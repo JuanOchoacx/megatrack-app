@@ -614,6 +614,58 @@ body {
 }
 
 /* ==========================================================
+   CINTA ANIMADA INFINITA (INFINITE SCROLLING SHOWCASE)
+   ========================================================== */
+.marquee-section {
+  width: 100%;
+  background: #FFFFFF;
+}
+
+.marquee-wrapper {
+  width: 100%;
+  overflow: hidden;
+  background: #FFFFFF;
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+  padding: 0.85rem 0;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 25s linear infinite;
+  align-items: center;
+  will-change: transform;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.brand-marquee-img {
+  filter: grayscale(100%) contrast(200%) invert(1);
+  mix-blend-mode: multiply;
+  height: 70px;
+  width: auto;
+  display: block;
+  flex-shrink: 0;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ==========================================================
    LOS 4 SEGMENTOS VEHICULARES DEL FOLLETO
    ========================================================== */
 
