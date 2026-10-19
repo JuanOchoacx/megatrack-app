@@ -72,77 +72,95 @@
     </div>
   </header>
 
-  <!-- Sección de Formulario de Contacto Cualificado -->
+  <!-- Sección de Formulario Filtro de Calificación Estratégica -->
   <section id="contacto" class="contact-section">
     <div class="contact-container">
       <div class="contact-header">
-        <span class="contact-badge">Cotización Estratégica</span>
+        <span class="contact-badge">Formulario Filtro de Calificación</span>
         <h2 class="contact-title">Cotiza tu Monitoreo Satelital</h2>
-        <p class="contact-desc">Completa tus datos y recibe una propuesta personalizada diseñada para el tamaño exacto de tu operación.</p>
+        <p class="contact-desc">Completa este breve formulario filtro para diseñar la solución exacta de telemetría y seguridad para tus vehículos.</p>
       </div>
 
       <form class="contact-form" id="contact-form">
         <div class="form-grid">
-          <!-- 1) Nombre Completo -->
+          <!-- 1) Nombre completo -->
           <div class="form-group">
-            <label for="nombre">Nombre Completo <span class="required-mark">*</span></label>
+            <label for="nombre_completo">Nombre Completo <span class="required-mark">*</span></label>
             <input 
               type="text" 
-              id="nombre" 
-              name="nombre" 
+              id="nombre_completo" 
+              name="nombre_completo" 
               placeholder="Ej. Carlos Mendoza" 
               required 
               autocomplete="name"
             >
           </div>
 
-          <!-- 2) Correo Electrónico Institucional/Personal -->
+          <!-- 2) Correo electrónico -->
           <div class="form-group">
-            <label for="correo">Correo Electrónico Institucional / Personal <span class="required-mark">*</span></label>
+            <label for="correo_electronico">Correo Electrónico <span class="required-mark">*</span></label>
             <input 
               type="email" 
-              id="correo" 
-              name="correo" 
+              id="correo_electronico" 
+              name="correo_electronico" 
               placeholder="carlos@empresa.com" 
               required 
               autocomplete="email"
             >
           </div>
 
-          <!-- 3) Teléfono de Contacto -->
+          <!-- 3) WhatsApp -->
           <div class="form-group">
-            <label for="telefono">Teléfono de Contacto <span class="required-mark">*</span></label>
+            <label for="whatsapp">WhatsApp <span class="required-mark">*</span></label>
             <input 
               type="tel" 
-              id="telefono" 
-              name="telefono" 
+              id="whatsapp" 
+              name="whatsapp" 
               placeholder="+593 99 123 4567" 
               required 
               autocomplete="tel"
             >
           </div>
 
-          <!-- 4) Tipo de Usuario -->
+          <!-- 4) Empresa/Negocio -->
           <div class="form-group">
-            <label for="tipo-usuario">Tipo de Usuario <span class="required-mark">*</span></label>
+            <label for="empresa_negocio">Empresa / Negocio <span class="required-mark">*</span></label>
+            <input 
+              type="text" 
+              id="empresa_negocio" 
+              name="empresa_negocio" 
+              placeholder="Ej. Logística Andina S.A. o Particular" 
+              required
+            >
+          </div>
+
+          <!-- 5) Presupuesto estimado -->
+          <div class="form-group">
+            <label for="presupuesto_estimado">Presupuesto Estimado <span class="required-mark">*</span></label>
             <div class="select-wrapper">
-              <select id="tipo-usuario" name="tipo_usuario" required>
-                <option value="" disabled selected>Selecciona tu perfil...</option>
-                <option value="particular">Dueño de Vehículo Particular</option>
-                <option value="flota">Administrador de Flota / Empresa</option>
+              <select id="presupuesto_estimado" name="presupuesto_estimado" required>
+                <option value="" disabled selected>Selecciona tu rango comercial...</option>
+                <option value="Menos de $300 / mes">Menos de $300 / mes (1 a 2 vehículos)</option>
+                <option value="$300 - $1,000 / mes">$300 - $1,000 / mes (Flota pequeña: 3 a 10 unidades)</option>
+                <option value="$1,000 - $3,000 / mes">$1,000 - $3,000 / mes (Flota mediana: 10 a 30 unidades)</option>
+                <option value="Más de $3,000 / mes">Más de $3,000 / mes (Operación pesada / corporativa)</option>
               </select>
             </div>
           </div>
 
-          <!-- 5) Tamaño de la Flota -->
-          <div class="form-group form-group-full">
-            <label for="tamano-flota">Tamaño de la Flota <span class="required-mark">*</span></label>
+          <!-- 6) Dolor principal / Mayor obstáculo comercial -->
+          <div class="form-group">
+            <label for="dolor_principal">Dolor Principal / Mayor Obstáculo Comercial <span class="required-mark">*</span></label>
             <div class="select-wrapper">
-              <select id="tamano-flota" name="tamano_flota" required>
-                <option value="" disabled selected>Selecciona la cantidad de vehículos...</option>
-                <option value="1">1 vehículo</option>
-                <option value="2-5">2 a 5 vehículos</option>
-                <option value="mas-5">Más de 5 vehículos</option>
+              <select id="dolor_principal" name="dolor_principal" required>
+                <option value="" disabled selected>Selecciona tu mayor reto actual...</option>
+                <option value="Pérdida de señal en carreteras interprovinciales">Pérdida de señal en carreteras interprovinciales</option>
+                <option value="Soporte técnico lento o indiferente ante emergencias">Soporte técnico lento o indiferente ante emergencias</option>
+                <option value="Falta de control en combustible, rutas y paradas">Falta de control en combustible, rutas y paradas</option>
+                <option value="Riesgo de robo vehicular y necesidad de corte de motor">Riesgo de robo vehicular y necesidad de corte de motor</option>
+                <option value="Instalaciones agresivas o daños al chasis">Instalaciones agresivas o daños al chasis</option>
+                <option value="Costos excesivos y tarifas poco transparentes">Costos excesivos y tarifas poco transparentes</option>
+                <option value="Otro obstáculo operativo o comercial">Otro obstáculo operativo o comercial</option>
               </select>
             </div>
           </div>

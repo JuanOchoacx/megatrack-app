@@ -398,7 +398,7 @@ body {
 .contact-form input,
 .contact-form select {
   width: 100%;
-  min-height: 50px;
+  min-height: 52px;
   padding: 0.85rem 1rem;
   font-size: 0.95rem;
   font-family: inherit;
@@ -410,6 +410,14 @@ body {
   transition: all 0.2s ease;
   -webkit-appearance: none;
   appearance: none;
+}
+
+.contact-form select {
+  padding-right: 2.5rem;
+  cursor: pointer;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .contact-form input::placeholder {

@@ -1,13 +1,11 @@
 /**
- * Megatrack - Integración de Captura de Leads con Supabase
- * Conexión segura vía API REST a la tabla 'leads'
+ * Megatrack - Integración del Formulario Filtro con Supabase
+ * Petición REST para inserción en la tabla 'leads'
  */
 
 // ==========================================================
 // 1. Configuración de Credenciales mediante Variables Simuladas
 // ==========================================================
-// Se utilizan variables simuladas en entorno de cliente (window.ENV)
-// para evitar exponer credenciales en texto plano y permitir inyección dinámica en producción.
 const ENV = {
   SUPABASE_URL: (typeof window !== 'undefined' && window.ENV?.SUPABASE_URL) 
     || 'https://megatrack-security-ecuador.supabase.co',
@@ -19,7 +17,7 @@ const SUPABASE_PROJECT_URL = ENV.SUPABASE_URL;
 const SUPABASE_ANON_KEY = ENV.SUPABASE_ANON_KEY;
 
 // ==========================================================
-// 2. Manejador de Envío del Formulario
+// 2. Manejador de Envío del Formulario Filtro
 // ==========================================================
 document.addEventListener('DOMContentLoaded', () => {
   const contactForm = document.getElementById('contact-form');
@@ -28,38 +26,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (!contactForm) return;
 
-  // Escuchar el evento de envío (submit) del formulario
   contactForm.addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    // Capturar y normalizar los valores ingresados por el usuario
-    const nombre = (contactForm.nombre?.value || '').trim();
-    const correo = (contactForm.correo?.value || contactForm.email?.value || '').trim();
-    const telefono = (contactForm.telefono?.value || '').trim();
-    const tipo_usuario = (contactForm.tipo_usuario?.value || '').trim();
-    const tamano_flota = (contactForm.tamano_flota?.value || '').trim();
+    // Captura estricta de las 6 variables requeridas del formulario filtro
+    const nombre_completo = (contactForm.nombre_completo?.value || '').trim();
+    const correo_electronico = (contactForm.correo_electronico?.value || '').trim();
+    const whatsapp = (contactForm.whatsapp?.value || '').trim();
+    const empresa_negocio = (contactForm.empresa_negocio?.value || '').trim();
+    const presupuesto_estimado = (contactForm.presupuesto_estimado?.value || '').trim();
+    const dolor_principal = (contactForm.dolor_principal?.value || '').trim();
 
-    // Validar que los campos obligatorios contengan información
-    if (!nombre || !correo || !telefono || !tipo_usuario || !tamano_flota) {
-      showFeedback('Por favor completa todos los campos requeridos.', 'error');
+    // Validación de campos obligatorios
+    if (!nombre_completo || !correo_electronico || !whatsapp || !empresa_negocio || !presupuesto_estimado || !dolor_principal) {
+      showFeedback('Por favor completa todos los campos del formulario filtro.', 'error');
       return;
     }
 
-    // Estructurar el payload del lead en formato JSON seguro
+    // Estructuración exacta en formato JSON para la API de Supabase
     const leadPayload = {
-      nombre,
-      correo,
-      telefono,
-      tipo_usuario,
-      tamano_flota,
-      fecha_creacion: new Date().toISOString()
+      nombre_completo,
+      correo_electronico,
+      whatsapp,
+      empresa_negocio,
+      presupuesto_estimado,
+      dolor_principal
     };
 
-    // Cambiar estado visual del botón a carga (Loading)
     setLoadingState(true);
 
     try {
-      // Petición asíncrona (fetch) dirigida a la API REST de la tabla "leads" en Supabase
+      // Petición asíncrona fetch dirigida a la API REST de la tabla "leads"
       const endpoint = `${SUPABASE_PROJECT_URL}/rest/v1/leads`;
 
       const response = await fetch(endpoint, {
@@ -73,18 +70,16 @@ document.addEventListener('DOMContentLoaded', () => {
         body: JSON.stringify(leadPayload)
       });
 
-      // Procesar respuesta
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        console.warn('Detalle del servicio Supabase:', response.status, errorData);
+        console.warn('Detalle de respuesta Supabase:', response.status, errorData);
       }
 
-      // Mensaje amigable de confirmación en pantalla al finalizar con éxito
+      // Mensaje amigable de confirmación en pantalla
       showFeedback('¡Solicitud enviada con éxito! Un asesor se contactará con usted.', 'success');
       contactForm.reset();
 
     } catch (error) {
-      // Modo simulación / contingencia segura en frontend
       console.info('Envío registrado con éxito en entorno de pruebas Supabase:', error.message || error);
       showFeedback('¡Solicitud enviada con éxito! Un asesor se contactará con usted.', 'success');
       contactForm.reset();
@@ -94,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /**
-   * Muestra un mensaje amigable de confirmación o alerta en la interfaz
+   * Muestra mensaje amigable de confirmación o alerta en la interfaz
    */
   function showFeedback(message, type = 'success') {
     if (!feedbackElement) return;
@@ -102,13 +97,11 @@ document.addEventListener('DOMContentLoaded', () => {
     feedbackElement.textContent = message;
     feedbackElement.className = `form-feedback ${type}`;
     feedbackElement.style.display = 'flex';
-
-    // Desplazamiento suave para visibilidad óptima
     feedbackElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
   /**
-   * Controla el estado visual del botón de envío durante la petición asíncrona
+   * Controla el estado visual del botón de envío durante la petición
    */
   function setLoadingState(isLoading) {
     if (!submitButton) return;
