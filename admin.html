@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Megatrack CRM - Bandeja de Prioridad en Vivo y Scoring Predictivo">
+  <title>Megatrack CRM | Bandeja de Prioridad de Leads</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="admin-body">
+
+  <!-- ==========================================================
+       PANTALLA DE ACCESO / PROTECCIÓN POR CONTRASEÑA
+       ========================================================== -->
+  <div id="admin-auth-screen" class="admin-auth-card">
+    <div class="auth-box">
+      <div class="auth-icon">🛡️</div>
+      <h2 class="auth-title">Portal Administrativo CRM</h2>
+      <p class="auth-subtitle">Ingresa la clave de acceso para visualizar la Bandeja de Prioridad en Vivo.</p>
+      
+      <form id="admin-login-form" class="auth-form" onsubmit="event.preventDefault();">
+        <div class="form-group">
+          <label for="admin-pass">Contraseña de Administrador</label>
+          <input 
+            type="password" 
+            id="admin-pass" 
+            placeholder="Ingresa la clave de acceso" 
+            required
+            autocomplete="current-password"
+          >
+        </div>
+        <button type="submit" class="btn-auth">Ingresar al Panel</button>
+        <div id="auth-error" class="auth-error-msg" style="display: none;">Contraseña incorrecta. Inténtalo de nuevo.</div>
+      </form>
+
+      <div class="auth-footer">
+        <a href="index.html" class="auth-back-link">← Regresar a la Landing Page</a>
+        <span class="auth-hint">Clave oficial: <code>megatrack2026</code></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================
+       PANEL DE CONTROL PRIVADO / BANDEJA DE PRIORIDAD EN VIVO
+       ========================================================== -->
+  <div id="admin-panel" class="admin-dashboard" style="display: none;">
+    <!-- Barra Superior del Panel -->
+    <header class="admin-topbar">
+      <div class="admin-topbar-left">
+        <div class="admin-brand">
+          <span class="admin-logo-icon">📡</span>
+          <span class="admin-brand-text">Megatrack <strong>CRM</strong></span>
+        </div>
+        <span class="live-pill">
+          <span class="live-pulse"></span>
+          Bandeja de Prioridad en Vivo (Supabase Sync)
+        </span>
+      </div>
+      <div class="admin-topbar-right">
+        <button id="btn-refresh-leads" class="btn-refresh" title="Consultar leads de Supabase">
+          <svg class="refresh-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <polyline points="1 20 1 14 7 14"></polyline>
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+          </svg>
+          <span>Actualizar</span>
+        </button>
+        <a href="index.html" class="btn-exit" title="Volver a la landing page pública">
+          <span>Ver Landing</span>
+        </a>
+        <button id="btn-logout" class="btn-logout" title="Cerrar sesión">Salir</button>
+      </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="admin-main">
+      <!-- Fila de Contadores KPI en la parte superior -->
+      <section class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">Total Prospectos</div>
+          <div class="kpi-val" id="kpi-total">0</div>
+          <div class="kpi-sub">Sincronizados en Supabase</div>
+        </div>
+        <div class="kpi-card kpi-hot">
+          <div class="kpi-label">🔥 Leads Calientes (&ge;80)</div>
+          <div class="kpi-val text-hot" id="kpi-hot">0</div>
+          <div class="kpi-sub">Prioridad Inmediata &lt; 5 min</div>
+        </div>
+        <div class="kpi-card kpi-medium">
+          <div class="kpi-label">⚡ Prioridad Media (50-79)</div>
+          <div class="kpi-val text-medium" id="kpi-medium">0</div>
+          <div class="kpi-sub">Contacto en el día</div>
+        </div>
+        <div class="kpi-card kpi-pending">
+          <div class="kpi-label">⏳ Por Contactar</div>
+          <div class="kpi-val text-pending" id="kpi-pending">0</div>
+          <div class="kpi-sub">Pendientes de gestión</div>
+        </div>
+      </section>
+
+      <!-- Bloque Explicativo del Algoritmo de Scoring -->
+      <div class="table-header-block">
+        <div>
+          <h3 class="table-heading">Bandeja de Prioridad Clasificada por Scoring</h3>
+          <p class="table-subheading">
+            Ordenamiento automático en tiempo real de mayor a menor score:
+            <strong>Presupuesto (60%):</strong> Alto: 60 | Medio: 40 | Bajo: 20 &nbsp;+&nbsp;
+            <strong>Dolor Principal (40%):</strong> Señal/Robos: 40 | Soporte/Instalación: 25 | Otro: 10.
+          </p>
+        </div>
+        <div class="status-legend">
+          <span class="legend-item"><span class="badge-hot-dot"></span> Caliente (&ge;80)</span>
+          <span class="legend-item"><span class="badge-med-dot"></span> Media (50-79)</span>
+          <span class="legend-item"><span class="badge-low-dot"></span> Baja (&lt;50)</span>
+        </div>
+      </div>
+
+      <!-- Tabla de la Bandeja de Prioridad -->
+      <div class="table-responsive">
+        <table class="leads-table" id="leads-table">
+          <thead>
+            <tr>
+              <th>Score & Temperatura</th>
+              <th>Prospecto</th>
+              <th>Empresa / Negocio</th>
+              <th>Presupuesto</th>
+              <th>Dolor Principal</th>
+              <th>Gestión de Estado</th>
+              <th>Registro</th>
+            </tr>
+          </thead>
+          <tbody id="leads-tbody">
+            <!-- Filas ordenadas dinámicamente con JavaScript -->
+          </tbody>
+        </table>
+        <div id="leads-empty-state" class="empty-state" style="display: none;">
+          <p>No se encontraron registros en Supabase. Los nuevos envíos desde la landing aparecerán aquí automáticamente.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Lógica exclusiva del panel de administración -->
+  <script src="admin.js"></script>
+</body>
+</html>

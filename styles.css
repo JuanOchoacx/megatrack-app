@@ -1054,6 +1054,11 @@ body {
 }
 
 /* Contenedor Principal Admin */
+.admin-body {
+  background-color: #060a12;
+  min-height: 100vh;
+}
+
 .admin-view-container {
   min-height: 100vh;
   background-color: #060a12;
