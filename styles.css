@@ -366,7 +366,8 @@ body {
   display: flex;
 }
 
-.hero-video-container video {
+.hero-video-container video,
+.hero-video-element {
   width: 100%;
   height: 100%;
   object-fit: cover;
