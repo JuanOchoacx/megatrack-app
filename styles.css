@@ -77,9 +77,33 @@ body {
 }
 
 /* ==========================================================
-   ISOTIPO VECTORIAL Y MARCA (BRAND LOGO NATIVO)
+   LOGOTIPO OFICIAL MEGATRACK
    ========================================================== */
-.brand-logo-container { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+.brand-logo-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.brand-logo-img {
+  max-height: 32px;
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+  display: inline-block;
+  vertical-align: middle;
+  background: #ffffff;
+  padding: 3px 8px;
+  border-radius: 6px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.brand-logo-container:hover .brand-logo-img {
+  transform: translateY(-1px);
+  opacity: 0.95;
+}
 
 .nav-menu {
   display: flex;
