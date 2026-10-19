@@ -79,76 +79,7 @@ body {
 /* ==========================================================
    ISOTIPO VECTORIAL Y MARCA (BRAND LOGO NATIVO)
    ========================================================== */
-.brand-logo-container {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-  text-decoration: none;
-  cursor: pointer;
-  transition: transform 0.2s ease, opacity 0.2s ease;
-  user-select: none;
-}
-
-.brand-logo-container:hover {
-  opacity: 0.95;
-  transform: translateY(-1px);
-}
-
-.brand-logo-svg {
-  width: 32px;
-  height: 32px;
-  max-width: 32px;
-  max-height: 32px;
-  flex-shrink: 0;
-  display: block;
-  filter: drop-shadow(0 0 8px var(--glow-green));
-}
-
-.brand-logo-text {
-  display: inline-flex;
-  align-items: baseline;
-  line-height: 1;
-}
-
-.brand-logo-mega {
-  font-family: var(--font-tech);
-  font-weight: 800;
-  font-size: 1.35rem;
-  color: var(--text-light);
-  letter-spacing: -0.5px;
-  text-transform: uppercase;
-}
-
-.brand-logo-track {
-  font-family: var(--font-tech);
-  font-weight: 700;
-  font-size: 1.35rem;
-  color: var(--accent-orange);
-  letter-spacing: -0.3px;
-  text-transform: lowercase;
-}
-
-.brand-logo-crm {
-  margin-left: 0.5rem;
-  padding: 0.2rem 0.5rem;
-  font-size: 0.7rem;
-  font-weight: 800;
-  font-family: var(--font-tech);
-  color: #34d399;
-  background: rgba(14, 154, 95, 0.18);
-  border: 1px solid rgba(14, 154, 95, 0.4);
-  border-radius: 4px;
-  letter-spacing: 0.5px;
-  align-self: center;
-}
-
-/* Compatibilidad con clases previas */
-.brand-logo {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-  text-decoration: none;
-}
+.brand-logo-container { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
 
 .nav-menu {
   display: flex;
