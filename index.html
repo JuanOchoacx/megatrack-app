@@ -3,333 +3,446 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Megatrack - Monitoreo satelital y control de flotas con soporte 100% humano e inmediato en Ecuador.">
-  <title>Megatrack | Monitoreo Satelital y Control de Flotas en Ecuador</title>
+  <meta name="description" content="Megatrack - Plataforma de Monitoreo Satelital y Control de Flotas en Ecuador. Telemetría en tiempo real y soporte humano 24/7.">
+  <title>Megatrack | Monitoreo Satelital y Telemetría en Ecuador</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <!-- Header / Barra de Navegación -->
+  <!-- ==========================================================
+       BARRA DE NAVEGACIÓN (NAVBAR ESTILO ARTEMIS)
+       ========================================================== -->
   <header class="navbar">
     <div class="nav-container">
-      <a href="#" class="brand-logo">
-        <span class="logo-icon">📡</span>
-        <span class="logo-text">Megatrack</span>
+      <a href="#" class="brand-logo" aria-label="Megatrack Inicio">
+        <div class="logo-mark">
+          <svg class="logo-radar" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="14" stroke="#0E9A5F" stroke-width="2" stroke-opacity="0.3"/>
+            <circle cx="16" cy="16" r="9" stroke="#0E9A5F" stroke-width="2" stroke-opacity="0.7"/>
+            <circle cx="16" cy="16" r="4" fill="#F07A22"/>
+            <path d="M16 2 A 14 14 0 0 1 30 16" stroke="#0E9A5F" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="logo-text-group">
+          <span class="logo-main">MEGA<span class="logo-accent">TRACK</span></span>
+          <span class="logo-sub">TELEMETRÍA SATELITAL</span>
+        </div>
       </a>
+
       <nav class="nav-menu">
+        <a href="#segmentos" class="nav-link">Segmentos</a>
+        <a href="#caracteristicas" class="nav-link">Características</a>
         <a href="#contacto" class="nav-link">Cotizar</a>
-        <a href="#beneficios" class="nav-link">Beneficios</a>
         <a href="#testimonios" class="nav-link">Testimonios</a>
-        <a href="admin.html" class="nav-admin-pill" title="Acceso a la Bandeja de Prioridad CRM">🔒 Admin</a>
+        <a href="admin.html" class="nav-admin-pill" title="Acceso a la Bandeja de Prioridad CRM">
+          <span class="lock-icon">🔒</span> Portal Admin
+        </a>
         <a href="#contacto" class="btn-nav">Cotizar mi Flota</a>
       </nav>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <header class="hero-section">
-    <div class="hero-overlay"></div>
+  <!-- ==========================================================
+       HERO SECTION: INSPIRACIÓN PORTAL ARTEMIS + FOLLETO
+       ========================================================== -->
+  <section class="hero-section">
+    <div class="hero-grid-bg"></div>
+    <div class="hero-glow-green"></div>
+    <div class="hero-glow-orange"></div>
+
     <div class="hero-container">
-      <div class="hero-badge">
-        <span class="pulse-dot"></span>
-        Tecnología Satelital de Alta Precisión en Ecuador
-      </div>
-      
-      <h1 class="hero-title">Megatrack</h1>
-      
-      <p class="hero-subtitle">
-        Monitoreo satelital y control de flotas con soporte 100% humano e inmediato en Ecuador
-      </p>
-
-      <div class="hero-actions">
-        <a href="#contacto" class="btn-cta">
-          Cotizar mi Flota
-          <svg class="arrow-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
-        </a>
-      </div>
-
-      <!-- Métricas / Puntos de Confianza -->
-      <div class="hero-stats">
-        <div class="stat-item">
-          <span class="stat-number">&lt; 10s</span>
-          <span class="stat-label">Respuesta Humana 24/7</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item">
-          <span class="stat-number">99.9%</span>
-          <span class="stat-label">Disponibilidad en Vivo</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item">
-          <span class="stat-number">100%</span>
-          <span class="stat-label">Cobertura en Ecuador</span>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- Sección de Formulario Filtro de Captación MOFU -->
-  <section id="contacto" class="contact-section">
-    <div class="contact-container">
-      <div class="contact-header">
-        <span class="contact-badge">Formulario Filtro de Calificación MOFU</span>
-        <h2 class="contact-title">Cotiza tu Monitoreo Satelital</h2>
-        <p class="contact-desc">Completa este breve formulario filtro para diseñar la solución exacta de telemetría y seguridad para tus vehículos.</p>
-      </div>
-
-      <form class="contact-form" id="contact-form">
-        <div class="form-grid">
-          <!-- 1) Nombre completo -->
-          <div class="form-group">
-            <label for="nombre_completo">Nombre Completo <span class="required-mark">*</span></label>
-            <input 
-              type="text" 
-              id="nombre_completo" 
-              name="nombre_completo" 
-              placeholder="Ej. Carlos Mendoza" 
-              required 
-              autocomplete="name"
-            >
-          </div>
-
-          <!-- 2) Correo electrónico -->
-          <div class="form-group">
-            <label for="correo_electronico">Correo Electrónico <span class="required-mark">*</span></label>
-            <input 
-              type="email" 
-              id="correo_electronico" 
-              name="correo_electronico" 
-              placeholder="carlos@empresa.com" 
-              required 
-              autocomplete="email"
-            >
-          </div>
-
-          <!-- 3) WhatsApp -->
-          <div class="form-group">
-            <label for="whatsapp">WhatsApp <span class="required-mark">*</span></label>
-            <input 
-              type="tel" 
-              id="whatsapp" 
-              name="whatsapp" 
-              placeholder="+593 99 123 4567" 
-              required 
-              autocomplete="tel"
-            >
-          </div>
-
-          <!-- 4) Empresa/Negocio -->
-          <div class="form-group">
-            <label for="empresa_negocio">Empresa / Negocio <span class="required-mark">*</span></label>
-            <input 
-              type="text" 
-              id="empresa_negocio" 
-              name="empresa_negocio" 
-              placeholder="Ej. Logística Andina S.A. o Particular" 
-              required
-            >
-          </div>
-
-          <!-- 5) Presupuesto estimado -->
-          <div class="form-group">
-            <label for="presupuesto_estimado">Presupuesto Estimado <span class="required-mark">*</span></label>
-            <div class="select-wrapper">
-              <select id="presupuesto_estimado" name="presupuesto_estimado" required>
-                <option value="" disabled selected>Selecciona tu rango comercial...</option>
-                <option value="Menos de $300 / mes">Menos de $300 / mes (1 a 2 vehículos)</option>
-                <option value="$300 - $1,000 / mes">$300 - $1,000 / mes (Flota pequeña: 3 a 10 unidades)</option>
-                <option value="$1,000 - $3,000 / mes">$1,000 - $3,000 / mes (Flota mediana: 10 a 30 unidades)</option>
-                <option value="Más de $3,000 / mes">Más de $3,000 / mes (Operación pesada / corporativa)</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- 6) Dolor principal / Mayor obstáculo comercial -->
-          <div class="form-group">
-            <label for="dolor_principal">Dolor Principal / Mayor Obstáculo Comercial <span class="required-mark">*</span></label>
-            <div class="select-wrapper">
-              <select id="dolor_principal" name="dolor_principal" required>
-                <option value="" disabled selected>Selecciona tu mayor reto actual...</option>
-                <option value="Pérdida de señal en carreteras interprovinciales">Pérdida de señal en carreteras interprovinciales</option>
-                <option value="Soporte técnico lento o indiferente ante emergencias">Soporte técnico lento o indiferente ante emergencias</option>
-                <option value="Falta de control en combustible, rutas y paradas">Falta de control en combustible, rutas y paradas</option>
-                <option value="Riesgo de robo vehicular y necesidad de corte de motor">Riesgo de robo vehicular y necesidad de corte de motor</option>
-                <option value="Instalaciones agresivas o daños al chasis">Instalaciones agresivas o daños al chasis</option>
-                <option value="Costos excesivos y tarifas poco transparentes">Costos excesivos y tarifas poco transparentes</option>
-                <option value="Otro obstáculo operativo o comercial">Otro obstáculo operativo o comercial</option>
-              </select>
-            </div>
-          </div>
+      <!-- Columna Izquierda: Información de Valor & Folleto -->
+      <div class="hero-text-col">
+        <div class="hero-badge">
+          <span class="live-dot"></span>
+          Plataforma Telemática de Alta Precisión &bull; Ecuador
         </div>
 
-        <button type="submit" id="btn-submit" class="btn-submit">
-          <span>Solicitar Cotización Inmediata</span>
-          <svg class="submit-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="22" y1="2" x2="11" y2="13"></line>
-            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-          </svg>
-        </button>
+        <h1 class="hero-title">
+          Monitoreo Satelital Inteligente y Control de Flotas
+        </h1>
 
-        <!-- Mensaje de Feedback Dinámico -->
-        <div id="form-feedback" class="form-feedback" style="display: none;"></div>
-
-        <p class="form-privacy">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-          </svg>
-          Tus datos están protegidos. Respuesta humana inmediata en menos de 10 minutos.
+        <p class="hero-subtitle">
+          Soporte 100% humano e inmediato en Ecuador. Máxima protección vehicular, telemetría segundo a segundo y apagado remoto sin intermediarios.
         </p>
-      </form>
+
+        <!-- Segmentos rápidos del folleto -->
+        <div class="hero-segments-strip">
+          <span class="strip-label">Soluciones optimizadas para:</span>
+          <div class="strip-items">
+            <span class="strip-badge">🚗 Autos</span>
+            <span class="strip-badge">🏍️ Motos</span>
+            <span class="strip-badge">🏢 Flotas</span>
+            <span class="strip-badge">🚛 Carga Pesada</span>
+          </div>
+        </div>
+
+        <!-- Indicadores de confianza -->
+        <div class="hero-stats-row">
+          <div class="hero-stat-box">
+            <span class="stat-number">&lt; 10s</span>
+            <span class="stat-text">Respuesta Humana 24/7</span>
+          </div>
+          <div class="hero-stat-sep"></div>
+          <div class="hero-stat-box">
+            <span class="stat-number">99.9%</span>
+            <span class="stat-text">Uptime Satelital</span>
+          </div>
+          <div class="hero-stat-sep"></div>
+          <div class="hero-stat-box">
+            <span class="stat-number">100%</span>
+            <span class="stat-text">Cobertura Interprovincial</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columna Derecha: Contenedor Glassmorphism con Formulario MOFU -->
+      <div class="hero-form-col" id="contacto">
+        <div class="glass-form-card">
+          <div class="glass-card-header">
+            <div class="card-badge-orange">Calificación Inmediata</div>
+            <h2 class="card-title">Cotiza tu Monitoreo</h2>
+            <p class="card-subtitle">Completa el formulario filtro para diseñar la solución de seguridad a la medida de tus unidades.</p>
+          </div>
+
+          <form class="contact-form" id="contact-form">
+            <div class="form-grid">
+              <!-- 1) Nombre completo -->
+              <div class="form-group">
+                <label for="nombre_completo">Nombre Completo <span class="required-star">*</span></label>
+                <input 
+                  type="text" 
+                  id="nombre_completo" 
+                  name="nombre_completo" 
+                  placeholder="Ej. Carlos Mendoza" 
+                  required 
+                  autocomplete="name"
+                >
+              </div>
+
+              <!-- 2) Correo electrónico -->
+              <div class="form-group">
+                <label for="correo_electronico">Correo Electrónico <span class="required-star">*</span></label>
+                <input 
+                  type="email" 
+                  id="correo_electronico" 
+                  name="correo_electronico" 
+                  placeholder="carlos@empresa.com" 
+                  required 
+                  autocomplete="email"
+                >
+              </div>
+
+              <!-- 3) WhatsApp -->
+              <div class="form-group">
+                <label for="whatsapp">WhatsApp <span class="required-star">*</span></label>
+                <input 
+                  type="tel" 
+                  id="whatsapp" 
+                  name="whatsapp" 
+                  placeholder="+593 99 123 4567" 
+                  required 
+                  autocomplete="tel"
+                >
+              </div>
+
+              <!-- 4) Empresa/Negocio -->
+              <div class="form-group">
+                <label for="empresa_negocio">Empresa / Negocio <span class="required-star">*</span></label>
+                <input 
+                  type="text" 
+                  id="empresa_negocio" 
+                  name="empresa_negocio" 
+                  placeholder="Ej. Logística Andina o Particular" 
+                  required
+                >
+              </div>
+
+              <!-- 5) Presupuesto estimado -->
+              <div class="form-group">
+                <label for="presupuesto_estimado">Presupuesto Estimado <span class="required-star">*</span></label>
+                <div class="select-wrapper">
+                  <select id="presupuesto_estimado" name="presupuesto_estimado" required>
+                    <option value="" disabled selected>Selecciona tu rango comercial...</option>
+                    <option value="Menos de $300 / mes">Menos de $300 / mes (1 a 2 vehículos)</option>
+                    <option value="$300 - $1,000 / mes">$300 - $1,000 / mes (Flota pequeña: 3 a 10 unidades)</option>
+                    <option value="$1,000 - $3,000 / mes">$1,000 - $3,000 / mes (Flota mediana: 10 a 30 unidades)</option>
+                    <option value="Más de $3,000 / mes">Más de $3,000 / mes (Operación pesada / corporativa)</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- 6) Dolor principal / Mayor obstáculo comercial -->
+              <div class="form-group">
+                <label for="dolor_principal">Dolor Principal / Mayor Obstáculo <span class="required-star">*</span></label>
+                <div class="select-wrapper">
+                  <select id="dolor_principal" name="dolor_principal" required>
+                    <option value="" disabled selected>Selecciona tu mayor reto actual...</option>
+                    <option value="Pérdida de señal en carreteras interprovinciales">Pérdida de señal en carreteras interprovinciales</option>
+                    <option value="Soporte técnico lento o indiferente ante emergencias">Soporte técnico lento o indiferente ante emergencias</option>
+                    <option value="Falta de control en combustible, rutas y paradas">Falta de control en combustible, rutas y paradas</option>
+                    <option value="Riesgo de robo vehicular y necesidad de corte de motor">Riesgo de robo vehicular y necesidad de corte de motor</option>
+                    <option value="Instalaciones agresivas o daños al chasis">Instalaciones agresivas o daños al chasis</option>
+                    <option value="Costos excesivos y tarifas poco transparentes">Costos excesivos y tarifas poco transparentes</option>
+                    <option value="Otro obstáculo operativo o comercial">Otro obstáculo operativo o comercial</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Botón CTA con Verde Brillante Dinámico y Spinner Antirrepetición -->
+            <button type="submit" id="btn-submit" class="btn-submit-green">
+              <span class="btn-text">Solicitar Cotización Inmediata</span>
+              <svg class="submit-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+
+            <!-- Mensaje de Feedback Dinámico -->
+            <div id="form-feedback" class="form-feedback" style="display: none;"></div>
+
+            <p class="form-privacy-note">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              <span>Privacidad garantizada. Asignación inmediata con un especialista humano.</span>
+            </p>
+          </form>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Sección de Características y Beneficios Comerciales -->
-  <section id="beneficios" class="benefits-section">
-    <div class="benefits-container">
-      <div class="benefits-header">
-        <span class="benefits-badge">Por qué elegir Megatrack</span>
-        <h2 class="benefits-title">Ventajas Diseñadas para tu Tranquilidad Total</h2>
-        <p class="benefits-subtitle">Resolvemos las fallas comunes del mercado tradicional con tecnología de punta y verdadera vocación de servicio.</p>
+  <!-- ==========================================================
+       LOS 4 SEGMENTOS VEHICULARES DEL FOLLETO MEGATRACK
+       ========================================================== -->
+  <section id="segmentos" class="segments-section">
+    <div class="section-container">
+      <div class="section-header-center">
+        <span class="section-badge-orange">Especialización Satelital</span>
+        <h2 class="section-title">Seguridad y Monitoreo Adaptado a Cada Vehículo</h2>
+        <p class="section-subtitle">Tecnología de rastreo diseñada para responder a los requerimientos específicos de cada categoría vehicular en Ecuador.</p>
       </div>
 
-      <div class="benefits-grid">
-        <!-- Bloque 1: Instalación Segura a Domicilio -->
-        <article class="benefit-card">
-          <div class="benefit-icon-wrapper">
-            <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+      <div class="segments-grid">
+        <!-- 1) Autos particulares -->
+        <article class="segment-card">
+          <div class="segment-icon-wrap">
+            <svg class="segment-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9C2.1 11 2 11.5 2 12v4c0 .6.4 1 1 1h2"></path>
+              <circle cx="7" cy="17" r="2"></circle>
+              <circle cx="17" cy="17" r="2"></circle>
             </svg>
           </div>
-          <div class="benefit-content">
-            <h3 class="benefit-heading">Instalación Segura a Domicilio</h3>
-            <p class="benefit-text">
-              Nuestros técnicos certificados van directamente al garaje de tu casa o empresa. Cero traslados incómodos y sin rampas peligrosas que raspen el chasis o dañen la suspensión de tu vehículo. Cuidamos tu patrimonio con instalación limpia, discreta y profesional.
-            </p>
-          </div>
-          <div class="benefit-footer-tag">
-            <span>✓ Comodidad sin riesgo a raspones</span>
-          </div>
+          <h3 class="segment-name">Autos Particulares</h3>
+          <p class="segment-desc">
+            Protección para tu vehículo de uso diario y familiar. Geocercas de aparcamiento, corte de motor desde el celular y botón de pánico en emergencias.
+          </p>
+          <ul class="segment-features">
+            <li>✓ Instalación segura a domicilio sin raspar chasis</li>
+            <li>✓ Alerta de encendido y movimiento no autorizado</li>
+            <li>✓ Cobertura nacional en carretera y ciudad</li>
+          </ul>
         </article>
 
-        <!-- Bloque 2: Soporte Humano 24/7 -->
-        <article class="benefit-card">
-          <div class="benefit-icon-wrapper">
-            <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- 2) Motos -->
+        <article class="segment-card">
+          <div class="segment-icon-wrap">
+            <svg class="segment-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="5" cy="16" r="3"></circle>
+              <circle cx="19" cy="16" r="3"></circle>
+              <path d="M12 17h4l3-6h-4l-2 3h-3l-2-7H4"></path>
+              <circle cx="10" cy="5" r="1.5"></circle>
+            </svg>
+          </div>
+          <h3 class="segment-name">Motos</h3>
+          <p class="segment-desc">
+            Dispositivos ultracompactos y discretos de consumo energético ultra-bajo que no descargan la batería de la motocicleta.
+          </p>
+          <ul class="segment-features">
+            <li>✓ Sensor de vibración e inclinación antiasalto</li>
+            <li>✓ Resistente a agua, polvo y lodo (IP67)</li>
+            <li>✓ Recuperación vehicular con protocolo rápido</li>
+          </ul>
+        </article>
+
+        <!-- 3) Flotas empresariales -->
+        <article class="segment-card segment-card-featured">
+          <div class="featured-ribbon">Alta Demanda</div>
+          <div class="segment-icon-wrap">
+            <svg class="segment-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+            </svg>
+          </div>
+          <h3 class="segment-name">Flotas Empresariales</h3>
+          <p class="segment-desc">
+            Optimización operativa de vehículos de servicio, ventas y supervisión. Control de tiempos de viaje, mantenimientos y cumplimiento de rutas.
+          </p>
+          <ul class="segment-features">
+            <li>✓ Historial de rutas y paradas no autorizadas</li>
+            <li>✓ Reportes ejecutivos de rendimiento y kilometraje</li>
+            <li>✓ Acceso multiusuario con roles y permisos</li>
+          </ul>
+        </article>
+
+        <!-- 4) Vehículos de carga -->
+        <article class="segment-card">
+          <div class="segment-icon-wrap">
+            <svg class="segment-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 3h15v13H1z"></path>
+              <path d="M16 8h4l3 3v5h-7V8z"></path>
+              <circle cx="5.5" cy="18.5" r="2.5"></circle>
+              <circle cx="18.5" cy="18.5" r="2.5"></circle>
+            </svg>
+          </div>
+          <h3 class="segment-name">Vehículos de Carga</h3>
+          <p class="segment-desc">
+            Telemetría pesada para transporte interprovincial y logística crítica. Transmisión constante en zonas montañosas sin pérdida de señal.
+          </p>
+          <ul class="segment-features">
+            <li>✓ Sensores de apertura de puertas y desenganche</li>
+            <li>✓ Control de combustible y velocidad en carretera</li>
+            <li>✓ Enlace multioperador satelital sin puntos ciegos</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       CARACTERÍSTICAS DESTACADAS DEL FOLLETO OFICIAL
+       ========================================================== -->
+  <section id="caracteristicas" class="features-section">
+    <div class="section-container">
+      <div class="section-header-center">
+        <span class="section-badge-green">Capacidades del Sistema</span>
+        <h2 class="section-title">Tecnología de Vanguardia para tu Tranquilidad</h2>
+        <p class="section-subtitle">Las 6 funciones principales que posicionan a Megatrack como el estándar de control y seguridad en Ecuador.</p>
+      </div>
+
+      <div class="features-grid-6">
+        <!-- 1) Ubicación en tiempo real -->
+        <div class="feature-box">
+          <div class="feature-box-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+          </div>
+          <h4>Ubicación en tiempo real</h4>
+          <p>Rastreo continuo segundo a segundo con precisión métrica en mapa satelital interactivo de alta definición.</p>
+        </div>
+
+        <!-- 2) Alertas inteligentes -->
+        <div class="feature-box">
+          <div class="feature-box-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+          </div>
+          <h4>Alertas inteligentes</h4>
+          <p>Notificaciones push y WhatsApp inmediatas de encendido de motor, exceso de velocidad y entrada/salida de geocercas.</p>
+        </div>
+
+        <!-- 3) Mayor seguridad -->
+        <div class="feature-box">
+          <div class="feature-box-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </div>
+          <h4>Mayor seguridad</h4>
+          <p>Inmovilización y corte remoto de motor seguro, botón de pánico físico y protocolo de recuperación asistida.</p>
+        </div>
+
+        <!-- 4) Reportes y control -->
+        <div class="feature-box">
+          <div class="feature-box-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+          </div>
+          <h4>Reportes y control</h4>
+          <p>Historiales detallados descargables en Excel/PDF con kilómetros recorridos, tiempos de ralentí y paradas.</p>
+        </div>
+
+        <!-- 5) Acceso desde cualquier dispositivo -->
+        <div class="feature-box">
+          <div class="feature-box-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+              <line x1="12" y1="18" x2="12.01" y2="18"></line>
+            </svg>
+          </div>
+          <h4>Acceso desde cualquier dispositivo</h4>
+          <p>Plataforma web tipo Artemis optimizada para computadoras y aplicación móvil nativa para iOS y Android.</p>
+        </div>
+
+        <!-- 6) Soporte permanente -->
+        <div class="feature-box">
+          <div class="feature-box-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
             </svg>
           </div>
-          <div class="benefit-content">
-            <h3 class="benefit-heading">Soporte Humano 24/7</h3>
-            <p class="benefit-text">
-              Atención inmediata en tu propio idioma ante emergencias, las 24 horas del día. Olvídate de contestadoras automatizadas, llamadas en espera o bots que no resuelven. Cuando hay un incidente, te asiste un especialista en seguridad en menos de 10 segundos.
-            </p>
-          </div>
-          <div class="benefit-footer-tag">
-            <span>✓ Respuesta humana en &lt; 10s</span>
-          </div>
-        </article>
-
-        <!-- Bloque 3: Conectividad Total en Ecuador -->
-        <article class="benefit-card">
-          <div class="benefit-icon-wrapper">
-            <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
-              <line x1="8" y1="2" x2="8" y2="18"></line>
-              <line x1="16" y1="6" x2="16" y2="22"></line>
-            </svg>
-          </div>
-          <div class="benefit-content">
-            <h3 class="benefit-heading">Conectividad Total en Ecuador</h3>
-            <p class="benefit-text">
-              Garantizamos telemetría de alta precisión sin pérdida de señal en carreteras interprovinciales ni zonas complejas. Gracias a nuestra tecnología de enlace multioperador satelital, mantienes el rastreo segundo a segundo de toda tu flota en todo el país.
-            </p>
-          </div>
-          <div class="benefit-footer-tag">
-            <span>✓ Red multioperador sin puntos ciegos</span>
-          </div>
-        </article>
+          <h4>Soporte permanente</h4>
+          <p>Central de monitoreo y atención técnica humana 24 horas al día, 365 días al año. Cero contestadoras automáticas.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Sección de Prueba Social (Testimonios) -->
+  <!-- ==========================================================
+       PRUEBA SOCIAL / TESTIMONIOS REALES
+       ========================================================== -->
   <section id="testimonios" class="testimonials-section">
-    <div class="benefits-container">
-      <div class="testimonials-header">
-        <span class="testimonials-badge">Prueba Social</span>
-        <h2 class="testimonials-title">La Confianza de Quienes Están en Ruta</h2>
-        <p class="testimonials-subtitle">Historias reales de empresas y particulares que ya recuperaron el control y la tranquilidad de sus vehículos con Megatrack.</p>
+    <div class="section-container">
+      <div class="section-header-center">
+        <span class="section-badge-orange">Confianza Comprobada</span>
+        <h2 class="section-title">Lo que Dicen Quienes Conducen con Megatrack</h2>
+        <p class="section-subtitle">Historias de transportistas y familias ecuatorianas que protegen su inversión día a día.</p>
       </div>
 
       <div class="testimonials-grid">
-        <!-- Testimonio 1: Gerente de Operaciones Logísticas -->
+        <!-- Testimonio 1 -->
         <article class="testimonial-card">
-          <div class="quote-badge">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
-            </svg>
-          </div>
-
-          <div class="testimonial-rating">
-            <span class="star">★</span>
-            <span class="star">★</span>
-            <span class="star">★</span>
-            <span class="star">★</span>
-            <span class="star">★</span>
-          </div>
-
-          <p class="testimonial-quote">
-            "Coordinamos más de 25 camiones de carga pesada en las rutas Quito - Guayaquil - Cuenca. Con los servicios anteriores vivíamos con la angustia de perder contacto en tramos montañosos. La tranquilidad de monitorear camiones interprovinciales sin pérdida de señal en carretera nos transformó la operación. Saber en tiempo real que la carga avanza segura no tiene precio."
+          <div class="test-quote-icon">“</div>
+          <div class="test-stars">★★★★★</div>
+          <p class="test-text">
+            "Coordinamos más de 25 camiones pesados en las rutas Quito - Guayaquil - Cuenca. Con nuestro proveedor anterior perdíamos señal en tramos montañosos. La tranquilidad de monitorear camiones interprovinciales sin pérdida de señal en carretera nos transformó la operación. Saber en tiempo real que la carga avanza segura no tiene precio."
           </p>
-
-          <div class="testimonial-author">
-            <div class="author-avatar author-avatar-1">
-              <span>RV</span>
-            </div>
-            <div class="author-meta">
-              <h4 class="author-name">Ing. Roberto Vintimilla</h4>
-              <p class="author-role">Gerente de Operaciones Logísticas</p>
-              <span class="author-company">Transportes & Carga del Austro</span>
+          <div class="test-author-box">
+            <div class="test-avatar avatar-orange">RV</div>
+            <div class="test-author-info">
+              <strong class="test-name">Ing. Roberto Vintimilla</strong>
+              <span class="test-role">Gerente de Operaciones Logísticas</span>
+              <span class="test-org">Transportes & Carga del Austro</span>
             </div>
           </div>
         </article>
 
-        <!-- Testimonio 2: Propietario Particular de SUV -->
+        <!-- Testimonio 2 -->
         <article class="testimonial-card">
-          <div class="quote-badge">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
-            </svg>
-          </div>
-
-          <div class="testimonial-rating">
-            <span class="star">★</span>
-            <span class="star">★</span>
-            <span class="star">★</span>
-            <span class="star">★</span>
-            <span class="star">★</span>
-          </div>
-
-          <p class="testimonial-quote">
+          <div class="test-quote-icon">“</div>
+          <div class="test-stars">★★★★★</div>
+          <p class="test-text">
             "Tenía mucho temor de llevar mi camioneta a talleres con rampas empinadas donde siempre terminan raspando los faldones o el chasis. La comodidad de la instalación a domicilio segura directamente en mi garaje fue excepcional. Además, la amabilidad y paciencia en la atención telefónica para enseñarme a usar la app me demostró que de verdad les importan los clientes."
           </p>
-
-          <div class="testimonial-author">
-            <div class="author-avatar author-avatar-2">
-              <span>AM</span>
-            </div>
-            <div class="author-meta">
-              <h4 class="author-name">Dra. Andrea Morales</h4>
-              <p class="author-role">Propietario Particular de SUV</p>
-              <span class="author-company">Cliente Particular (Cuenca)</span>
+          <div class="test-author-box">
+            <div class="test-avatar avatar-green">AM</div>
+            <div class="test-author-info">
+              <strong class="test-name">Dra. Andrea Morales</strong>
+              <span class="test-role">Propietaria de Vehículo SUV</span>
+              <span class="test-org">Cliente Particular (Cuenca)</span>
             </div>
           </div>
         </article>
@@ -337,18 +450,31 @@
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- ==========================================================
+       FOOTER OFICIAL CON IDENTIDAD MEGATRACK
+       ========================================================== -->
   <footer class="footer">
     <div class="footer-container">
-      <p>&copy; 2026 Megatrack Ecuador. Todos los derechos reservados.</p>
-      <p class="footer-sub">Seguridad vehicular y rastreo satelital profesional con soporte humano garantizado.</p>
-      <div class="footer-admin-link-wrapper">
-        <a href="admin.html" class="footer-admin-link">🔒 Portal Administrativo Privado (admin.html)</a>
+      <div class="footer-top">
+        <div class="footer-brand">
+          <span class="brand-name">MEGA<span class="brand-orange">TRACK</span></span>
+          <p class="footer-tagline">Seguridad satelital inteligente y control telemático de flotas en todo el territorio ecuatoriano.</p>
+        </div>
+        <div class="footer-links">
+          <a href="#segmentos">Segmentos</a>
+          <a href="#caracteristicas">Características</a>
+          <a href="#contacto">Cotización</a>
+          <a href="admin.html" class="footer-admin-tag">🔒 Panel Administrativo</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Megatrack Ecuador. Todos los derechos reservados.</p>
+        <p class="footer-disclaimer">Soporte técnico y telemetría profesional bajo estándares Artemis Telematics.</p>
       </div>
     </div>
   </footer>
 
-  <!-- Script de la Landing Page (Captación de Leads) -->
+  <!-- Script de la Landing Page (app.js) -->
   <script src="app.js"></script>
 </body>
 </html>
