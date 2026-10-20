@@ -220,13 +220,13 @@ body {
   z-index: 2;
   max-width: 1240px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
+  display: flex;
   gap: 3.5rem;
   align-items: center;
 }
 
 .hero-text-col {
+  flex: 1 1 40%;
   display: flex;
   flex-direction: column;
 }
@@ -352,26 +352,97 @@ body {
 }
 
 /* ==========================================================
-   CONTENEDOR DE VIDEO RESPONSIVO EN HERO
+   DISEÑO INTERACTIVO DE RADAR EN HERO (.hero-graphic-display)
    ========================================================== */
-.hero-video-container {
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 12px 32px rgba(10, 25, 78, 0.1), 0 2px 6px rgba(10, 25, 78, 0.05);
-  border: 1px solid rgba(10, 25, 78, 0.08);
-  background: #000000;
+.hero-graphic-display {
+  flex: 1 1 60%;
+  min-height: 450px;
+  background-color: #0A194E; /* Azul Eléctrico Profundo */
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(10, 25, 78, 0.15), 0 5px 15px rgba(0, 0, 0, 0.08);
   position: relative;
+  overflow: hidden;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-.hero-video-container video,
-.hero-video-element {
+/* Retícula de satélites y coordenadas */
+.satellite-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at center, rgba(0, 210, 255, 0.12) 0%, transparent 70%),
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 100% 100%, 35px 35px, 35px 35px;
+  z-index: 1;
+}
+
+/* Pulso y barrido de radar telemático */
+.radar-pulse {
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 210, 255, 0.4);
+  box-shadow: 0 0 25px rgba(0, 210, 255, 0.2), inset 0 0 25px rgba(0, 210, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.radar-pulse::before {
+  content: '';
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 107, 0, 0.6);
+  animation: radarRotate 12s linear infinite;
+}
+
+.radar-pulse::after {
+  content: '';
+  position: absolute;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  display: block;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, rgba(0, 210, 255, 0.45) 0deg, rgba(14, 154, 95, 0.2) 40deg, transparent 65deg, transparent 360deg);
+  animation: radarSweep 3.5s linear infinite;
+}
+
+@keyframes radarSweep {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes radarRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Estado del sistema telemático en vivo */
+.telematics-status {
+  position: relative;
+  z-index: 3;
+  margin-top: auto;
+  margin-bottom: 2rem;
+  padding: 0.65rem 1.4rem;
+  background: rgba(10, 25, 78, 0.85);
+  border: 1px solid rgba(0, 210, 255, 0.4);
+  border-radius: 9999px;
+  color: #FFFFFF;
+  font-size: 0.825rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 210, 255, 0.2);
+  text-align: center;
 }
 
 /* ==========================================================
@@ -1700,8 +1771,14 @@ body {
 
 @media (max-width: 1024px) {
   .hero-container {
-    grid-template-columns: 1fr;
+    flex-direction: column;
     gap: 3rem;
+  }
+
+  .hero-text-col,
+  .hero-graphic-display {
+    width: 100%;
+    flex: 1 1 100%;
   }
 
   .segments-grid {
@@ -1732,6 +1809,21 @@ body {
 @media (max-width: 768px) {
   .nav-menu .nav-link {
     display: none;
+  }
+
+  .hero-graphic-display {
+    min-height: 360px;
+    padding: 1.5rem;
+  }
+
+  .radar-pulse {
+    width: 210px;
+    height: 210px;
+  }
+
+  .radar-pulse::before {
+    width: 125px;
+    height: 125px;
   }
 
   .hero-section {
