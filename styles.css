@@ -287,54 +287,45 @@ body {
   backdrop-filter: blur(6px);
 }
 
-/* Estadísticas del Hero */
-.hero-stats-row {
+/* Métricas del Hero en Naranja Vibrante (#FF7A00) */
+.metrics-row-container {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   gap: 1.25rem;
-  padding: 1rem 1.5rem;
-  background: rgba(10, 25, 78, 0.65);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  align-self: flex-start;
+  width: 100%;
+  margin-top: 0.5rem;
 }
 
-.metric-card,
-.hero-stat-box {
-  background: rgba(255, 255, 255, 0.1) !important;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 8px 14px;
-  border-radius: 10px;
+.metric-card.premium-orange {
+  background: #FF7A00 !important;
+  border: 1px solid #E66E00 !important;
+  box-shadow: 0 10px 20px rgba(255, 122, 0, 0.2);
+  padding: 20px;
+  border-radius: 16px;
+  transition: transform 0.3s ease;
+  flex: 1 1 0;
   display: flex;
   flex-direction: column;
 }
 
-.metric-card h3,
-.metric-card p,
-.hero-stat-box .stat-number,
-.hero-stat-box .stat-text {
+.metric-card.premium-orange:hover {
+  transform: translateY(-4px);
+}
+
+.metric-card.premium-orange h3 {
   color: #FFFFFF !important;
+  font-size: 1.25rem !important;
+  font-weight: 800 !important;
+  margin-bottom: 6px;
+  line-height: 1.2;
+}
+
+.metric-card.premium-orange p {
+  color: #FFFFFF !important;
+  font-size: 0.875rem !important;
+  line-height: 1.35 !important;
+  opacity: 0.95 !important;
   margin: 0;
-}
-
-.stat-number {
-  font-size: 1.35rem;
-  font-weight: 800;
-  font-family: var(--font-tech);
-}
-
-.stat-text {
-  font-size: 0.775rem;
-  font-weight: 600;
-  opacity: 0.9;
-}
-
-.hero-stat-sep {
-  width: 1px;
-  height: 32px;
-  background: rgba(255, 255, 255, 0.2);
 }
 
 /* ==========================================================
@@ -403,41 +394,41 @@ body {
   white-space: nowrap;
 }
 
-.badge-gps {
-  position: absolute;
-  top: 35%;
-  right: 10%;
-  z-index: 10;
-  animation: floatSimpleY 4s ease-in-out infinite;
-}
-
 .badge-signal {
   position: absolute;
-  top: 48%;
-  left: 0%;
+  top: 38%;
+  left: -2%;
   z-index: 10;
   animation: floatSimpleY 5s ease-in-out infinite 1s;
 }
 
+.badge-gps {
+  position: absolute;
+  top: 12%;
+  left: 35%;
+  z-index: 10;
+  animation: floatSimpleY 4s ease-in-out infinite;
+}
+
 .badge-speed {
   position: absolute;
-  top: 52%;
-  right: -2%;
+  top: 35%;
+  left: 45%;
   z-index: 10;
   animation: floatSimpleY 4.5s ease-in-out infinite 0.5s;
 }
 
-/* Escaparate de Flota de Camiones Gigantes */
+/* Escaparate de Flota de Camiones Gigantes (Escalado Doble de Impacto Visual) */
 .hero-fleet-showcase {
   position: absolute;
   bottom: 45px;
-  right: -2%;
-  width: 90%;
-  height: 320px;
+  right: -5%;
+  width: 100%;
+  height: 480px; /* Escalado al doble de impacto visual */
   background: url('hero-fleet.png') center bottom no-repeat;
   background-size: contain;
   z-index: 3;
-  filter: drop-shadow(0 20px 35px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 25px 40px rgba(0, 0, 0, 0.6));
   pointer-events: none;
 }
 
@@ -1865,18 +1856,18 @@ body {
     right: 0;
   }
 
-  .badge-gps {
-    top: 25%;
-    right: 5%;
-  }
-
   .badge-signal {
-    top: 36%;
+    top: 32%;
     left: 2%;
   }
 
+  .badge-gps {
+    top: 8%;
+    left: 25%;
+  }
+
   .badge-speed {
-    top: 48%;
+    top: 25%;
     right: 2%;
   }
 
@@ -1886,15 +1877,10 @@ body {
     padding: 8px 12px;
   }
 
-  .hero-stats-row {
+  .metrics-row-container {
     flex-direction: column;
     gap: 0.75rem;
     width: 100%;
-    align-items: stretch;
-  }
-
-  .hero-stat-sep {
-    display: none;
   }
 
   .glass-form-card {
