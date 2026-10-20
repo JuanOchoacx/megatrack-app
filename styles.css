@@ -341,53 +341,34 @@ body {
    DISEÑO DERECHO HERO FLOTANTE SOBRE EL FONDO
    ========================================================== */
 .hero-graphic-display {
+  flex: 1 1 55%;
+  height: 550px; /* Incremento drástico de altura para cumplir la referencia */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   background: none !important;
   box-shadow: none !important;
   border: none !important;
-  flex: 1 1 50%;
-  position: relative;
-  height: 480px;
 }
 
-/* Contenedor de Flota Pesada y Liviana en Perspectiva (Estilo Satrack) */
+/* Escaparate de Flota Unificada en Gran Formato (Estilo Satrack) */
 .hero-fleet-showcase {
   position: absolute;
-  bottom: -10px;
-  right: -2%;
-  width: 110%;
-  height: 460px;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.truck-heavy {
-  position: absolute;
-  bottom: 20px;
-  right: 2%;
-  width: 620px; /* Escalado para mayor tamaño e impacto */
-  max-width: 100%;
-  height: 400px;
-  background: url('hero-fleet.png') right bottom no-repeat;
-  background-size: contain;
-  filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.6));
-}
-
-.truck-medium {
-  position: absolute;
-  bottom: 10px;
-  right: 48%;
-  width: 300px;
-  height: 240px;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
   background: url('hero-fleet.png') center bottom no-repeat;
-  background-size: contain;
-  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.5));
-  opacity: 0;
+  background-size: contain; /* Cobertura nítida y completa de la flota */
+  z-index: 2;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.45));
   pointer-events: none;
 }
 
 /* Badges Flotantes Telemáticos Interactivos (Estilo Satrack) */
 .floating-badge {
-  position: absolute;
   padding: 10px 18px;
   background: rgba(255, 255, 255, 0.95);
   border: 1px solid #E2E8F0;
@@ -397,29 +378,32 @@ body {
   font-weight: 700;
   color: #0A194E;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
-  z-index: 10;
   white-space: nowrap;
 }
 
 .badge-gps {
-  top: 10%;
-  right: 15%;
+  position: absolute;
+  top: 8%;
+  left: 50%;
   transform: translateX(-50%);
-  animation: floatY 4s ease-in-out infinite;
+  z-index: 10;
+  animation: floatCenterY 4s ease-in-out infinite;
 }
 
 .badge-signal {
-  top: 30%;
-  right: 68%;
-  transform: translateX(-50%);
-  animation: floatY 5s ease-in-out infinite 1s;
+  position: absolute;
+  top: 25%;
+  left: 15%;
+  z-index: 10;
+  animation: floatSimpleY 5s ease-in-out infinite 1s;
 }
 
 .badge-speed {
-  top: 40%;
-  right: -2%;
-  transform: translateX(-50%);
-  animation: floatY 4.5s ease-in-out infinite 0.5s;
+  position: absolute;
+  top: 25%;
+  right: 15%;
+  z-index: 10;
+  animation: floatSimpleY 4.5s ease-in-out infinite 0.5s;
 }
 
 /* Estado del sistema telemático en vivo */
@@ -1784,7 +1768,9 @@ body {
   }
 
   .hero-graphic-display {
-    height: 300px;
+    width: 100%;
+    flex: 1 1 100%;
+    height: 480px;
   }
 
   .segments-grid {
@@ -1828,33 +1814,22 @@ body {
   }
 
   .hero-graphic-display {
-    height: 320px;
-  }
-
-  .hero-fleet-showcase {
-    height: 280px;
-    right: 0;
-    width: 100%;
-  }
-
-  .truck-heavy {
-    width: 100%;
-    height: 260px;
+    height: 380px;
   }
 
   .badge-gps {
-    top: 15%;
-    right: 10%;
-  }
-
-  .badge-speed {
-    bottom: 52%;
-    right: 5%;
+    top: 6%;
+    left: 50%;
   }
 
   .badge-signal {
-    top: 28%;
-    right: 48%;
+    top: 22%;
+    left: 6%;
+  }
+
+  .badge-speed {
+    top: 22%;
+    right: 6%;
   }
 
   .hero-stats-row {
@@ -1929,9 +1904,21 @@ body {
    ANIMACIÓN DE FLOTACIÓN VERTICAL SUAVE
    ========================================================== */
 @keyframes floatY {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes floatCenterY {
   0% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(-10px); }
+  50% { transform: translateX(-50%) translateY(-8px); }
   100% { transform: translateX(-50%) translateY(0); }
+}
+
+@keyframes floatSimpleY {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0); }
 }
 
 
