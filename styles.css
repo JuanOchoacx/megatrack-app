@@ -354,8 +354,14 @@ body {
 /* ==========================================================
    DISEÑO INTERACTIVO DE RADAR EN HERO (.hero-graphic-display)
    ========================================================== */
-.hero-graphic-display {
+.hero-right-col {
   flex: 1 1 60%;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-graphic-display {
+  width: 100%;
   min-height: 450px;
   background: radial-gradient(circle, rgba(14,154,95,0.05) 1px, transparent 1px), #0A194E;
   background-size: 20px 20px;
@@ -369,26 +375,6 @@ body {
   align-items: center;
   justify-content: center;
   border: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-/* Animación de Fondo de Flota Vehicular en Movimiento */
-.fleet-background-animation {
-  position: absolute;
-  bottom: 35px;
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  opacity: 0.25;
-  z-index: 2;
-  pointer-events: none;
-}
-
-.truck-icon {
-  width: 40px;
-  height: 40px;
-  filter: brightness(0) invert(1);
-  animation: driveHorizontal 10s linear infinite;
 }
 
 /* Retícula de satélites y coordenadas */
@@ -1833,6 +1819,7 @@ body {
   }
 
   .hero-text-col,
+  .hero-right-col,
   .hero-graphic-display {
     width: 100%;
     flex: 1 1 100%;
@@ -1985,11 +1972,37 @@ body {
 }
 
 /* ==========================================================
-   ANIMACIÓN DE TRASLACIÓN DE FLOTA VEHICULAR (ESTILO SATRACK)
+   CARRETERA TELEMÁTICA EN MOVIMIENTO BAJO EL RADAR
    ========================================================== */
-@keyframes driveHorizontal {
-  0% { transform: translateX(50px); opacity: 0; }
-  10% { opacity: 0.25; }
-  90% { opacity: 0.25; }
-  100% { transform: translateX(-50px); opacity: 0; }
+.fleet-highway {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+  font-size: 2rem;
+  padding: 10px 0;
+  background: rgba(10, 25, 78, 0.04);
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.fleet-vehicle {
+  display: inline-block;
+  animation: roadDrive 8s linear infinite;
+}
+
+.fleet-highway span:nth-child(2) {
+  animation-delay: 2s;
+}
+
+.fleet-highway span:nth-child(3) {
+  animation-delay: 4s;
+}
+
+@keyframes roadDrive {
+  0% { transform: translateX(100%); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.6; }
+  100% { transform: translateX(-100%); opacity: 0; }
 }
