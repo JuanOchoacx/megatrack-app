@@ -59,7 +59,7 @@
         </a>
         <span class="live-pill">
           <span class="live-pulse"></span>
-          Bandeja de Prioridad en Vivo (Supabase Sync)
+          Panel de Control de Clientes en Tiempo Real
         </span>
       </div>
       <div class="admin-topbar-right">
@@ -88,7 +88,7 @@
           <div class="kpi-sub">Sincronizados en Supabase</div>
         </div>
         <div class="kpi-card kpi-hot">
-          <div class="kpi-label">🔥 Leads Calientes (&ge;80)</div>
+          <div class="kpi-label">🔥 Clientes de Alta Prioridad (&ge;80)</div>
           <div class="kpi-val text-hot" id="kpi-hot">0</div>
           <div class="kpi-sub">Prioridad Inmediata &lt; 5 min</div>
         </div>
@@ -104,21 +104,20 @@
         </div>
       </section>
 
-      <!-- Bloque Explicativo del Algoritmo de Scoring -->
+      <!-- Título de la sección principal purificado de tecnicismos -->
       <div class="table-header-block">
         <div>
-          <h3 class="table-heading">Bandeja de Prioridad Clasificada por Scoring</h3>
-          <p class="table-subheading">
-            Ordenamiento automático en tiempo real de mayor a menor score:
-            <strong>Presupuesto (60%):</strong> Alto: 60 | Medio: 40 | Bajo: 20 &nbsp;+&nbsp;
-            <strong>Dolor Principal (40%):</strong> Señal/Robos: 40 | Soporte/Instalación: 25 | Otro: 10.
-          </p>
+          <h3 class="panel-subtitle">Lista de Clientes Priorizados por Interés</h3>
+          <p class="panel-description">Organizado automáticamente de mayor a menor interés según el presupuesto y el problema que reportó el cliente.</p>
         </div>
-        <div class="status-legend">
-          <span class="legend-item"><span class="badge-hot-dot"></span> Caliente (&ge;80)</span>
-          <span class="legend-item"><span class="badge-med-dot"></span> Media (50-79)</span>
-          <span class="legend-item"><span class="badge-low-dot"></span> Baja (&lt;50)</span>
-        </div>
+      </div>
+
+      <!-- Botones interactivos con clases de filtro añadidas -->
+      <div class="filter-bar-container">
+        <button class="filter-btn btn-all active" data-filter="all">📋 Mostrar Todos</button>
+        <button class="filter-btn btn-hot" data-filter="hot">🟢 Muy Interesados (80+ pts)</button>
+        <button class="filter-btn btn-mid" data-filter="mid">🟡 Interés Medio (50-79 pts)</button>
+        <button class="filter-btn btn-low" data-filter="low">🔴 Interés Bajo (&lt;50 pts)</button>
       </div>
 
       <!-- Contenedor Dinámico en Malla de Tarjetas SaaS -->

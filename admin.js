@@ -232,6 +232,33 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Escuchador de eventos para los botones de filtrado
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  filterButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+      // Remover estado activo previo y asignar al seleccionado
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+      
+      const filterValue = button.getAttribute('data-filter');
+      const cards = document.querySelectorAll('.lead-card-module');
+      
+      cards.forEach(card => {
+        if (filterValue === 'all') {
+          card.style.display = 'flex';
+        } else if (filterValue === 'hot' && card.classList.contains('status-hot')) {
+          card.style.display = 'flex';
+        } else if (filterValue === 'mid' && card.classList.contains('status-mid')) {
+          card.style.display = 'flex';
+        } else if (filterValue === 'low' && card.classList.contains('status-low')) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+
   function showDashboard() {
     if (authScreen) authScreen.style.display = 'none';
     if (panelScreen) panelScreen.style.display = 'block';
@@ -347,11 +374,12 @@ function renderLeadsPriorityInbox(leads) {
     return `
       <div class="lead-card-module ${lead.statusCardClass}" data-id="${lead.id}">
         <div class="lead-card-header">
-          <span class="lead-badge-temp ${lead.badgeClass}">${lead.badgeIcon} ${lead.totalScore} ${lead.temperatura}</span>
+          <span class="lead-badge-temp ${lead.badgeClass}">${lead.badgeIcon} Puntaje de Interés: ${lead.totalScore} (${lead.temperatura})</span>
           <span class="lead-date">${formattedDate}</span>
         </div>
         
         <div class="lead-card-body">
+          <span class="info-label">Datos del Cliente:</span>
           <h3 class="lead-name">${escapeHtml(lead.nombre_completo || 'Sin nombre')}</h3>
           <p class="lead-phone">📞 <a href="${waLink}" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;" title="Abrir chat de WhatsApp">${escapeHtml(lead.whatsapp || 'Sin WhatsApp')}</a></p>
           <p class="lead-email">${escapeHtml(lead.correo_electronico || 'Sin correo')}</p>
@@ -367,7 +395,7 @@ function renderLeadsPriorityInbox(leads) {
             <span class="info-value">${escapeHtml(lead.presupuesto_estimado || 'No indicado')} <small>(+${lead.scorePresupuesto} pts)</small></span>
           </div>
           <div class="lead-info-row">
-            <span class="info-label">Dolor Principal:</span>
+            <span class="info-label">Problema Principal del Cliente:</span>
             <span class="info-value error-highlight">${escapeHtml(lead.dolor_principal || 'No indicado')} (+${lead.scoreDolor} pts)</span>
           </div>
         </div>
@@ -384,8 +412,34 @@ function renderLeadsPriorityInbox(leads) {
     `;
   }).join('');
 
-  // 5) Escuchar eventos en los selectores de estado
+  // 5) Aplicar filtro activo actual
+  applyCurrentFilter();
+
+  // 6) Escuchar eventos en los selectores de estado
   attachStatusListeners();
+}
+
+/**
+ * Aplica el filtro seleccionado a todas las tarjetas presentes en pantalla
+ */
+function applyCurrentFilter() {
+  const activeBtn = document.querySelector('.filter-btn.active');
+  const filterValue = activeBtn ? activeBtn.getAttribute('data-filter') : 'all';
+  const cards = document.querySelectorAll('.lead-card-module');
+
+  cards.forEach(card => {
+    if (filterValue === 'all') {
+      card.style.display = 'flex';
+    } else if (filterValue === 'hot' && card.classList.contains('status-hot')) {
+      card.style.display = 'flex';
+    } else if (filterValue === 'mid' && card.classList.contains('status-mid')) {
+      card.style.display = 'flex';
+    } else if (filterValue === 'low' && card.classList.contains('status-low')) {
+      card.style.display = 'flex';
+    } else {
+      card.style.display = 'none';
+    }
+  });
 }
 
 /**
