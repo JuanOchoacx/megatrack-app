@@ -181,6 +181,19 @@ body {
   overflow: hidden;
 }
 
+.hero-bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  opacity: 0.15;
+  filter: grayscale(80%) contrast(110%) sepia(20%) hue-rotate(185deg);
+  pointer-events: none;
+}
+
 .hero-grid-bg {
   position: absolute;
   inset: 0;
@@ -217,7 +230,7 @@ body {
 
 .hero-container {
   position: relative;
-  z-index: 2;
+  z-index: 1;
   max-width: 1240px;
   margin: 0 auto;
   display: flex;
