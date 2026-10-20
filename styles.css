@@ -342,17 +342,17 @@ body {
   border: none !important;
 }
 
-/* Paso 1: Desplazar el radar a la esquina izquierda junto a los camiones */
+/* PASO 1: Colocar el radar moderno más arriba en la esquina izquierda junto a los camiones */
 .radar-container-addon {
   position: absolute;
-  top: 15%; /* Posicionado a una altura cómoda en la zona izquierda */
-  left: -8%;
+  top: 0%; /* Elevado significativamente hacia arriba para despejar la base */
+  left: -8%; /* Posicionado firmemente en la esquina izquierda junto a la flota */
   width: 250px;
   height: 250px;
   border: 2px solid rgba(0, 210, 255, 0.3);
   border-radius: 50%;
   background: radial-gradient(circle, rgba(10, 25, 78, 0.65) 0%, rgba(10, 25, 78, 0.85) 60%, transparent 100%);
-  z-index: 5; /* Por encima o al lado sin quedar tapado */
+  z-index: 5;
   box-shadow: 0 0 35px rgba(0, 210, 255, 0.15);
 }
 
@@ -437,32 +437,32 @@ body {
   white-space: nowrap;
 }
 
-/* Paso 2: Asegurar que los tres badges rodeen ÚNICAMENTE al radar en la izquierda */
+/* PASO 2: Acomodar los elementos flotantes alrededor del contorno del radar */
 .badge-signal { 
   position: absolute; 
-  top: 10%; 
-  left: -12%;
+  top: -3%; 
+  left: -15%; /* Órbita superior izquierda del radar */
   z-index: 10; 
   animation: floatSimpleY 5s ease-in-out infinite 1s;
 }
 
 .badge-gps { 
   position: absolute; 
-  top: -5%; 
-  left: 12%;
+  top: -15%; 
+  left: 15%; /* Órbita superior central del radar */
   z-index: 10; 
   animation: floatSimpleY 4s ease-in-out infinite;
 }
 
 .badge-speed { 
   position: absolute; 
-  top: 15%; 
-  left: 28%;
+  top: 5%; 
+  left: 32%; /* Órbita derecha del radar, fuera de la carrocería */
   z-index: 10; 
   animation: floatSimpleY 4.5s ease-in-out infinite 0.5s;
 }
 
-/* Mantener la flota de camiones súper gigantes en su posición derecha */
+/* RESTAURACIÓN INTACTA DE LA FLOTA VEHICULAR COMPACTA SÚPER GRANDE */
 .hero-fleet-showcase-hd {
   position: absolute;
   bottom: 30px;
@@ -477,7 +477,7 @@ body {
   position: absolute;
   bottom: -10px;
   right: -5%;
-  width: 440px;
+  width: 440px; /* Tamaño grande e imponente restaurado */
   height: auto;
   filter: drop-shadow(0 30px 45px rgba(0,0,0,0.65));
   image-rendering: -webkit-optimize-contrast;
@@ -487,8 +487,8 @@ body {
 .fleet-truck-volvo {
   position: absolute;
   bottom: 15px;
-  right: 28%;
-  width: 390px;
+  right: 28%; /* Acoplamiento compacto restaurado */
+  width: 390px; /* Tamaño grande e imponente restaurado */
   height: auto;
   filter: drop-shadow(0 25px 35px rgba(0,0,0,0.55)) brightness(1.1);
   image-rendering: -webkit-optimize-contrast;
@@ -498,8 +498,8 @@ body {
 .fleet-truck-dongfeng {
   position: absolute;
   bottom: -5px;
-  right: 55%;
-  width: 310px;
+  right: 55%; /* Acoplamiento compacto restaurado */
+  width: 310px; /* Tamaño grande e imponente restaurado */
   height: auto;
   filter: drop-shadow(0 20px 30px rgba(0,0,0,0.45));
   image-rendering: -webkit-optimize-contrast;
