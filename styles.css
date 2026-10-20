@@ -334,7 +334,7 @@ body {
    ========================================================== */
 .hero-graphic-display {
   flex: 1 1 55%;
-  height: 560px;
+  height: 600px; /* Mayor respiro vertical para el escalado */
   position: relative;
   overflow: visible;
   background: none !important;
@@ -382,88 +382,93 @@ body {
   white-space: nowrap;
 }
 
-.badge-signal {
-  position: absolute;
-  top: 20%;
-  left: -10%;
-  z-index: 10;
-  animation: floatSimpleY 5s ease-in-out infinite 1s;
-}
-
-.badge-gps {
-  position: absolute;
-  top: -5%;
-  left: 25%;
-  z-index: 10;
+.badge-gps { 
+  position: absolute; 
+  top: -12%; 
+  left: 20%; 
+  z-index: 10; 
   animation: floatSimpleY 4s ease-in-out infinite;
 }
 
-.badge-speed {
-  position: absolute;
-  top: 18%;
-  left: 48%;
-  z-index: 10;
+.badge-signal { 
+  position: absolute; 
+  top: 10%; 
+  left: -12%; 
+  z-index: 10; 
+  animation: floatSimpleY 5s ease-in-out infinite 1s;
+}
+
+.badge-speed { 
+  position: absolute; 
+  top: 8%; 
+  left: 52%; 
+  z-index: 10; 
   animation: floatSimpleY 4.5s ease-in-out infinite 0.5s;
 }
 
-/* Paso 2: Integración de Camiones al Doble de Tamaño y Resaltados */
+/* El escaparate de la flota ahora se expande al máximo */
 .hero-fleet-showcase-hd {
   position: absolute;
-  bottom: 40px;
-  right: -5%;
-  width: 100%;
-  height: 380px;
+  bottom: 30px;
+  right: -8%;
+  width: 115%;
+  height: 460px; /* Mayor altura de caja para los camiones gigantes */
   z-index: 3;
   pointer-events: none;
 }
 
+/* Escalado súper grande e imponente para cada camión local */
 .fleet-truck-scania {
   position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 290px; /* Tamaño gigante e imponente */
+  bottom: -10px;
+  right: -5%;
+  width: 440px; /* Incremento masivo de tamaño */
   height: auto;
-  filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.6));
+  filter: drop-shadow(0 30px 45px rgba(0,0,0,0.65));
   image-rendering: -webkit-optimize-contrast;
+  z-index: 3;
 }
 
 .fleet-truck-volvo {
   position: absolute;
-  bottom: 10px;
-  right: 32%;
-  width: 270px;
+  bottom: 15px;
+  right: 28%;
+  width: 390px; /* Incremento masivo de tamaño */
   height: auto;
-  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.5)) brightness(1.1);
+  filter: drop-shadow(0 25px 35px rgba(0,0,0,0.55)) brightness(1.1);
   image-rendering: -webkit-optimize-contrast;
+  z-index: 2;
 }
 
 .fleet-truck-dongfeng {
   position: absolute;
   bottom: -5px;
-  right: 58%;
-  width: 220px;
+  right: 55%;
+  width: 310px; /* Incremento masivo de tamaño */
   height: auto;
-  filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.4));
+  filter: drop-shadow(0 20px 30px rgba(0,0,0,0.45));
   image-rendering: -webkit-optimize-contrast;
+  z-index: 1;
 }
 
+/* Texto telemático inferior centrado debajo de la flota gigante */
 .telematics-status {
   position: absolute;
-  bottom: -5px;
+  bottom: -15px;
   left: 50%;
   transform: translateX(-50%);
-  width: 80%;
-  background: rgba(10, 25, 78, 0.9);
-  border: 1px solid rgba(0, 210, 255, 0.25);
+  width: 85%;
+  background: rgba(10, 25, 78, 0.95);
+  border: 1px solid rgba(0, 210, 255, 0.3);
   color: #FFFFFF;
   text-align: center;
-  padding: 8px 16px;
-  border-radius: 20px;
+  padding: 10px 20px;
+  border-radius: 25px;
   z-index: 5;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 700;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
   backdrop-filter: blur(8px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
 /* ==========================================================
@@ -1852,49 +1857,53 @@ body {
   }
 
   .hero-graphic-display {
-    height: 420px;
+    height: 480px;
   }
 
   .radar-container-addon {
-    width: 190px;
-    height: 190px;
-    top: 8%;
-    left: 2%;
+    width: 200px;
+    height: 200px;
+    top: 0%;
+    left: 0%;
   }
 
   .hero-fleet-showcase-hd {
-    height: 250px;
-    bottom: 30px;
+    height: 340px;
+    bottom: 25px;
     right: 0;
     width: 100%;
   }
 
   .fleet-truck-scania {
-    width: 180px;
+    width: 280px;
+    right: -5%;
+    bottom: -5px;
   }
 
   .fleet-truck-volvo {
-    width: 160px;
-    right: 28%;
+    width: 250px;
+    right: 25%;
+    bottom: 10px;
   }
 
   .fleet-truck-dongfeng {
-    width: 130px;
-    right: 55%;
-  }
-
-  .badge-signal {
-    top: 15%;
-    left: 0%;
+    width: 200px;
+    right: 50%;
+    bottom: -5px;
   }
 
   .badge-gps {
-    top: -5%;
+    top: -10%;
     left: 15%;
   }
 
+  .badge-signal {
+    top: 5%;
+    left: -5%;
+  }
+
   .badge-speed {
-    top: 15%;
+    top: 5%;
     right: 5%;
     left: auto;
   }
@@ -1903,6 +1912,7 @@ body {
     width: 95%;
     font-size: 0.775rem;
     padding: 8px 12px;
+    bottom: -15px;
   }
 
   .metrics-row-container {
