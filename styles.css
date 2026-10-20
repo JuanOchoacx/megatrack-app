@@ -342,33 +342,88 @@ body {
   border: none !important;
 }
 
-/* Paso 1: Separar y desplazar el radar hacia arriba */
+/* Paso 1: Mover al centro-derecha según la demarcación del usuario */
 .radar-container-addon {
   position: absolute;
-  top: 0%; /* Elevado al máximo para despejar a los camiones */
-  left: -5%;
+  top: 12%; /* Elevado y centrado sobre el fondo azul */
+  left: 32%; /* Desplazado a la derecha a la posición exacta marcada */
   width: 280px;
   height: 280px;
-  border: 2px solid rgba(0, 210, 255, 0.2);
+  border: 2px solid rgba(0, 210, 255, 0.3);
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(10, 25, 78, 0.6) 0%, transparent 75%);
-  z-index: 1;
+  background: radial-gradient(circle, rgba(10, 25, 78, 0.5) 0%, rgba(10, 25, 78, 0.8) 50%, transparent 100%);
+  z-index: 2;
+  box-shadow: 0 0 40px rgba(0, 210, 255, 0.15);
 }
 
+/* Paso 2: Diseño de anillos concéntricos modernos */
 .radar-pulse-ring {
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
-  border: 1px solid rgba(0, 210, 255, 0.4);
+  border: 1px dashed rgba(0, 210, 255, 0.4);
   border-radius: 50%;
-  animation: radarPing 3s linear infinite;
+  animation: radarPing 4s linear infinite;
 }
 
+.radar-pulse-ring-mid {
+  position: absolute;
+  top: 15%; left: 15%; width: 70%; height: 70%;
+  border: 1px solid rgba(0, 210, 255, 0.25);
+  border-radius: 50%;
+}
+
+.radar-pulse-ring-inner {
+  position: absolute;
+  top: 35%; left: 35%; width: 30%; height: 30%;
+  border: 1px solid rgba(0, 210, 255, 0.35);
+  border-radius: 50%;
+  background: rgba(0, 210, 255, 0.05);
+}
+
+/* Línea de barrido rotativa premium */
+.radar-sweep-line {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 50%;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(0, 210, 255, 1) 0%, rgba(0, 210, 255, 0) 100%);
+  transform-origin: left center;
+  animation: radarSweep 3s linear infinite;
+  z-index: 3;
+}
+
+/* Objetivos detectados en el mapa del radar (Puntos GPS parpadeantes) */
+.radar-target {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #00D2FF;
+  border-radius: 50%;
+  box-shadow: 0 0 12px #00D2FF;
+  animation: targetBlink 1.5s ease-in-out infinite;
+}
+
+.target-1 { top: 25%; left: 65%; animation-delay: 0.3s; }
+.target-2 { top: 60%; left: 30%; animation-delay: 0.8s; }
+
+/* Animaciones CSS nativas para el Radar Moderno */
 @keyframes radarPing {
-  0% { transform: scale(0.2); opacity: 1; }
-  100% { transform: scale(1.2); opacity: 0; }
+  0% { transform: scale(0.4); opacity: 0; }
+  50% { opacity: 0.8; }
+  100% { transform: scale(1.1); opacity: 0; }
 }
 
-/* Posicionamiento en órbita alrededor del contorno del radar */
+@keyframes radarSweep {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes targetBlink {
+  0%, 100% { opacity: 0.2; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
+/* Reajustar la órbita de los badges flotantes alrededor de la nueva posición */
 .floating-badge {
   padding: 10px 18px;
   background: rgba(255, 255, 255, 0.95);
@@ -384,24 +439,24 @@ body {
 
 .badge-gps { 
   position: absolute; 
-  top: -15%; 
-  left: 25%; 
+  top: -5%; 
+  left: 45%; 
   z-index: 10; 
   animation: floatSimpleY 4s ease-in-out infinite;
 }
 
 .badge-signal { 
   position: absolute; 
-  top: 8%; 
-  left: -10%; 
+  top: 22%; 
+  left: -2%; 
   z-index: 10; 
   animation: floatSimpleY 5s ease-in-out infinite 1s;
 }
 
 .badge-speed { 
   position: absolute; 
-  top: 6%; 
-  left: 55%; 
+  top: 18%; 
+  left: 82%; 
   z-index: 10; 
   animation: floatSimpleY 4.5s ease-in-out infinite 0.5s;
 }
@@ -1861,10 +1916,10 @@ body {
   }
 
   .radar-container-addon {
-    width: 200px;
-    height: 200px;
-    top: 0%;
-    left: 0%;
+    width: 220px;
+    height: 220px;
+    top: 5%;
+    left: 20%;
   }
 
   .hero-fleet-showcase-hd {
@@ -1893,18 +1948,18 @@ body {
   }
 
   .badge-gps {
-    top: -12%;
-    left: 20%;
+    top: -5%;
+    left: 35%;
   }
 
   .badge-signal {
-    top: 5%;
-    left: -5%;
+    top: 15%;
+    left: 2%;
   }
 
   .badge-speed {
-    top: 5%;
-    right: 5%;
+    top: 15%;
+    right: 2%;
     left: auto;
   }
 
