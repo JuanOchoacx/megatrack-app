@@ -349,6 +349,39 @@ body {
   height: 450px;
 }
 
+/* Contenedor de Flota Pesada y Liviana en Perspectiva (Estilo Satrack) */
+.hero-fleet-showcase {
+  position: absolute;
+  bottom: -20px;
+  right: -5%;
+  width: 110%;
+  height: 380px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.truck-heavy {
+  position: absolute;
+  bottom: 10px;
+  right: 5%;
+  width: 540px;
+  max-width: 100%;
+  height: 340px;
+  background: url('hero-fleet.png') right bottom no-repeat;
+  background-size: contain;
+  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.6));
+}
+
+.truck-medium {
+  position: absolute;
+  bottom: 0;
+  right: 45%;
+  width: 220px;
+  height: 180px;
+  pointer-events: none;
+  opacity: 0;
+}
+
 /* Badges Flotantes Telemáticos Interactivos (Estilo Satrack) */
 .floating-badge {
   position: absolute;
@@ -365,21 +398,21 @@ body {
 }
 
 .badge-gps {
-  top: 15%;
-  left: 8%;
+  top: 20%;
+  right: 20%;
   animation: floatY 4s ease-in-out infinite;
 }
 
-.badge-speed {
-  bottom: 25%;
-  left: 12%;
-  animation: floatY 4.5s ease-in-out infinite 0.5s;
+.badge-signal {
+  top: 35%;
+  right: 60%;
+  animation: floatY 5s ease-in-out infinite 1s;
 }
 
-.badge-signal {
-  top: 25%;
+.badge-speed {
+  bottom: 55%;
   right: 10%;
-  animation: floatY 5s ease-in-out infinite 1s;
+  animation: floatY 4.5s ease-in-out infinite 0.5s;
 }
 
 /* Estado del sistema telemático en vivo */
@@ -1788,22 +1821,33 @@ body {
   }
 
   .hero-graphic-display {
+    height: 320px;
+  }
+
+  .hero-fleet-showcase {
+    height: 280px;
+    right: 0;
+    width: 100%;
+  }
+
+  .truck-heavy {
+    width: 100%;
     height: 260px;
   }
 
   .badge-gps {
-    left: 6px;
-    top: 10%;
+    top: 15%;
+    right: 10%;
   }
 
   .badge-speed {
-    left: 6px;
-    bottom: 15%;
+    bottom: 52%;
+    right: 5%;
   }
 
   .badge-signal {
-    right: 6px;
-    top: 18%;
+    top: 28%;
+    right: 48%;
   }
 
   .hero-stats-row {
