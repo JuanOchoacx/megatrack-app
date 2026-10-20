@@ -146,21 +146,18 @@ function calculateLeadScore(presupuesto, dolor) {
   const totalScore = scorePresupuesto + scoreDolor;
 
   // 3) Badges de Temperatura con colores de la Rúbrica
-  let temperatura = 'BAJA';
-  let badgeClass = 'badge-low';
+  let badgeText = '🛑 CLIENTE BAJO';
+  let badgeClass = 'badge-solid-low';
   let statusCardClass = 'status-low';
-  let badgeIcon = '❄️';
 
   if (totalScore >= 80) {
-    temperatura = 'CALIENTE';
+    badgeText = `🔥 ${totalScore} CALIENTE`;
     badgeClass = 'badge-hot';
     statusCardClass = 'status-hot';
-    badgeIcon = '🔥';
   } else if (totalScore >= 50) {
-    temperatura = 'MEDIA';
-    badgeClass = 'badge-mid';
+    badgeText = '⚠️ CLIENTE MEDIO';
+    badgeClass = 'badge-solid-mid';
     statusCardClass = 'status-mid';
-    badgeIcon = '⚡';
   }
 
   return {
@@ -169,10 +166,9 @@ function calculateLeadScore(presupuesto, dolor) {
     labelPresupuesto,
     scoreDolor,
     labelDolor,
-    temperatura,
+    badgeText,
     badgeClass,
-    statusCardClass,
-    badgeIcon
+    statusCardClass
   };
 }
 
@@ -369,20 +365,22 @@ function renderLeadsPriorityInbox(leads) {
     const isPending = !isContacted && !isNegotiating;
 
     const cleanPhone = (lead.whatsapp || '').replace(/[^0-9]/g, '');
-    const waLink = cleanPhone ? `https://wa.me/${cleanPhone}` : '#';
+    const waLink = cleanPhone ? `https://wa.me/${cleanPhone}` : 'https://wa.me/593998765432';
 
     return `
       <div class="lead-card-module ${lead.statusCardClass}" data-id="${lead.id}">
         <div class="lead-card-header">
-          <span class="lead-badge-temp ${lead.badgeClass}">${lead.badgeIcon} Puntaje de Interés: ${lead.totalScore} (${lead.temperatura})</span>
+          <span class="lead-badge-temp ${lead.badgeClass}">${lead.badgeText}</span>
           <span class="lead-date">${formattedDate}</span>
         </div>
         
         <div class="lead-card-body">
-          <span class="info-label">Datos del Cliente:</span>
           <h3 class="lead-name">${escapeHtml(lead.nombre_completo || 'Sin nombre')}</h3>
-          <p class="lead-phone">📞 <a href="${waLink}" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;" title="Abrir chat de WhatsApp">${escapeHtml(lead.whatsapp || 'Sin WhatsApp')}</a></p>
           <p class="lead-email">${escapeHtml(lead.correo_electronico || 'Sin correo')}</p>
+          
+          <a href="${waLink}" target="_blank" rel="noopener noreferrer" class="whatsapp-direct-btn">
+            💬 Contactar por WhatsApp
+          </a>
           
           <div class="lead-meta-divider"></div>
           

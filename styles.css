@@ -1707,21 +1707,22 @@ body {
   background-color: #ef4444;
 }
 
-/* Contenedor principal en malla flexible */
+/* Reducción de dimensiones del contenedor grid */
 .leads-grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 25px;
-  padding: 20px 0;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); /* Módulos más angostos para meter más por fila */
+  gap: 15px; /* Menor espacio de separación */
+  padding: 10px 0;
   width: 100%;
 }
 
-/* Módulo Cuadrado / Tarjeta de Lead Premium */
+/* Tarjeta optimizada y compacta */
 .lead-card-module {
-  background: #0B194E; /* Fondo oscuro premium alineado con la marca */
+  background: #0B194E;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 24px;
+  border-radius: 8px;
+  padding: 16px; /* Padding reducido para ahorrar espacio vertical */
+  font-size: 0.85rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -1741,19 +1742,21 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 18px;
+  margin-bottom: 12px;
 }
 
+/* Etiquetas de interés simplificadas con COLORES SÓLIDOS Y FUERTES */
 .lead-badge-temp {
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 800;
   text-transform: uppercase;
+  color: #FFFFFF !important; /* Texto siempre blanco para contraste */
 }
-.badge-hot { background: rgba(239, 68, 68, 0.2); color: #EF4444; border: 1px solid #EF4444; }
-.badge-mid { background: rgba(245, 158, 11, 0.2); color: #F59E0B; border: 1px solid #F59E0B; }
-.badge-low { background: rgba(16, 185, 129, 0.2); color: #10B981; border: 1px solid #10B981; }
+.badge-hot { background: #E53935; border: none; } /* Rojo Sólido Fuerte */
+.badge-solid-mid { background: #FB8C00; border: none; } /* Naranja Sólido Fuerte */
+.badge-solid-low { background: #757575; border: none; } /* Gris Sólido Fuerte */
 
 .lead-date {
   font-size: 0.75rem;
@@ -1766,26 +1769,26 @@ body {
 }
 
 .lead-name {
-  font-size: 1.25rem;
+  font-size: 1.05rem; /* Fuente más pequeña y estilizada */
   font-weight: 700;
-  margin: 0 0 6px 0;
+  margin-bottom: 4px;
   color: #FFFFFF;
 }
 
-.lead-phone, .lead-email {
-  font-size: 0.85rem;
+.lead-email {
+  font-size: 0.75rem;
+  margin-bottom: 8px;
   color: rgba(255, 255, 255, 0.7);
-  margin: 4px 0;
 }
 
 .lead-meta-divider {
   height: 1px;
   background: rgba(255, 255, 255, 0.1);
-  margin: 16px 0;
+  margin: 10px 0;
 }
 
 .lead-info-row {
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   font-size: 0.85rem;
 }
 
@@ -1807,10 +1810,33 @@ body {
 .text-highlight { color: #00D2FF; font-weight: 600; }
 .error-highlight { color: #FFCDD2; }
 
+/* Botón Premium Directo a WhatsApp */
+.whatsapp-direct-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 8px 12px;
+  background: #25D366; /* Verde institucional WhatsApp */
+  color: #FFFFFF !important;
+  font-weight: 700;
+  font-size: 0.8rem;
+  border-radius: 6px;
+  text-decoration: none;
+  margin: 8px 0;
+  transition: background 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 4px 10px rgba(37, 211, 102, 0.2);
+}
+
+.whatsapp-direct-btn:hover {
+  background: #128C7E;
+  transform: translateY(-1px);
+}
+
 /* Pie de la Tarjeta e Integración de Acciones */
 .lead-card-footer {
-  margin-top: 18px;
-  padding-top: 14px;
+  margin-top: 10px;
+  padding-top: 8px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -1825,12 +1851,12 @@ body {
 
 .lead-status-select {
   width: 100%;
-  padding: 10px 12px;
+  padding: 8px 10px;
   background: #10256B;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 6px;
   color: #FFFFFF;
-  font-size: 0.85rem;
+  font-size: 0.825rem;
   cursor: pointer;
   outline: none;
   transition: border-color 0.2s;
