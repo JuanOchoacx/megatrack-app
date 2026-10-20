@@ -300,7 +300,7 @@ body {
   background: #FF7A00 !important;
   border: 1px solid #E66E00 !important;
   box-shadow: 0 8px 16px rgba(255, 122, 0, 0.15);
-  padding: 12px 16px !important; /* Altura y espacio reducidos para compactarlo */
+  padding: 12px 14px !important; /* Altura y espacio reducidos */
   border-radius: 12px !important;
   flex: 1;
   min-width: 100px;
@@ -315,16 +315,16 @@ body {
 
 .metric-card.premium-orange h3 {
   color: #FFFFFF !important;
-  font-size: 1.05rem !important; /* Tipografía más sutil y balanceada */
+  font-size: 1.05rem !important;
   font-weight: 800 !important;
-  margin-bottom: 3px !important;
+  margin-bottom: 2px !important;
   line-height: 1.2;
 }
 
 .metric-card.premium-orange p {
   color: #FFFFFF !important;
-  font-size: 0.78rem !important; /* Texto fluido que no sobrecarga la interfaz */
-  line-height: 1.25 !important;
+  font-size: 0.76rem !important;
+  line-height: 1.2 !important;
   opacity: 0.95 !important;
   margin: 0;
 }
@@ -334,7 +334,7 @@ body {
    ========================================================== */
 .hero-graphic-display {
   flex: 1 1 55%;
-  height: 580px; /* Mayor espacio vertical interno */
+  height: 560px;
   position: relative;
   overflow: visible;
   background: none !important;
@@ -345,13 +345,13 @@ body {
 /* Paso 1: Separar y desplazar el radar hacia arriba */
 .radar-container-addon {
   position: absolute;
-  top: 5%; /* Elevado significativamente para despejar el área */
-  left: 0%;
-  width: 260px;
-  height: 260px;
-  border: 2px solid rgba(0, 210, 255, 0.25);
+  top: 0%; /* Elevado al máximo para despejar a los camiones */
+  left: -5%;
+  width: 280px;
+  height: 280px;
+  border: 2px solid rgba(0, 210, 255, 0.2);
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(10, 25, 78, 0.7) 0%, transparent 75%);
+  background: radial-gradient(circle, rgba(10, 25, 78, 0.6) 0%, transparent 75%);
   z-index: 1;
 }
 
@@ -363,25 +363,12 @@ body {
   animation: radarPing 3s linear infinite;
 }
 
-.radar-sweep-line {
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
-  border-radius: 50%;
-  background: conic-gradient(from 0deg, rgba(0, 210, 255, 0.35) 0deg, transparent 60deg, transparent 360deg);
-  animation: radarSweep 4s linear infinite;
-}
-
 @keyframes radarPing {
   0% { transform: scale(0.2); opacity: 1; }
   100% { transform: scale(1.2); opacity: 0; }
 }
 
-@keyframes radarSweep {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-/* Badges Flotantes Telemáticos Interactivos (Estilo Satrack) */
+/* Posicionamiento en órbita alrededor del contorno del radar */
 .floating-badge {
   padding: 10px 18px;
   background: rgba(255, 255, 255, 0.95);
@@ -397,63 +384,86 @@ body {
 
 .badge-signal {
   position: absolute;
-  top: 25%;
-  left: -5%;
+  top: 20%;
+  left: -10%;
   z-index: 10;
   animation: floatSimpleY 5s ease-in-out infinite 1s;
 }
 
 .badge-gps {
   position: absolute;
-  top: 2%;
-  left: 32%;
+  top: -5%;
+  left: 25%;
   z-index: 10;
   animation: floatSimpleY 4s ease-in-out infinite;
 }
 
 .badge-speed {
   position: absolute;
-  top: 22%;
-  left: 45%;
+  top: 18%;
+  left: 48%;
   z-index: 10;
   animation: floatSimpleY 4.5s ease-in-out infinite 0.5s;
 }
 
-/* Paso 2: Flota en Ultra-Alta Resolución con diseño estilizado */
-.hero-fleet-showcase {
+/* Paso 2: Integración de Camiones al Doble de Tamaño y Resaltados */
+.hero-fleet-showcase-hd {
   position: absolute;
-  bottom: 50px;
-  right: -3%;
-  width: 95%;
-  height: 340px;
-  background: url('hero-fleet.png') center bottom no-repeat;
-  background-size: contain;
-  image-rendering: -webkit-optimize-contrast; /* Fuerza máxima nitidez y resolución en navegadores */
-  image-rendering: crisp-edges;
+  bottom: 40px;
+  right: -5%;
+  width: 100%;
+  height: 380px;
   z-index: 3;
-  filter: drop-shadow(0 30px 45px rgba(0, 0, 0, 0.6));
   pointer-events: none;
 }
 
-/* Barra de Estado Telemático Centrada Abajo de los Camiones */
-.telematics-status {
+.fleet-truck-scania {
   position: absolute;
   bottom: 0;
+  right: 0;
+  width: 290px; /* Tamaño gigante e imponente */
+  height: auto;
+  filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.6));
+  image-rendering: -webkit-optimize-contrast;
+}
+
+.fleet-truck-volvo {
+  position: absolute;
+  bottom: 10px;
+  right: 32%;
+  width: 270px;
+  height: auto;
+  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.5)) brightness(1.1);
+  image-rendering: -webkit-optimize-contrast;
+}
+
+.fleet-truck-dongfeng {
+  position: absolute;
+  bottom: -5px;
+  right: 58%;
+  width: 220px;
+  height: auto;
+  filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.4));
+  image-rendering: -webkit-optimize-contrast;
+}
+
+.telematics-status {
+  position: absolute;
+  bottom: -5px;
   left: 50%;
   transform: translateX(-50%);
-  width: 85%;
-  background: rgba(10, 25, 78, 0.85);
-  border: 1px solid rgba(0, 210, 255, 0.3);
+  width: 80%;
+  background: rgba(10, 25, 78, 0.9);
+  border: 1px solid rgba(0, 210, 255, 0.25);
   color: #FFFFFF;
-  font-weight: 700;
-  font-size: 0.85rem;
   text-align: center;
-  padding: 10px 20px;
-  border-radius: 30px;
+  padding: 8px 16px;
+  border-radius: 20px;
   z-index: 5;
-  letter-spacing: 1px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  font-size: 0.8rem;
+  font-weight: 700;
   backdrop-filter: blur(8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
 /* ==========================================================
@@ -1852,26 +1862,41 @@ body {
     left: 2%;
   }
 
-  .hero-fleet-showcase {
-    width: 100%;
+  .hero-fleet-showcase-hd {
     height: 250px;
-    bottom: 50px;
+    bottom: 30px;
     right: 0;
+    width: 100%;
+  }
+
+  .fleet-truck-scania {
+    width: 180px;
+  }
+
+  .fleet-truck-volvo {
+    width: 160px;
+    right: 28%;
+  }
+
+  .fleet-truck-dongfeng {
+    width: 130px;
+    right: 55%;
   }
 
   .badge-signal {
-    top: 32%;
-    left: 2%;
+    top: 15%;
+    left: 0%;
   }
 
   .badge-gps {
-    top: 8%;
-    left: 25%;
+    top: -5%;
+    left: 15%;
   }
 
   .badge-speed {
-    top: 25%;
-    right: 2%;
+    top: 15%;
+    right: 5%;
+    left: auto;
   }
 
   .telematics-status {
