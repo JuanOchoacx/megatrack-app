@@ -363,7 +363,7 @@ body {
   border-radius: 20px;
   box-shadow: 0 15px 35px rgba(10, 25, 78, 0.15), 0 5px 15px rgba(0, 0, 0, 0.08);
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -375,6 +375,8 @@ body {
 .satellite-grid {
   position: absolute;
   inset: 0;
+  border-radius: 20px;
+  overflow: hidden;
   background-image: 
     radial-gradient(circle at center, rgba(0, 210, 255, 0.12) 0%, transparent 70%),
     linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
@@ -445,6 +447,39 @@ body {
   backdrop-filter: blur(8px);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 210, 255, 0.2);
   text-align: center;
+}
+
+/* Badges Flotantes Telemáticos Interactivos (Estilo Satrack) */
+.floating-badge {
+  position: absolute;
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #E2E8F0;
+  border-radius: 30px;
+  font-family: sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #0A194E;
+  box-shadow: 0 10px 20px rgba(10, 25, 78, 0.08);
+  z-index: 10;
+}
+
+.badge-gps {
+  top: 15%;
+  left: -5%;
+  animation: floatY 4s ease-in-out infinite;
+}
+
+.badge-speed {
+  bottom: 20%;
+  left: -10%;
+  animation: floatY 4.5s ease-in-out infinite 0.5s;
+}
+
+.badge-signal {
+  top: 25%;
+  right: -5%;
+  animation: floatY 5s ease-in-out infinite 1s;
 }
 
 /* ==========================================================
@@ -1828,6 +1863,21 @@ body {
     height: 125px;
   }
 
+  .badge-gps {
+    left: 6px;
+    top: 10%;
+  }
+
+  .badge-speed {
+    left: 6px;
+    bottom: 15%;
+  }
+
+  .badge-signal {
+    right: 6px;
+    top: 18%;
+  }
+
   .hero-section {
     padding: 3.5rem 1.25rem 4rem;
   }
@@ -1903,4 +1953,13 @@ body {
   0% { box-shadow: 0 20px 40px rgba(10, 25, 78, 0.2); }
   50% { box-shadow: 0 20px 50px rgba(0, 210, 255, 0.3); }
   100% { box-shadow: 0 20px 40px rgba(10, 25, 78, 0.2); }
+}
+
+/* ==========================================================
+   ANIMACIÓN DE FLOTACIÓN VERTICAL SUAVE
+   ========================================================== */
+@keyframes floatY {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
 }
