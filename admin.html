@@ -121,27 +121,12 @@
         </div>
       </div>
 
-      <!-- Tabla de la Bandeja de Prioridad -->
-      <div class="table-responsive">
-        <table class="leads-table" id="leads-table">
-          <thead>
-            <tr>
-              <th>Score & Temperatura</th>
-              <th>Prospecto</th>
-              <th>Empresa / Negocio</th>
-              <th>Presupuesto</th>
-              <th>Dolor Principal</th>
-              <th>Gestión de Estado</th>
-              <th>Registro</th>
-            </tr>
-          </thead>
-          <tbody id="leads-tbody">
-            <!-- Filas ordenadas dinámicamente con JavaScript -->
-          </tbody>
-        </table>
-        <div id="leads-empty-state" class="empty-state" style="display: none;">
-          <p>No se encontraron registros en Supabase. Los nuevos envíos desde la landing aparecerán aquí automáticamente.</p>
-        </div>
+      <!-- Contenedor Dinámico en Malla de Tarjetas SaaS -->
+      <div class="leads-grid-container" id="leads-container">
+        <!-- Cada lead se inyectará dinámicamente mediante JS usando la estructura de tarjeta -->
+      </div>
+      <div id="leads-empty-state" class="empty-state" style="display: none;">
+        <p>No se encontraron registros en Supabase. Los nuevos envíos desde la landing aparecerán aquí automáticamente.</p>
       </div>
     </main>
   </div>

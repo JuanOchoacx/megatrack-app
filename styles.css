@@ -1673,171 +1673,137 @@ body {
   background-color: #ef4444;
 }
 
-/* Tabla de Leads */
-.table-responsive {
-  background: var(--bg-form-pure);
-  border: 1px solid rgba(10, 25, 78, 0.08);
-  border-radius: 18px;
-  overflow: hidden;
-  box-shadow: 0 4px 25px rgba(10, 25, 78, 0.05);
-}
-
-.leads-table {
+/* Contenedor principal en malla flexible */
+.leads-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 25px;
+  padding: 20px 0;
   width: 100%;
-  border-collapse: collapse;
-  text-align: left;
 }
 
-.leads-table th {
-  background: #F8FAFC;
-  padding: 1.1rem 1.25rem;
-  font-size: 0.8rem;
-  font-weight: 800;
-  color: var(--text-electric-blue);
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  border-bottom: 1.5px solid var(--border-light);
-}
-
-.leads-table td {
-  padding: 1.25rem 1.25rem;
-  font-size: 0.9rem;
-  border-bottom: 1px solid var(--border-light);
-  vertical-align: middle;
-  color: var(--text-body-gray);
-}
-
-.lead-row:hover {
-  background-color: #F8FAFC;
-}
-
-/* Badges de Scoring por Temperatura */
-.score-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.45rem 0.9rem;
+/* Módulo Cuadrado / Tarjeta de Lead Premium */
+.lead-card-module {
+  background: #0B194E; /* Fondo oscuro premium alineado con la marca */
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
-  font-weight: 800;
-  font-size: 0.95rem;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  color: #FFFFFF;
 }
 
-.badge-number {
-  font-size: 1.15rem;
-  font-family: var(--font-tech);
+.lead-card-module:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 210, 255, 0.2);
+  border-color: rgba(0, 210, 255, 0.4);
 }
 
-.badge-text {
-  font-size: 0.775rem;
+/* Cabecera de la Tarjeta */
+.lead-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.lead-badge-temp {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.badge-hot { background: rgba(239, 68, 68, 0.2); color: #EF4444; border: 1px solid #EF4444; }
+.badge-mid { background: rgba(245, 158, 11, 0.2); color: #F59E0B; border: 1px solid #F59E0B; }
+.badge-low { background: rgba(16, 185, 129, 0.2); color: #10B981; border: 1px solid #10B981; }
+
+.lead-date {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Cuerpo de la Tarjeta */
+.lead-card-body {
+  flex-grow: 1;
+}
+
+.lead-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 6px 0;
+  color: #FFFFFF;
+}
+
+.lead-phone, .lead-email {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 4px 0;
+}
+
+.lead-meta-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 16px 0;
+}
+
+.lead-info-row {
+  margin-bottom: 12px;
+  font-size: 0.85rem;
+}
+
+.info-label {
+  display: block;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 2px;
+  font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-.badge-temp-hot {
-  background: rgba(16, 185, 129, 0.12);
-  border: 1px solid #10b981;
-  color: #065f46;
+.info-value {
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.4;
 }
 
-.badge-temp-medium {
-  background: rgba(245, 158, 11, 0.12);
-  border: 1px solid #f59e0b;
-  color: #92400e;
+.text-highlight { color: #00D2FF; font-weight: 600; }
+.error-highlight { color: #FFCDD2; }
+
+/* Pie de la Tarjeta e Integración de Acciones */
+.lead-card-footer {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.badge-temp-low {
-  background: rgba(239, 68, 68, 0.12);
-  border: 1px solid #ef4444;
-  color: #991b1b;
-}
-
-.prospect-name {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--text-electric-blue);
-  margin-bottom: 0.3rem;
-}
-
-.prospect-links {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
-
-.link-wa {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  color: #059669;
-  font-size: 0.825rem;
+.status-label {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 6px;
   font-weight: 600;
-  text-decoration: none;
 }
 
-.link-wa:hover {
-  text-decoration: underline;
-}
-
-.prospect-email {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-}
-
-.company-tag {
-  display: inline-block;
-  background: #F1F5F9;
-  border: 1px solid #CBD5E1;
-  padding: 0.35rem 0.75rem;
-  border-radius: 8px;
+.lead-status-select {
+  width: 100%;
+  padding: 10px 12px;
+  background: #10256B;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  color: #FFFFFF;
   font-size: 0.85rem;
-  color: var(--text-electric-blue);
-  font-weight: 600;
-}
-
-.detail-primary {
-  color: var(--text-electric-blue);
-  font-weight: 700;
-  font-size: 0.875rem;
-  margin-bottom: 0.2rem;
-}
-
-.detail-pts {
-  font-size: 0.775rem;
-  font-weight: 700;
-  color: var(--btn-neon-orange);
-}
-
-.text-cyan {
-  color: var(--text-electric-blue);
-}
-
-.status-select-wrap select {
-  padding: 0.5rem 0.85rem;
-  border-radius: 8px;
-  font-size: 0.825rem;
-  font-weight: 700;
-  font-family: inherit;
-  outline: none;
   cursor: pointer;
-  transition: all 0.2s ease;
+  outline: none;
+  transition: border-color 0.2s;
 }
 
-.status-pending {
-  background: rgba(245, 158, 11, 0.12);
-  border: 1px solid rgba(245, 158, 11, 0.5);
-  color: #b45309;
-}
-
-.status-done {
-  background: rgba(16, 185, 129, 0.12);
-  border: 1px solid rgba(16, 185, 129, 0.5);
-  color: #065f46;
-}
-
-.date-text {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  white-space: nowrap;
+.lead-status-select:focus {
+  border-color: #00D2FF;
 }
 
 .empty-state {
@@ -1886,14 +1852,6 @@ body {
 
   .kpi-grid {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .table-responsive {
-    overflow-x: auto;
-  }
-
-  .leads-table th, .leads-table td {
-    white-space: nowrap;
   }
 }
 

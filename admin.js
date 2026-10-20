@@ -146,17 +146,20 @@ function calculateLeadScore(presupuesto, dolor) {
   const totalScore = scorePresupuesto + scoreDolor;
 
   // 3) Badges de Temperatura con colores de la Rúbrica
-  let temperatura = 'Baja';
-  let badgeClass = 'badge-temp-low';
+  let temperatura = 'BAJA';
+  let badgeClass = 'badge-low';
+  let statusCardClass = 'status-low';
   let badgeIcon = '❄️';
 
   if (totalScore >= 80) {
-    temperatura = 'Caliente';
-    badgeClass = 'badge-temp-hot'; // Verde
+    temperatura = 'CALIENTE';
+    badgeClass = 'badge-hot';
+    statusCardClass = 'status-hot';
     badgeIcon = '🔥';
   } else if (totalScore >= 50) {
-    temperatura = 'Media';
-    badgeClass = 'badge-temp-medium'; // Amarillo
+    temperatura = 'MEDIA';
+    badgeClass = 'badge-mid';
+    statusCardClass = 'status-mid';
     badgeIcon = '⚡';
   }
 
@@ -168,6 +171,7 @@ function calculateLeadScore(presupuesto, dolor) {
     labelDolor,
     temperatura,
     badgeClass,
+    statusCardClass,
     badgeIcon
   };
 }
@@ -298,12 +302,12 @@ function getCombinedLeads() {
  * Renderiza la Bandeja de Prioridad con ordenamiento automático por score
  */
 function renderLeadsPriorityInbox(leads) {
-  const tbody = document.getElementById('leads-tbody');
+  const container = document.getElementById('leads-container');
   const emptyState = document.getElementById('leads-empty-state');
-  if (!tbody) return;
+  if (!container) return;
 
   if (!leads || leads.length === 0) {
-    tbody.innerHTML = '';
+    container.innerHTML = '';
     if (emptyState) emptyState.style.display = 'block';
     updateKpis([]);
     return;
@@ -326,72 +330,57 @@ function renderLeadsPriorityInbox(leads) {
   // 3) Actualizar contadores KPI
   updateKpis(scoredLeads);
 
-  // 4) Generar HTML de la tabla
-  tbody.innerHTML = scoredLeads.map(lead => {
+  // 4) Generar HTML de las tarjetas cuadradas en formato SaaS Premium
+  container.innerHTML = scoredLeads.map(lead => {
     const formattedDate = lead.created_at 
       ? new Date(lead.created_at).toLocaleDateString('es-EC', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })
       : 'Reciente';
 
-    const currentStatus = lead.estado || 'Por contactar';
-    const isContacted = currentStatus === 'Contactado';
+    const rawStatus = (lead.estado || 'por-contactar').toLowerCase();
+    const isContacted = rawStatus === 'contactado';
+    const isNegotiating = rawStatus === 'en-negociacion' || rawStatus === 'en negociación';
+    const isPending = !isContacted && !isNegotiating;
 
     const cleanPhone = (lead.whatsapp || '').replace(/[^0-9]/g, '');
     const waLink = cleanPhone ? `https://wa.me/${cleanPhone}` : '#';
 
     return `
-      <tr class="lead-row ${lead.badgeClass}-row" data-id="${lead.id}">
-        <!-- Score & Temperatura -->
-        <td class="col-score">
-          <div class="score-badge ${lead.badgeClass}">
-            <span class="badge-icon">${lead.badgeIcon}</span>
-            <span class="badge-number">${lead.totalScore}</span>
-            <span class="badge-text">${lead.temperatura}</span>
+      <div class="lead-card-module ${lead.statusCardClass}" data-id="${lead.id}">
+        <div class="lead-card-header">
+          <span class="lead-badge-temp ${lead.badgeClass}">${lead.badgeIcon} ${lead.totalScore} ${lead.temperatura}</span>
+          <span class="lead-date">${formattedDate}</span>
+        </div>
+        
+        <div class="lead-card-body">
+          <h3 class="lead-name">${escapeHtml(lead.nombre_completo || 'Sin nombre')}</h3>
+          <p class="lead-phone">📞 <a href="${waLink}" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;" title="Abrir chat de WhatsApp">${escapeHtml(lead.whatsapp || 'Sin WhatsApp')}</a></p>
+          <p class="lead-email">${escapeHtml(lead.correo_electronico || 'Sin correo')}</p>
+          
+          <div class="lead-meta-divider"></div>
+          
+          <div class="lead-info-row">
+            <span class="info-label">Empresa:</span>
+            <span class="info-value text-highlight">${escapeHtml(lead.empresa_negocio || 'Particular')}</span>
           </div>
-        </td>
-
-        <!-- Prospecto -->
-        <td class="col-prospect">
-          <div class="prospect-name">${escapeHtml(lead.nombre_completo || 'Sin nombre')}</div>
-          <div class="prospect-links">
-            <a href="${waLink}" target="_blank" rel="noopener noreferrer" class="link-wa" title="Abrir chat de WhatsApp">
-              <span>💬 ${escapeHtml(lead.whatsapp || 'Sin WhatsApp')}</span>
-            </a>
-            <span class="prospect-email">${escapeHtml(lead.correo_electronico || '')}</span>
+          <div class="lead-info-row">
+            <span class="info-label">Presupuesto:</span>
+            <span class="info-value">${escapeHtml(lead.presupuesto_estimado || 'No indicado')} <small>(+${lead.scorePresupuesto} pts)</small></span>
           </div>
-        </td>
-
-        <!-- Empresa / Negocio -->
-        <td class="col-company">
-          <span class="company-tag">${escapeHtml(lead.empresa_negocio || 'Particular')}</span>
-        </td>
-
-        <!-- Presupuesto Estimado -->
-        <td class="col-budget">
-          <div class="detail-primary">${escapeHtml(lead.presupuesto_estimado || 'No indicado')}</div>
-          <div class="detail-pts text-cyan">+${lead.scorePresupuesto} pts (${lead.labelPresupuesto})</div>
-        </td>
-
-        <!-- Dolor Principal -->
-        <td class="col-pain">
-          <div class="detail-primary">${escapeHtml(lead.dolor_principal || 'No indicado')}</div>
-          <div class="detail-pts text-cyan">+${lead.scoreDolor} pts (${lead.labelDolor})</div>
-        </td>
-
-        <!-- Selector de Estado Básico (Supabase Async) -->
-        <td class="col-status">
-          <div class="status-select-wrap">
-            <select class="status-selector ${isContacted ? 'status-done' : 'status-pending'}" data-lead-id="${lead.id}">
-              <option value="Por contactar" ${!isContacted ? 'selected' : ''}>⏳ Por contactar</option>
-              <option value="Contactado" ${isContacted ? 'selected' : ''}>✅ Contactado</option>
-            </select>
+          <div class="lead-info-row">
+            <span class="info-label">Dolor Principal:</span>
+            <span class="info-value error-highlight">${escapeHtml(lead.dolor_principal || 'No indicado')} (+${lead.scoreDolor} pts)</span>
           </div>
-        </td>
-
-        <!-- Fecha -->
-        <td class="col-date">
-          <span class="date-text">${formattedDate}</span>
-        </td>
-      </tr>
+        </div>
+        
+        <div class="lead-card-footer">
+          <label class="status-label">Gestión de Estado:</label>
+          <select class="lead-status-select" data-lead-id="${lead.id}">
+            <option value="por-contactar" ${isPending ? 'selected' : ''}>⏳ Por contactar</option>
+            <option value="contactado" ${isContacted ? 'selected' : ''}>✅ Contactado</option>
+            <option value="en-negociacion" ${isNegotiating ? 'selected' : ''}>🤝 En negociación</option>
+          </select>
+        </div>
+      </div>
     `;
   }).join('');
 
@@ -403,20 +392,11 @@ function renderLeadsPriorityInbox(leads) {
  * Escucha cambios en los selectores y actualiza Supabase asíncronamente
  */
 function attachStatusListeners() {
-  const selectors = document.querySelectorAll('.status-selector');
+  const selectors = document.querySelectorAll('.lead-status-select');
   selectors.forEach(select => {
     select.addEventListener('change', async (e) => {
       const newStatus = e.target.value;
       const leadId = e.target.getAttribute('data-lead-id');
-
-      // Actualización visual inmediata de clases
-      if (newStatus === 'Contactado') {
-        e.target.classList.add('status-done');
-        e.target.classList.remove('status-pending');
-      } else {
-        e.target.classList.add('status-pending');
-        e.target.classList.remove('status-done');
-      }
 
       // 1) Actualizar memoria y caché local
       const targetLead = adminLeads.find(l => String(l.id) === String(leadId));
@@ -461,7 +441,10 @@ function updateKpis(leads) {
   const total = leads.length;
   const hot = leads.filter(l => l.totalScore >= 80).length;
   const medium = leads.filter(l => l.totalScore >= 50 && l.totalScore < 80).length;
-  const pending = leads.filter(l => (l.estado || 'Por contactar') === 'Por contactar').length;
+  const pending = leads.filter(l => {
+    const raw = (l.estado || 'por-contactar').toLowerCase();
+    return raw === 'por-contactar' || raw === 'por contactar' || !raw;
+  }).length;
 
   if (kpiTotal) kpiTotal.textContent = total;
   if (kpiHot) kpiHot.textContent = hot;
