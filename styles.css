@@ -346,40 +346,43 @@ body {
   border: none !important;
   flex: 1 1 50%;
   position: relative;
-  height: 450px;
+  height: 480px;
 }
 
 /* Contenedor de Flota Pesada y Liviana en Perspectiva (Estilo Satrack) */
 .hero-fleet-showcase {
   position: absolute;
-  bottom: -20px;
-  right: -5%;
+  bottom: -10px;
+  right: -2%;
   width: 110%;
-  height: 380px;
+  height: 460px;
   pointer-events: none;
   z-index: 2;
 }
 
 .truck-heavy {
   position: absolute;
-  bottom: 10px;
-  right: 5%;
-  width: 540px;
+  bottom: 20px;
+  right: 2%;
+  width: 620px; /* Escalado para mayor tamaño e impacto */
   max-width: 100%;
-  height: 340px;
+  height: 400px;
   background: url('hero-fleet.png') right bottom no-repeat;
   background-size: contain;
-  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.6));
+  filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.6));
 }
 
 .truck-medium {
   position: absolute;
-  bottom: 0;
-  right: 45%;
-  width: 220px;
-  height: 180px;
-  pointer-events: none;
+  bottom: 10px;
+  right: 48%;
+  width: 300px;
+  height: 240px;
+  background: url('hero-fleet.png') center bottom no-repeat;
+  background-size: contain;
+  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.5));
   opacity: 0;
+  pointer-events: none;
 }
 
 /* Badges Flotantes Telemáticos Interactivos (Estilo Satrack) */
@@ -395,23 +398,27 @@ body {
   color: #0A194E;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
   z-index: 10;
+  white-space: nowrap;
 }
 
 .badge-gps {
-  top: 20%;
-  right: 20%;
+  top: 10%;
+  right: 15%;
+  transform: translateX(-50%);
   animation: floatY 4s ease-in-out infinite;
 }
 
 .badge-signal {
-  top: 35%;
-  right: 60%;
+  top: 30%;
+  right: 68%;
+  transform: translateX(-50%);
   animation: floatY 5s ease-in-out infinite 1s;
 }
 
 .badge-speed {
-  bottom: 55%;
-  right: 10%;
+  top: 40%;
+  right: -2%;
+  transform: translateX(-50%);
   animation: floatY 4.5s ease-in-out infinite 0.5s;
 }
 
@@ -1922,9 +1929,9 @@ body {
    ANIMACIÓN DE FLOTACIÓN VERTICAL SUAVE
    ========================================================== */
 @keyframes floatY {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0); }
+  0% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-10px); }
+  100% { transform: translateX(-50%) translateY(0); }
 }
 
 
