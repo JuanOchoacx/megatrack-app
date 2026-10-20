@@ -299,31 +299,32 @@ body {
 .metric-card.premium-orange {
   background: #FF7A00 !important;
   border: 1px solid #E66E00 !important;
-  box-shadow: 0 10px 20px rgba(255, 122, 0, 0.2);
-  padding: 20px;
-  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(255, 122, 0, 0.15);
+  padding: 12px 16px !important; /* Altura y espacio reducidos para compactarlo */
+  border-radius: 12px !important;
+  flex: 1;
+  min-width: 100px;
   transition: transform 0.3s ease;
-  flex: 1 1 0;
   display: flex;
   flex-direction: column;
 }
 
 .metric-card.premium-orange:hover {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
 }
 
 .metric-card.premium-orange h3 {
   color: #FFFFFF !important;
-  font-size: 1.25rem !important;
+  font-size: 1.05rem !important; /* Tipografía más sutil y balanceada */
   font-weight: 800 !important;
-  margin-bottom: 6px;
+  margin-bottom: 3px !important;
   line-height: 1.2;
 }
 
 .metric-card.premium-orange p {
   color: #FFFFFF !important;
-  font-size: 0.875rem !important;
-  line-height: 1.35 !important;
+  font-size: 0.78rem !important; /* Texto fluido que no sobrecarga la interfaz */
+  line-height: 1.25 !important;
   opacity: 0.95 !important;
   margin: 0;
 }
@@ -333,7 +334,7 @@ body {
    ========================================================== */
 .hero-graphic-display {
   flex: 1 1 55%;
-  height: 550px;
+  height: 580px; /* Mayor espacio vertical interno */
   position: relative;
   overflow: visible;
   background: none !important;
@@ -341,16 +342,16 @@ body {
   border: none !important;
 }
 
-/* Radar Acoplado a la izquierda de los camiones */
+/* Paso 1: Separar y desplazar el radar hacia arriba */
 .radar-container-addon {
   position: absolute;
-  top: 15%;
-  left: 5%;
-  width: 280px;
-  height: 280px;
-  border: 2px solid rgba(0, 210, 255, 0.2);
+  top: 5%; /* Elevado significativamente para despejar el área */
+  left: 0%;
+  width: 260px;
+  height: 260px;
+  border: 2px solid rgba(0, 210, 255, 0.25);
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(10, 25, 78, 0.6) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(10, 25, 78, 0.7) 0%, transparent 75%);
   z-index: 1;
 }
 
@@ -396,39 +397,41 @@ body {
 
 .badge-signal {
   position: absolute;
-  top: 38%;
-  left: -2%;
+  top: 25%;
+  left: -5%;
   z-index: 10;
   animation: floatSimpleY 5s ease-in-out infinite 1s;
 }
 
 .badge-gps {
   position: absolute;
-  top: 12%;
-  left: 35%;
+  top: 2%;
+  left: 32%;
   z-index: 10;
   animation: floatSimpleY 4s ease-in-out infinite;
 }
 
 .badge-speed {
   position: absolute;
-  top: 35%;
+  top: 22%;
   left: 45%;
   z-index: 10;
   animation: floatSimpleY 4.5s ease-in-out infinite 0.5s;
 }
 
-/* Escaparate de Flota de Camiones Gigantes (Escalado Doble de Impacto Visual) */
+/* Paso 2: Flota en Ultra-Alta Resolución con diseño estilizado */
 .hero-fleet-showcase {
   position: absolute;
-  bottom: 45px;
-  right: -5%;
-  width: 100%;
-  height: 480px; /* Escalado al doble de impacto visual */
+  bottom: 50px;
+  right: -3%;
+  width: 95%;
+  height: 340px;
   background: url('hero-fleet.png') center bottom no-repeat;
   background-size: contain;
+  image-rendering: -webkit-optimize-contrast; /* Fuerza máxima nitidez y resolución en navegadores */
+  image-rendering: crisp-edges;
   z-index: 3;
-  filter: drop-shadow(0 25px 40px rgba(0, 0, 0, 0.6));
+  filter: drop-shadow(0 30px 45px rgba(0, 0, 0, 0.6));
   pointer-events: none;
 }
 
