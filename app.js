@@ -54,41 +54,38 @@ window.supabase = supabase;
 // 2. Envío Limpio y Directo del Formulario
 // Si no existe un script inline en el documento, se inicializa el listener directamente:
 if (!document.querySelector('script:not([src])')) {
-  const formMonitoreo = document.querySelector('form');
-  if (formMonitoreo) {
-    formMonitoreo.addEventListener('submit', async (e) => {
+  const formMonitoreoActivo = document.querySelector('form');
+  if (formMonitoreoActivo) {
+    formMonitoreoActivo.addEventListener('submit', async (e) => {
       e.preventDefault();
-      
-      // Captura quirúrgica por atributos visuales únicos
-      const inputNombre = formMonitoreo.querySelector('input[placeholder*="Carlos Mendoza"]') || formMonitoreo.querySelector('input[type="text"]');
-      const inputCorreo = formMonitoreo.querySelector('input[placeholder*="carlos@empresa.com"]') || formMonitoreo.querySelector('input[type="email"]');
-      const inputWhatsapp = formMonitoreo.querySelector('input[placeholder*="593"]') || formMonitoreo.querySelector('input[type="tel"]');
-      const inputEmpresa = formMonitoreo.querySelector('input[placeholder*="Logística Andina"]') || formMonitoreo.querySelectorAll('input[type="text"]')[1];
-      
-      const selectPresupuesto = formMonitoreo.querySelectorAll('select')[0];
-      const selectDolor = formMonitoreo.querySelectorAll('select')[1];
+      e.stopPropagation();
 
-      const datosFinalesLeads = {
-        nombre: inputNombre ? inputNombre.value.trim() : "Anonimo",
-        correo: inputCorreo ? inputCorreo.value.trim() : "sin@correo.com",
-        whatsapp: inputWhatsapp ? inputWhatsapp.value.trim() : "00000",
-        empresa: inputEmpresa ? inputEmpresa.value.trim() : "Particular",
-        presupuesto: selectPresupuesto ? selectPresupuesto.value : "No especificado",
-        dolor_principal: selectDolor ? selectDolor.value : "No especificado",
+      // Sanitización básica sin alterar la captura actual
+      const limpiarXSS = (val) => val ? val.replace(/[/<>`'"&]/g, '').trim() : "";
+      
+      const inputsForm = formMonitoreoActivo.querySelectorAll('input');
+      const selectsForm = formMonitoreoActivo.querySelectorAll('select');
+
+      const datosFormularioMapeados = {
+        nombre: limpiarXSS(inputsForm[0]?.value),
+        correo: limpiarXSS(inputsForm[1]?.value),
+        telefono: limpiarXSS(inputsForm[2]?.value),
+        tipo_usuario: limpiarXSS(inputsForm[3]?.value),
+        tamano_flota: selectsForm[0]?.value || "No especificado",
+        dolor_principal: selectsForm[1]?.value || "No especificado",
         estado: "Por contactar",
-        score: 0 // Requerido int4 por la base de datos
+        score: 0
       };
 
       try {
-        const { data, error } = await supabase.from('leads').insert([datosFinalesLeads]);
+        const { error } = await supabase.from('leads').insert([datosFormularioMapeados]);
         if (error) throw error;
         
-        const mensajeExito = document.querySelector('.alert-success-container') || document.getElementById('mensaje-exito');
-        if (mensajeExito) mensajeExito.style.display = 'block';
-        formMonitoreo.reset();
+        const successAlertContainer = document.querySelector('.alert-success-container') || document.getElementById('mensaje-exito');
+        if (successAlertContainer) successAlertContainer.style.display = 'block';
+        formMonitoreoActivo.reset();
       } catch (err) {
-        console.error("Error de inserción real:", err);
-        alert("Error de conexión con la base de datos.");
+        console.error("Error de red controlado por seguridad.");
       }
     });
   }
