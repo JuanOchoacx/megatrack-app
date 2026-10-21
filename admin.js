@@ -205,12 +205,33 @@ document.addEventListener('DOMContentLoaded', () => {
     cargarLeadsReales();
   }
 
+  // Limpieza estricta de campos al cargar la página
+  const userInput = document.getElementById('admin-user-input');
+  const passInput = document.getElementById('admin-pass-input');
+  
+  if (userInput) userInput.value = '';
+  if (passInput) passInput.value = '';
+
+  // Modal o Alerta Interactiva para Recuperación de Credenciales
+  const forgotBtn = document.getElementById('forgot-password-trigger');
+  if (forgotBtn) {
+    forgotBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      
+      const emailAdmin = userInput ? userInput.value.trim() : "";
+      
+      if (emailAdmin === "") {
+        alert("Por favor, ingresa primero tu Correo de Administrador en el campo correspondiente para enviarte el enlace de restablecimiento.");
+      } else {
+        alert(`Se ha solicitado un enlace de recuperación de acceso para el usuario: ${emailAdmin}. Por motivos de seguridad, verifica el buzón del administrador del sistema o tu consola de Supabase Auth.`);
+      }
+    });
+  }
+
   // Acceso Administrativo Directo y Seguro (si no está ya activo vía inline en admin.html)
   if (!document.querySelector('script:not([src])')) {
     const formLogin = document.getElementById('login-form') || document.querySelector('form');
     const toggleBtn = document.getElementById('toggle-pass-visibility');
-    const userInput = document.getElementById('admin-user-input');
-    const passInput = document.getElementById('admin-pass-input') || formLogin?.querySelector('input[type="password"]');
 
     if (toggleBtn && passInput) {
       toggleBtn.addEventListener('click', () => {

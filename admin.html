@@ -41,11 +41,13 @@
         </div>
 
         <button type="submit" style="width: 100%; padding: 12px; background: #FF6B00; color: white; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; margin-top: 10px;">Ingresar al Panel</button>
+        <div style="text-align: center; margin-top: 15px;">
+          <a href="#" id="forgot-password-trigger" style="font-size: 0.85rem; color: #0A194E; text-decoration: none; font-weight: 600; transition: color 0.2s;">¿Olvidaste tu contraseña?</a>
+        </div>
       </form>
 
       <div class="auth-footer">
         <a href="index.html" class="auth-back-link">← Regresar a la Landing Page</a>
-        <span class="auth-hint">Acceso: <code>admin@megatrack.com</code> / <code>megatrack2026</code></span>
       </div>
     </div>
   </div>
@@ -290,10 +292,31 @@
     document.addEventListener('DOMContentLoaded', () => {
       setTimeout(cargarLeadsReales, 800);
       
-      const formLogin = document.getElementById('login-form');
-      const toggleBtn = document.getElementById('toggle-pass-visibility');
+      // Limpieza estricta de campos al cargar la página
       const userInput = document.getElementById('admin-user-input');
       const passInput = document.getElementById('admin-pass-input');
+      
+      if (userInput) userInput.value = '';
+      if (passInput) passInput.value = '';
+
+      // Modal o Alerta Interactiva para Recuperación de Credenciales
+      const forgotBtn = document.getElementById('forgot-password-trigger');
+      if (forgotBtn) {
+        forgotBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          
+          const emailAdmin = userInput ? userInput.value.trim() : "";
+          
+          if (emailAdmin === "") {
+            alert("Por favor, ingresa primero tu Correo de Administrador en el campo correspondiente para enviarte el enlace de restablecimiento.");
+          } else {
+            alert(`Se ha solicitado un enlace de recuperación de acceso para el usuario: ${emailAdmin}. Por motivos de seguridad, verifica el buzón del administrador del sistema o tu consola de Supabase Auth.`);
+          }
+        });
+      }
+
+      const formLogin = document.getElementById('login-form');
+      const toggleBtn = document.getElementById('toggle-pass-visibility');
       const overlayCapa = document.getElementById('login-overlay');
 
       // Lógica interactiva para ocultar/revelar contraseña
