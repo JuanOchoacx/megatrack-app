@@ -437,27 +437,28 @@ body {
   white-space: nowrap;
 }
 
-/* ALINEACIÓN ORBITAL: Los badges rodean al radar de forma concéntrica y equidistante */
+/* REUBICACIÓN EXACTA SEGÚN MARCAS DE EQUIS (X) */
+
 .badge-signal { 
   position: absolute; 
-  top: 8%; 
-  left: 4%; /* Rodeando el contorno izquierdo del radar */
+  top: 35%;     /* Bajado radicalmente */
+  left: -5%;    /* Ubicado en la esquina inferior izquierda del radar */
   z-index: 10; 
   animation: floatSimpleY 5s ease-in-out infinite 1s;
 }
 
 .badge-gps { 
   position: absolute; 
-  top: -12%; 
-  left: 44%; /* Rodeando el contorno superior del radar */
+  top: -15%;    /* Manteniendo la altura superior */
+  left: 55%;    /* Desplazado a la derecha sobre el cuadrante superior derecho */
   z-index: 10; 
   animation: floatSimpleY 4s ease-in-out infinite;
 }
 
 .badge-speed { 
   position: absolute; 
-  top: 18%; 
-  left: 80%; /* Rodeando el contorno derecho del radar */
+  top: 15%;     /* Posicionado en la franja media alta */
+  left: -22%;   /* Desplazado fuertemente a la izquierda, entre el texto y el radar */
   z-index: 10; 
   animation: floatSimpleY 4.5s ease-in-out infinite 0.5s;
 }
