@@ -539,3 +539,56 @@ function escapeHtml(string) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
 }
+
+// ==========================================================
+// 4. Listeners para la barra de navegación superior
+// ==========================================================
+document.addEventListener('DOMContentLoaded', () => {
+  // 1. Selector del Botón Actualizar
+  let btnActualizar = null;
+  try {
+    btnActualizar = document.querySelector('button:contains("Actualizar")') || document.querySelectorAll('button')[0] || document.querySelector('.btn-actualizar');
+  } catch (err) {
+    btnActualizar = document.querySelector('.btn-refresh') || document.querySelector('.btn-actualizar') || document.querySelectorAll('button')[0];
+  }
+
+  // Ajuste de selector por texto exacto para evitar fallas
+  const todosLosBotonesTop = document.querySelectorAll('button, a');
+  
+  todosLosBotonesTop.forEach(elemento => {
+    if (elemento.textContent.includes('Actualizar')) {
+      elemento.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (typeof cargarLeadsReales === 'function') {
+          cargarLeadsReales();
+          console.log("Base de datos de Supabase actualizada en tiempo real.");
+        }
+      });
+    }
+    
+    if (elemento.textContent.includes('Ver Landing')) {
+      elemento.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.open('index.html', '_blank'); // Abre la landing page en pestaña nueva
+      });
+    }
+    
+    if (elemento.textContent.includes('Salir')) {
+      elemento.addEventListener('click', (e) => {
+        e.preventDefault();
+        sessionStorage.removeItem('megatrack_admin_session');
+        // Forzar el bloqueo del panel administrativo por seguridad
+        const overlayLogueo = document.getElementById('login-overlay');
+        if (overlayLogueo) {
+          overlayLogueo.style.display = 'flex';
+          // Limpiar el campo de texto de contraseña anterior
+          const inputPass = overlayLogueo.querySelector('input[type="password"]');
+          if (inputPass) inputPass.value = '';
+        } else {
+          // Si no existe overlay, recargar la página limpia para retirar sesión de variables
+          window.location.href = 'admin.html';
+        }
+      });
+    }
+  });
+});
