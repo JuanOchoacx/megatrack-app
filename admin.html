@@ -25,24 +25,27 @@
       <h2 class="auth-title">Portal Administrativo</h2>
       <p class="auth-subtitle">Ingresa la clave de acceso para visualizar la Bandeja de Prioridad en Vivo.</p>
       
-      <form id="login-form" class="auth-form" onsubmit="event.preventDefault(); return false;">
-        <div class="form-group">
-          <label for="admin-pass">Contraseña de Administrador</label>
-          <input 
-            type="password" 
-            id="admin-pass" 
-            placeholder="Ingresa la clave de acceso" 
-            required
-            autocomplete="current-password"
-          >
+      <form id="login-form" style="display: flex; flex-direction: column; gap: 15px; width: 100%;">
+        
+        <div class="input-group-addon" style="display: flex; flex-direction: column; gap: 5px; text-align: left;">
+          <label style="font-size: 0.85rem; font-weight: 600; color: #0A194E;">Correo de Administrador</label>
+          <input type="email" id="admin-user-input" placeholder="ejemplo@megatrack.com" style="width: 100%; padding: 10px; border: 1px solid #D1D5DB; border-radius: 6px;" required>
         </div>
-        <button type="submit" class="btn-auth">Ingresar al Panel</button>
-        <div id="auth-error" class="auth-error-msg" style="display: none;">Contraseña incorrecta. Inténtalo de nuevo.</div>
+
+        <div class="input-group-addon" style="display: flex; flex-direction: column; gap: 5px; text-align: left;">
+          <label style="font-size: 0.85rem; font-weight: 600; color: #0A194E;">Contraseña de Administrador</label>
+          <div class="password-wrapper-addon" style="position: relative; width: 100%;">
+            <input type="password" id="admin-pass-input" placeholder="Ingresa tu contraseña" style="width: 100%; padding: 10px; padding-right: 40px; border: 1px solid #D1D5DB; border-radius: 6px;" required>
+            <button type="button" id="toggle-pass-visibility" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 1.1rem; padding: 0;">👁️</button>
+          </div>
+        </div>
+
+        <button type="submit" style="width: 100%; padding: 12px; background: #FF6B00; color: white; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; margin-top: 10px;">Ingresar al Panel</button>
       </form>
 
       <div class="auth-footer">
         <a href="index.html" class="auth-back-link">← Regresar a la Landing Page</a>
-        <span class="auth-hint">Clave oficial: <code>megatrack2026</code></span>
+        <span class="auth-hint">Acceso: <code>admin@megatrack.com</code> / <code>megatrack2026</code></span>
       </div>
     </div>
   </div>
@@ -287,38 +290,50 @@
     document.addEventListener('DOMContentLoaded', () => {
       setTimeout(cargarLeadsReales, 800);
       
-      const formLogin = document.getElementById('login-form') || document.querySelector('form');
+      const formLogin = document.getElementById('login-form');
+      const toggleBtn = document.getElementById('toggle-pass-visibility');
+      const userInput = document.getElementById('admin-user-input');
+      const passInput = document.getElementById('admin-pass-input');
       const overlayCapa = document.getElementById('login-overlay');
 
+      // Lógica interactiva para ocultar/revelar contraseña
+      if (toggleBtn && passInput) {
+        toggleBtn.addEventListener('click', () => {
+          if (passInput.type === 'password') {
+            passInput.type = 'text';
+            toggleBtn.textContent = '🙈';
+          } else {
+            passInput.type = 'password';
+            toggleBtn.textContent = '👁️';
+          }
+        });
+      }
+
+      // Validador de credenciales combinadas
       if (formLogin) {
         formLogin.addEventListener('submit', (e) => {
-          // EVITA LA RECARGA DE LA PÁGINA (Previene el signo ? en la URL y la pantalla en blanco)
           e.preventDefault();
           e.stopPropagation();
 
-          const inputPassword = formLogin.querySelector('input[type="password"]');
-          
-          if (inputPassword && inputPassword.value === 'megatrack2026') {
-            // 1. Remover la capa de bloqueo visual inmediatamente
+          const usuarioIngresado = userInput ? userInput.value.trim() : "";
+          const claveIngresada = passInput ? passInput.value : "";
+
+          // Validación estricta de credenciales oficiales de Megatrack
+          if (usuarioIngresado === 'admin@megatrack.com' && claveIngresada === 'megatrack2026') {
+            sessionStorage.setItem('megatrack_admin_session', 'true');
             if (overlayCapa) {
               overlayCapa.style.display = 'none';
-              overlayCapa.remove(); // Remueve el elemento del DOM para asegurar el paso
+              overlayCapa.remove();
             }
             
-            // 2. Forzar visualización del contenedor principal del panel
             const mainPanel = document.querySelector('.leads-grid-container') || document.getElementById('leads-container');
-            if (mainPanel) {
-              mainPanel.style.display = 'grid';
-            }
+            if (mainPanel) mainPanel.style.display = 'grid';
 
-            // 3. Ejecutar la llamada de lectura real a Supabase si existe
             if (typeof cargarLeadsReales === 'function') {
               cargarLeadsReales();
-            } else {
-              console.log("Sistema listo. Esperando registros reales.");
             }
           } else {
-            alert('Contraseña incorrecta. Por favor verifique la clave oficial.');
+            alert('Credenciales inválidas. Por favor verifique el usuario o la contraseña.');
           }
         });
       }

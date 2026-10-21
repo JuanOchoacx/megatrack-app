@@ -207,19 +207,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Acceso Administrativo Directo y Seguro (si no está ya activo vía inline en admin.html)
   if (!document.querySelector('script:not([src])')) {
-    const formLoginAdmin = document.getElementById('login-form') || document.querySelector('form');
-    if (formLoginAdmin) {
-      formLoginAdmin.addEventListener('submit', (e) => {
+    const formLogin = document.getElementById('login-form') || document.querySelector('form');
+    const toggleBtn = document.getElementById('toggle-pass-visibility');
+    const userInput = document.getElementById('admin-user-input');
+    const passInput = document.getElementById('admin-pass-input') || formLogin?.querySelector('input[type="password"]');
+
+    if (toggleBtn && passInput) {
+      toggleBtn.addEventListener('click', () => {
+        if (passInput.type === 'password') {
+          passInput.type = 'text';
+          toggleBtn.textContent = '🙈';
+        } else {
+          passInput.type = 'password';
+          toggleBtn.textContent = '👁️';
+        }
+      });
+    }
+
+    if (formLogin) {
+      formLogin.addEventListener('submit', (e) => {
         e.preventDefault();
-        const passField = formLoginAdmin.querySelector('input[type="password"]');
-        
-        if (passField && passField.value === 'megatrack2026') {
+        e.stopPropagation();
+        const usuarioIngresado = userInput ? userInput.value.trim() : "";
+        const claveIngresada = passInput ? passInput.value : "";
+
+        if ((!userInput || usuarioIngresado === 'admin@megatrack.com') && claveIngresada === 'megatrack2026') {
           sessionStorage.setItem('megatrack_admin_session', 'true');
           const overlay = document.getElementById('login-overlay');
-          if (overlay) overlay.style.display = 'none';
+          if (overlay) {
+            overlay.style.display = 'none';
+            overlay.remove();
+          }
+          const mainPanel = document.querySelector('.leads-grid-container') || document.getElementById('leads-container');
+          if (mainPanel) mainPanel.style.display = 'grid';
           if (typeof cargarLeadsReales === 'function') cargarLeadsReales();
         } else {
-          alert('Contraseña incorrecta. Por favor, introduce la clave oficial de Megatrack.');
+          alert('Credenciales inválidas. Por favor verifique el usuario o la contraseña.');
         }
       });
     }
