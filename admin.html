@@ -25,7 +25,7 @@
       <h2 class="auth-title">Portal Administrativo</h2>
       <p class="auth-subtitle">Ingresa la clave de acceso para visualizar la Bandeja de Prioridad en Vivo.</p>
       
-      <form id="login-form" class="auth-form">
+      <form id="login-form" class="auth-form" onsubmit="event.preventDefault(); return false;">
         <div class="form-group">
           <label for="admin-pass">Contraseña de Administrador</label>
           <input 
@@ -50,7 +50,7 @@
   <!-- ==========================================================
        PANEL DE CONTROL PRIVADO / BANDEJA DE PRIORIDAD EN VIVO
        ========================================================== -->
-  <div id="admin-panel" class="admin-dashboard" style="display: none;">
+  <div id="admin-panel" class="admin-dashboard">
     <!-- Barra Superior del Panel -->
     <header class="admin-topbar">
       <div class="admin-topbar-left">
@@ -137,21 +137,43 @@
   
   <!-- Acceso Administrativo Directo -->
   <script>
-    const formLoginAdmin = document.getElementById('login-form') || document.querySelector('form');
-    if (formLoginAdmin) {
-      formLoginAdmin.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const passField = formLoginAdmin.querySelector('input[type="password"]');
-        
-        if (passField && passField.value === 'megatrack2026') {
-          const overlay = document.getElementById('login-overlay');
-          if (overlay) overlay.style.display = 'none';
-          if (typeof cargarLeadsReales === 'function') cargarLeadsReales();
-        } else {
-          alert('Contraseña incorrecta. Por favor, introduce la clave oficial de Megatrack.');
-        }
-      });
-    }
+    document.addEventListener('DOMContentLoaded', () => {
+      const formLogin = document.getElementById('login-form') || document.querySelector('form');
+      const overlayCapa = document.getElementById('login-overlay');
+
+      if (formLogin) {
+        formLogin.addEventListener('submit', (e) => {
+          // EVITA LA RECARGA DE LA PÁGINA (Previene el signo ? en la URL y la pantalla en blanco)
+          e.preventDefault();
+          e.stopPropagation();
+
+          const inputPassword = formLogin.querySelector('input[type="password"]');
+          
+          if (inputPassword && inputPassword.value === 'megatrack2026') {
+            // 1. Remover la capa de bloqueo visual inmediatamente
+            if (overlayCapa) {
+              overlayCapa.style.display = 'none';
+              overlayCapa.remove(); // Remueve el elemento del DOM para asegurar el paso
+            }
+            
+            // 2. Forzar visualización del contenedor principal del panel
+            const mainPanel = document.querySelector('.leads-grid-container') || document.getElementById('leads-container');
+            if (mainPanel) {
+              mainPanel.style.display = 'grid';
+            }
+
+            // 3. Ejecutar la llamada de lectura real a Supabase si existe
+            if (typeof cargarLeadsReales === 'function') {
+              cargarLeadsReales();
+            } else {
+              console.log("Sistema listo. Esperando registros reales.");
+            }
+          } else {
+            alert('Contraseña incorrecta. Por favor verifique la clave oficial.');
+          }
+        });
+      }
+    });
   </script>
 </body>
 </html>
