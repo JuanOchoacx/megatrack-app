@@ -193,48 +193,32 @@ function cargarLeadsReales() {
 window.cargarLeadsReales = cargarLeadsReales;
 
 document.addEventListener('DOMContentLoaded', () => {
-  const loginOverlay = document.getElementById('login-overlay') || document.getElementById('admin-auth-screen');
+  const overlay = document.getElementById('login-overlay');
   const panelScreen = document.getElementById('admin-panel');
-  const passInput = document.querySelector('input[type="password"]');
-  const errorMsg = document.getElementById('auth-error');
   const btnLogout = document.getElementById('btn-logout');
   const btnRefresh = document.getElementById('btn-refresh-leads');
 
   // Verificar si ya existe sesión iniciada
   const isAuth = sessionStorage.getItem('megatrack_admin_session') === 'true';
-
   if (isAuth) {
-    if (loginOverlay) loginOverlay.style.display = 'none';
-    if (panelScreen) panelScreen.style.display = 'block';
+    if (overlay) overlay.style.display = 'none';
     cargarLeadsReales();
   }
 
-  // Validación de contraseña aislada y segura
-  const formularioAdmin = document.getElementById('login-form') || document.getElementById('admin-login-form') || document.querySelector('form');
-  if (formularioAdmin) {
-    formularioAdmin.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const claveIngresada = (document.querySelector('input[type="password"]')?.value || '').trim();
+  // Acceso Administrativo Directo
+  const loginFormAdmin = document.getElementById('login-form') || document.querySelector('form');
+  if (loginFormAdmin) {
+    loginFormAdmin.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const inputPass = loginFormAdmin.querySelector('input[type="password"]');
       
-      if (claveIngresada === 'megatrack2026') {
+      if (inputPass && inputPass.value === 'megatrack2026') {
         sessionStorage.setItem('megatrack_admin_session', 'true');
-        if (errorMsg) errorMsg.style.display = 'none';
-        
-        // Remover pantalla de bloqueo y renderizar la bandeja modular
-        const overlay = document.getElementById('login-overlay') || loginOverlay;
+        const overlay = document.getElementById('login-overlay');
         if (overlay) overlay.style.display = 'none';
-        if (panelScreen) panelScreen.style.display = 'block';
-        
-        if (typeof cargarLeadsReales === 'function') {
-          cargarLeadsReales();
-        }
+        if (typeof cargarLeadsReales === 'function') cargarLeadsReales();
       } else {
-        if (errorMsg) errorMsg.style.display = 'block';
-        alert('Contraseña incorrecta. Por favor verifique la clave oficial de Megatrack.');
-        if (passInput) {
-          passInput.value = '';
-          passInput.focus();
-        }
+        alert('Clave incorrecta. Por favor verifique la clave oficial.');
       }
     });
   }
@@ -243,9 +227,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnLogout) {
     btnLogout.addEventListener('click', () => {
       sessionStorage.removeItem('megatrack_admin_session');
-      if (loginOverlay) loginOverlay.style.display = 'flex';
+      if (overlay) overlay.style.display = 'flex';
       if (panelScreen) panelScreen.style.display = 'none';
-      if (passInput) passInput.focus();
+      const pass = document.querySelector('input[type="password"]');
+      if (pass) pass.focus();
     });
   }
 
