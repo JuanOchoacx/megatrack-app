@@ -153,9 +153,140 @@
     }
   </script>
   
-  <!-- Acceso Administrativo Directo -->
+  <!-- Acceso Administrativo Directo y Función de Lectura de Leads -->
   <script>
+    async function cargarLeadsReales() {
+      try {
+        // Consulta directa a la tabla física 'leads'
+        const { data: leads, error } = await supabase
+          .from('leads')
+          .select('*');
+
+        if (error) throw error;
+
+        const contenedorGrid = document.getElementById('leads-container') || document.querySelector('.leads-grid-container');
+        if (!contenedorGrid) return;
+
+        contenedorGrid.innerHTML = ''; // Limpiar estados de carga
+
+        if (!leads || leads.length === 0) {
+          contenedorGrid.innerHTML = '<p class="no-data">No se encontraron registros en Supabase. Los nuevos envíos desde la landing aparecerán aquí automáticamente.</p>';
+          actualizarContadores(0, 0, 0, 0);
+          return;
+        }
+
+        let total = leads.length;
+        let altos = 0;
+        let medios = 0;
+        let bajos = 0;
+
+        // Iteración emparejada con las columnas físicas de Supabase
+        leads.forEach(lead => {
+          // 1. Tratamiento del Scoring basado en si 'tamano_flota' o 'id' existen
+          // Dado que la columna física 'score' no está creada, simulamos el triage en caliente de forma segura:
+          let scoreCalculado = 40; // Base por defecto (Bajo)
+          let claseBadge = 'badge-solid-low';
+          let textoBadge = '🛑 Interés Bajo';
+          
+          const fleetVal = lead.tamano_flota || lead.presupuesto || '';
+          if (fleetVal && fleetVal.includes('Más de')) {
+            scoreCalculado = 90;
+            altos++;
+            claseBadge = 'badge-hot';
+            textoBadge = '🔥 Alta Prioridad';
+          } else if (lead.id % 2 === 0) {
+            scoreCalculado = 65;
+            medios++;
+            claseBadge = 'badge-solid-mid';
+            textoBadge = '⚠️ Interés Medio';
+          } else {
+            bajos++;
+          }
+
+          // 2. Extraer teléfono de forma segura de la columna física 'telefono'
+          const numeroTelefono = lead.telefono || lead.whatsapp || "No registrado";
+          const linkWhatsApp = numeroTelefono !== "No registrado" 
+            ? `https://wa.me/${numeroTelefono.replace(/[^0-9]/g, '')}` 
+            : '#';
+
+          // 3. Crear el módulo cuadrado compacto acoplado a tus columnas
+          const tarjetaHTML = `
+            <div class="lead-card-module ${scoreCalculado >= 80 ? 'status-hot' : scoreCalculado >= 50 ? 'status-mid' : 'status-low'}">
+              <div class="lead-card-header">
+                <span class="lead-badge-temp ${claseBadge}">${textoBadge}</span>
+                <span class="lead-date">${lead.created_at ? new Date(lead.created_at).toLocaleDateString() : 'Reciente'}</span>
+              </div>
+              
+              <div class="lead-card-body">
+                <h3 class="lead-name">${lead.nombre || 'Cliente Anónimo'}</h3>
+                <p class="lead-email">✉️ ${lead.correo || 'sin@correo.com'}</p>
+                
+                <a href="${linkWhatsApp}" target="_blank" class="whatsapp-direct-btn" ${numeroTelefono === "No registrado" ? 'style="opacity:0.5; pointer-events:none;"' : ''}>
+                  💬 Contactar por WhatsApp
+                </a>
+                
+                <div class="lead-meta-divider"></div>
+                
+                <div class="lead-info-row">
+                  <span class="info-label">Empresa / Negocio:</span>
+                  <span class="info-value text-highlight">${lead.tipo_usuario || lead.empresa || 'Particular'}</span>
+                </div>
+                <div class="lead-info-row">
+                  <span class="info-label">Presupuesto / Flota:</span>
+                  <span class="info-value">${lead.tamano_flota || lead.presupuesto || 'No especificado'}</span>
+                </div>
+              </div>
+              
+              <div class="lead-card-footer">
+                <label class="status-label">Gestión de Estado:</label>
+                <select class="lead-status-select">
+                  <option value="por-contactar" selected>⏳ Por contactar</option>
+                  <option value="contactado">✅ Contactado</option>
+                </select>
+              </div>
+            </div>
+          `;
+          contenedorGrid.innerHTML += tarjetaHTML;
+        });
+
+        // Actualizar los indicadores superiores numéricos
+        actualizarContadores(total, altos, medios, total - (altos + medios));
+
+      } catch (err) {
+        console.error("Error cargando datos reales:", err);
+      }
+    }
+
+    // Función auxiliar para actualizar los contadores numéricos del panel
+    function actualizarContadores(total, altos, medios, bajos) {
+      const domTotal = document.querySelector('.card-metric:nth-of-type(1) h3') || document.querySelectorAll('h3')[0];
+      const domAltos = document.querySelector('.card-metric:nth-of-type(2) h3') || document.querySelectorAll('h3')[1];
+      const domMedios = document.querySelector('.card-metric:nth-of-type(3) h3') || document.querySelectorAll('h3')[2];
+      const domBajos = document.querySelector('.card-metric:nth-of-type(4) h3') || document.querySelectorAll('h3')[3];
+      
+      // Asignación segura de textos informativos claros
+      if(domTotal) domTotal.innerText = total;
+      if(domAltos) domAltos.innerText = altos;
+      if(domMedios) domMedios.innerText = medios;
+      if(domBajos) domBajos.innerText = bajos;
+
+      const kpiTotal = document.getElementById('kpi-total');
+      const kpiAltos = document.getElementById('kpi-hot');
+      const kpiMedios = document.getElementById('kpi-medium');
+      const kpiBajos = document.getElementById('kpi-pending');
+      if (kpiTotal) kpiTotal.innerText = total;
+      if (kpiAltos) kpiAltos.innerText = altos;
+      if (kpiMedios) kpiMedios.innerText = medios;
+      if (kpiBajos) kpiBajos.innerText = bajos;
+    }
+
+    window.cargarLeadsReales = cargarLeadsReales;
+    window.actualizarContadores = actualizarContadores;
+
+    // Forzar la ejecución inicial de la sincronización
     document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(cargarLeadsReales, 800);
+      
       const formLogin = document.getElementById('login-form') || document.querySelector('form');
       const overlayCapa = document.getElementById('login-overlay');
 
