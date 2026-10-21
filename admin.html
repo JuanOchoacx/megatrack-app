@@ -134,5 +134,24 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <!-- Lógica exclusiva del panel de administración -->
   <script src="admin.js"></script>
+  
+  <!-- Acceso Administrativo Directo -->
+  <script>
+    const formLoginAdmin = document.getElementById('login-form') || document.querySelector('form');
+    if (formLoginAdmin) {
+      formLoginAdmin.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const passField = formLoginAdmin.querySelector('input[type="password"]');
+        
+        if (passField && passField.value === 'megatrack2026') {
+          const overlay = document.getElementById('login-overlay');
+          if (overlay) overlay.style.display = 'none';
+          if (typeof cargarLeadsReales === 'function') cargarLeadsReales();
+        } else {
+          alert('Contraseña incorrecta. Por favor, introduce la clave oficial de Megatrack.');
+        }
+      });
+    }
+  </script>
 </body>
 </html>

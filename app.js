@@ -52,64 +52,39 @@ if (!supabase || typeof supabase.from !== 'function') {
 window.supabase = supabase;
 
 // 2. Envío Limpio y Directo del Formulario
-const formMegatrack = document.querySelector('form');
-if (formMegatrack) {
-  formMegatrack.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const inputs = formMegatrack.querySelectorAll('input');
-    const selects = formMegatrack.querySelectorAll('select');
-    
-    const dataLead = {
-      nombre: inputs[0] ? inputs[0].value.trim() : "",
-      correo: inputs[1] ? inputs[1].value.trim() : "",
-      whatsapp: inputs[2] ? inputs[2].value.trim() : "",
-      empresa: inputs[3] ? inputs[3].value.trim() : "",
-      presupuesto: selects[0] ? selects[0].value : "No especificado",
-      dolor_principal: selects[1] ? selects[1].value : "No especificado",
-      estado: "Por contactar",
-      score: 0
-    };
-
-    try {
-      const { data, error } = await supabase.from('leads').insert([dataLead]);
-      if (error) throw error;
+// Si no existe un script inline en el documento, se inicializa el listener directamente:
+if (!document.querySelector('script:not([src])')) {
+  const formMegatrack = document.querySelector('form');
+  if (formMegatrack) {
+    formMegatrack.addEventListener('submit', async (e) => {
+      e.preventDefault();
       
-      // Respaldo de sincronización inmediata con el panel administrativo
-      try {
-        const cached = JSON.parse(localStorage.getItem('megatrack_cached_leads') || '[]');
-        cached.unshift({
-          id: 'lead-' + Date.now(),
-          ...dataLead,
-          created_at: new Date().toISOString()
-        });
-        localStorage.setItem('megatrack_cached_leads', JSON.stringify(cached));
-      } catch (cacheErr) {}
-
-      const alertSuccess = document.querySelector('.alert-success-container') || document.getElementById('mensaje-exito');
-      if (alertSuccess) alertSuccess.style.display = 'block';
-      formMegatrack.reset();
-    } catch (err) {
-      console.error("Error en Supabase:", err);
+      const inputs = formMegatrack.querySelectorAll('input');
+      const selects = formMegatrack.querySelectorAll('select');
       
-      // Respaldo de contingencia local
-      try {
-        const cached = JSON.parse(localStorage.getItem('megatrack_cached_leads') || '[]');
-        cached.unshift({
-          id: 'lead-' + Date.now(),
-          ...dataLead,
-          created_at: new Date().toISOString()
-        });
-        localStorage.setItem('megatrack_cached_leads', JSON.stringify(cached));
-      } catch (cacheErr) {}
+      // Mapeo seguro por orden de aparición en el formulario visual
+      const dataLead = {
+        nombre: inputs[0] ? inputs[0].value.trim() : "",
+        correo: inputs[1] ? inputs[1].value.trim() : "",
+        whatsapp: inputs[2] ? inputs[2].value.trim() : "",
+        empresa: inputs[3] ? inputs[3].value.trim() : "",
+        presupuesto: selects[0] ? selects[0].value : "No especificado",
+        dolor_principal: selects[1] ? selects[1].value : "No especificado",
+        estado: "Por contactar",
+        score: 0
+      };
 
-      const alertSuccess = document.querySelector('.alert-success-container') || document.getElementById('mensaje-exito');
-      if (alertSuccess) {
-        alertSuccess.style.display = 'block';
+      try {
+        const { data, error } = await supabase.from('leads').insert([dataLead]);
+        if (error) throw error;
+        
+        const alertSuccess = document.querySelector('.alert-success-container') || document.getElementById('mensaje-exito');
+        if (alertSuccess) alertSuccess.style.display = 'block';
         formMegatrack.reset();
-      } else {
+      } catch (err) {
+        console.error("Error en Supabase:", err);
         alert("Error de conexión con la base de datos.");
       }
-    }
-  });
+    });
+  }
 }

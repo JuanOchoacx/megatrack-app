@@ -513,5 +513,42 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <!-- Script de la Landing Page (app.js) -->
   <script src="app.js"></script>
+  
+  <!-- Manejo Directo de Envío de Leads -->
+  <script>
+    const formMegatrack = document.querySelector('form');
+    if (formMegatrack) {
+      formMegatrack.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const inputs = formMegatrack.querySelectorAll('input');
+        const selects = formMegatrack.querySelectorAll('select');
+        
+        // Mapeo seguro por orden de aparición en el formulario visual
+        const dataLead = {
+          nombre: inputs[0] ? inputs[0].value.trim() : "",
+          correo: inputs[1] ? inputs[1].value.trim() : "",
+          whatsapp: inputs[2] ? inputs[2].value.trim() : "",
+          empresa: inputs[3] ? inputs[3].value.trim() : "",
+          presupuesto: selects[0] ? selects[0].value : "No especificado",
+          dolor_principal: selects[1] ? selects[1].value : "No especificado",
+          estado: "Por contactar",
+          score: 0
+        };
+
+        try {
+          const { data, error } = await supabase.from('leads').insert([dataLead]);
+          if (error) throw error;
+          
+          const alertSuccess = document.querySelector('.alert-success-container') || document.getElementById('mensaje-exito');
+          if (alertSuccess) alertSuccess.style.display = 'block';
+          formMegatrack.reset();
+        } catch (err) {
+          console.error("Error en Supabase:", err);
+          alert("Error de conexión con la base de datos.");
+        }
+      });
+    }
+  </script>
 </body>
 </html>
