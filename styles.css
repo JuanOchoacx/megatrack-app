@@ -508,24 +508,46 @@ body {
   z-index: 1;
 }
 
-/* Texto telemático inferior centrado debajo de la flota gigante */
+/* TEXTO TELEMÁTICO CENTRADO Y ANIMADO */
 .telematics-status {
   position: absolute;
-  bottom: -20px;
+  bottom: -20px; /* Posicionado perfectamente abajo del bloque de camiones */
   left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
+  transform: translateX(-50%); /* Truco CSS para centrado absoluto horizontal */
+  width: 80%; /* Ancho óptimo y elegante */
   background: rgba(10, 25, 78, 0.95);
-  border: 1px solid rgba(0, 210, 255, 0.3);
+  border: 1px solid rgba(0, 210, 255, 0.4);
   color: #FFFFFF;
   text-align: center;
   padding: 10px 20px;
   border-radius: 25px;
-  z-index: 5;
+  z-index: 5; /* Por encima del fondo pero sin obstruir las llantas de los camiones */
   font-size: 0.85rem;
   font-weight: 700;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-  backdrop-filter: blur(8px);
+  letter-spacing: 0.5px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+  
+  /* Conexión de la nueva animación de monitoreo */
+  animation: telematicsPulse 2.5s ease-in-out infinite;
+}
+
+/* Animación Nativa CSS de Monitoreo Activo */
+@keyframes telematicsPulse {
+  0% {
+    border-color: rgba(0, 210, 255, 0.3);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 210, 255, 0.1);
+    opacity: 0.95;
+  }
+  50% {
+    border-color: rgba(0, 210, 255, 0.8);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 210, 255, 0.4);
+    opacity: 1;
+  }
+  100% {
+    border-color: rgba(0, 210, 255, 0.3);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 210, 255, 0.1);
+    opacity: 0.95;
+  }
 }
 
 /* ==========================================================
