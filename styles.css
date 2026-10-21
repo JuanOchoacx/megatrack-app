@@ -449,8 +449,8 @@ body {
 
 .badge-gps { 
   position: absolute; 
-  top: -12%;    
-  left: 36%;    /* Ajustado pegado al contorno superior central del radar */
+  top: -2%;     /* Bajando la posición para que coincida exactamente con la marca (X) */
+  left: 36%;    /* Manteniendo la alineación horizontal concéntrica con el radar */
   z-index: 10; 
   animation: floatSimpleY 4s ease-in-out infinite;
 }
