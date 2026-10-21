@@ -437,28 +437,28 @@ body {
   white-space: nowrap;
 }
 
-/* REUBICACIÓN EXACTA SEGÚN MARCAS DE EQUIS (X) */
+/* CORRECCIÓN: Traer los elementos de vuelta para que abracen el contorno del radar */
 
 .badge-signal { 
   position: absolute; 
-  top: 35%;     /* Bajado radicalmente */
-  left: -5%;    /* Ubicado en la esquina inferior izquierda del radar */
+  top: 40%;     
+  left: 14%;    /* Ajustado pegado al contorno inferior izquierdo del radar */
   z-index: 10; 
   animation: floatSimpleY 5s ease-in-out infinite 1s;
 }
 
 .badge-gps { 
   position: absolute; 
-  top: -15%;    /* Manteniendo la altura superior */
-  left: 55%;    /* Desplazado a la derecha sobre el cuadrante superior derecho */
+  top: -12%;    
+  left: 36%;    /* Ajustado pegado al contorno superior central del radar */
   z-index: 10; 
   animation: floatSimpleY 4s ease-in-out infinite;
 }
 
 .badge-speed { 
   position: absolute; 
-  top: 15%;     /* Posicionado en la franja media alta */
-  left: -22%;   /* Desplazado fuertemente a la izquierda, entre el texto y el radar */
+  top: 25%;     
+  left: 48%;    /* Ajustado pegado al contorno derecho del radar */
   z-index: 10; 
   animation: floatSimpleY 4.5s ease-in-out infinite 0.5s;
 }
