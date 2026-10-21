@@ -21,6 +21,16 @@ const ENV = {
 const SUPABASE_PROJECT_URL = ENV.SUPABASE_URL;
 const SUPABASE_ANON_KEY = ENV.SUPABASE_ANON_KEY;
 
+// Inicialización de cliente Supabase oficial si la librería está disponible
+let supabase = null;
+if (typeof window !== 'undefined' && window.supabase && typeof window.supabase.createClient === 'function') {
+  try {
+    supabase = window.supabase.createClient(SUPABASE_PROJECT_URL, SUPABASE_ANON_KEY);
+  } catch (e) {
+    console.warn('Error inicializando cliente oficial Supabase en admin:', e);
+  }
+}
+
 // Contraseñas autorizadas para el acceso
 const VALID_PASSWORDS = ['megatrack2026', 'admin123', 'admin'];
 
@@ -276,25 +286,38 @@ async function fetchLeadsFromSupabase() {
   if (btnRefresh) btnRefresh.classList.add('loading-spin');
 
   try {
-    const endpoint = `${SUPABASE_PROJECT_URL}/rest/v1/leads?select=*&order=created_at.desc`;
-    const response = await fetch(endpoint, {
-      method: 'GET',
-      headers: {
-        'apikey': SUPABASE_ANON_KEY,
-        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-        'Content-Type': 'application/json'
-      }
-    });
+    if (supabase && typeof supabase.from === 'function') {
+      const { data, error } = await supabase
+        .from('leads')
+        .select('*')
+        .order('created_at', { ascending: false });
 
-    if (response.ok) {
-      const data = await response.json();
-      if (Array.isArray(data) && data.length > 0) {
+      if (!error && Array.isArray(data) && data.length > 0) {
         adminLeads = data;
       } else {
         adminLeads = getCombinedLeads();
       }
     } else {
-      adminLeads = getCombinedLeads();
+      const endpoint = `${SUPABASE_PROJECT_URL}/rest/v1/leads?select=*&order=created_at.desc`;
+      const response = await fetch(endpoint, {
+        method: 'GET',
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (Array.isArray(data) && data.length > 0) {
+          adminLeads = data;
+        } else {
+          adminLeads = getCombinedLeads();
+        }
+      } else {
+        adminLeads = getCombinedLeads();
+      }
     }
   } catch (err) {
     console.info('Consultando bandeja con caché local / respaldo de Supabase:', err);
@@ -460,19 +483,26 @@ function attachStatusListeners() {
         updateKpis(adminLeads.map(l => ({ ...l, ...calculateLeadScore(l.presupuesto || l.presupuesto_estimado, l.dolor_principal) })));
       }
 
-      // 2) Actualización asíncrona hacia Supabase REST
+      // 2) Actualización hacia Supabase (tabla 'leads')
       try {
-        const patchEndpoint = `${SUPABASE_PROJECT_URL}/rest/v1/leads?id=eq.${leadId}`;
-        await fetch(patchEndpoint, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            'apikey': SUPABASE_ANON_KEY,
-            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-            'Prefer': 'return=minimal'
-          },
-          body: JSON.stringify({ estado: newStatus })
-        });
+        if (supabase && typeof supabase.from === 'function') {
+          await supabase
+            .from('leads')
+            .update({ estado: newStatus })
+            .eq('id', leadId);
+        } else {
+          const patchEndpoint = `${SUPABASE_PROJECT_URL}/rest/v1/leads?id=eq.${leadId}`;
+          await fetch(patchEndpoint, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+              'Prefer': 'return=minimal'
+            },
+            body: JSON.stringify({ estado: newStatus })
+          });
+        }
         console.log(`Lead ${leadId} actualizado a "${newStatus}" en Supabase.`);
       } catch (err) {
         console.warn('Actualización sincronizada localmente (modo protegido Supabase):', err);

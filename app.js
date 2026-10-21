@@ -17,6 +17,16 @@ const ENV = {
 const SUPABASE_PROJECT_URL = ENV.SUPABASE_URL;
 const SUPABASE_ANON_KEY = ENV.SUPABASE_ANON_KEY;
 
+// Inicialización de cliente Supabase oficial si la librería está disponible
+let supabase = null;
+if (typeof window !== 'undefined' && window.supabase && typeof window.supabase.createClient === 'function') {
+  try {
+    supabase = window.supabase.createClient(SUPABASE_PROJECT_URL, SUPABASE_ANON_KEY);
+  } catch (e) {
+    console.warn('Error inicializando cliente oficial Supabase:', e);
+  }
+}
+
 // ==========================================================
 // 2. Manejador del Formulario Filtro de Captación MOFU
 // ==========================================================
@@ -51,23 +61,35 @@ document.addEventListener('DOMContentLoaded', () => {
     setLoadingState(true);
 
     try {
-      // 2) Petición de Inserción asíncrona hacia la tabla 'leads' de Supabase
-      const endpoint = `${SUPABASE_PROJECT_URL}/rest/v1/leads`;
+      // 2) Petición de Inserción: tabla física 'leads' (en minúsculas exactas)
+      if (supabase && typeof supabase.from === 'function') {
+        const { data, error } = await supabase
+          .from('leads') // Tabla física exacta en minúsculas
+          .insert([datosParaSupabase]);
 
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-          'Prefer': 'return=representation'
-        },
-        body: JSON.stringify(datosParaSupabase)
-      });
+        if (error) {
+          console.warn('Detalle de inserción supabase-js:', error);
+          throw error;
+        }
+      } else {
+        // Fallback REST directo hacia la tabla 'leads'
+        const endpoint = `${SUPABASE_PROJECT_URL}/rest/v1/leads`;
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        console.warn('Detalle de respuesta Supabase:', response.status, errorData);
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+            'Prefer': 'return=representation'
+          },
+          body: JSON.stringify(datosParaSupabase)
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          console.warn('Detalle de respuesta Supabase:', response.status, errorData);
+        }
       }
     } catch (error) {
       console.info('Registro procesado en entorno local / protegido:', error.message || error);
