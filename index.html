@@ -516,35 +516,40 @@
   
   <!-- Manejo Directo de Envío de Leads -->
   <script>
-    const formMegatrack = document.querySelector('form');
-    if (formMegatrack) {
-      formMegatrack.addEventListener('submit', async (e) => {
+    const formMonitoreo = document.querySelector('form');
+    if (formMonitoreo) {
+      formMonitoreo.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        const inputs = formMegatrack.querySelectorAll('input');
-        const selects = formMegatrack.querySelectorAll('select');
+        // Captura quirúrgica por atributos visuales únicos
+        const inputNombre = formMonitoreo.querySelector('input[placeholder*="Carlos Mendoza"]') || formMonitoreo.querySelector('input[type="text"]');
+        const inputCorreo = formMonitoreo.querySelector('input[placeholder*="carlos@empresa.com"]') || formMonitoreo.querySelector('input[type="email"]');
+        const inputWhatsapp = formMonitoreo.querySelector('input[placeholder*="593"]') || formMonitoreo.querySelector('input[type="tel"]');
+        const inputEmpresa = formMonitoreo.querySelector('input[placeholder*="Logística Andina"]') || formMonitoreo.querySelectorAll('input[type="text"]')[1];
         
-        // Mapeo seguro por orden de aparición en el formulario visual
-        const dataLead = {
-          nombre: inputs[0] ? inputs[0].value.trim() : "",
-          correo: inputs[1] ? inputs[1].value.trim() : "",
-          whatsapp: inputs[2] ? inputs[2].value.trim() : "",
-          empresa: inputs[3] ? inputs[3].value.trim() : "",
-          presupuesto: selects[0] ? selects[0].value : "No especificado",
-          dolor_principal: selects[1] ? selects[1].value : "No especificado",
+        const selectPresupuesto = formMonitoreo.querySelectorAll('select')[0];
+        const selectDolor = formMonitoreo.querySelectorAll('select')[1];
+
+        const datosFinalesLeads = {
+          nombre: inputNombre ? inputNombre.value.trim() : "Anonimo",
+          correo: inputCorreo ? inputCorreo.value.trim() : "sin@correo.com",
+          whatsapp: inputWhatsapp ? inputWhatsapp.value.trim() : "00000",
+          empresa: inputEmpresa ? inputEmpresa.value.trim() : "Particular",
+          presupuesto: selectPresupuesto ? selectPresupuesto.value : "No especificado",
+          dolor_principal: selectDolor ? selectDolor.value : "No especificado",
           estado: "Por contactar",
-          score: 0
+          score: 0 // Requerido int4 por la base de datos
         };
 
         try {
-          const { data, error } = await supabase.from('leads').insert([dataLead]);
+          const { data, error } = await supabase.from('leads').insert([datosFinalesLeads]);
           if (error) throw error;
           
-          const alertSuccess = document.querySelector('.alert-success-container') || document.getElementById('mensaje-exito');
-          if (alertSuccess) alertSuccess.style.display = 'block';
-          formMegatrack.reset();
+          const mensajeExito = document.querySelector('.alert-success-container') || document.getElementById('mensaje-exito');
+          if (mensajeExito) mensajeExito.style.display = 'block';
+          formMonitoreo.reset();
         } catch (err) {
-          console.error("Error en Supabase:", err);
+          console.error("Error de inserción real:", err);
           alert("Error de conexión con la base de datos.");
         }
       });
