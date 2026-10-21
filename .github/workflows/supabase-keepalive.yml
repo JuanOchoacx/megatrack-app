@@ -1,0 +1,17 @@
+name: Supabase Base de Datos Keep-Alive Diario
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Se ejecuta de forma automática todos los días a la medianoche (UTC)
+  workflow_dispatch: # Permite dispararlo manualmente desde GitHub si es necesario
+
+jobs:
+  ping_supabase:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enviar peticion ultra ligera de lectura para reportar actividad continua
+        run: |
+          curl -X GET "https://fatdawzrhkxedcpvnvsa.supabase.co/rest/v1/leads?select=id&limit=1" \
+          -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZhdGRhd3pyaGt4ZWRjcHZudnNhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIzNzk2NzEsImV4cCI6MjEwNzk1NTY3MX0.fSWVJG-OFaTNMExes4fceiKKZUyn0jvjmxUbe2BKP5k" \
+          -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZhdGRhd3pyaGt4ZWRjcHZudnNhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIzNzk2NzEsImV4cCI6MjEwNzk1NTY3MX0.fSWVJG-OFaTNMExes4fceiKKZUyn0jvjmxUbe2BKP5k"
+          echo "Disparador diario completado con éxito. Actividad continua reportada al servidor."
