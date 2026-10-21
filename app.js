@@ -30,37 +30,28 @@ document.addEventListener('DOMContentLoaded', () => {
   contactForm.addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    // Captura estricta de las 6 variables del formulario filtro
-    const nombre_completo = (contactForm.nombre_completo?.value || '').trim();
-    const correo_electronico = (contactForm.correo_electronico?.value || '').trim();
-    const whatsapp = (contactForm.whatsapp?.value || '').trim();
-    const empresa_negocio = (contactForm.empresa_negocio?.value || '').trim();
-    const presupuesto_estimado = (contactForm.presupuesto_estimado?.value || '').trim();
-    const dolor_principal = (contactForm.dolor_principal?.value || '').trim();
+    // 1) Captura y Mapeo de Campos del Formulario según la estructura física de Supabase
+    const datosParaSupabase = {
+      nombre: (document.querySelector('input[placeholder="Ej. Carlos Mendoza"]')?.value || contactForm.nombre_completo?.value || '').trim(),
+      correo: (document.querySelector('input[placeholder="carlos@empresa.com"]')?.value || contactForm.correo_electronico?.value || '').trim(),
+      whatsapp: (document.querySelector('input[placeholder="+593 99 123 4567"]')?.value || contactForm.whatsapp?.value || '').trim(),
+      empresa: (document.querySelector('input[placeholder="Ej. Logística Andina o Particular"]')?.value || contactForm.empresa_negocio?.value || '').trim(),
+      presupuesto: document.querySelector('select:nth-of-type(1)')?.value || contactForm.presupuesto_estimado?.value || "No especificado", 
+      dolor_principal: document.querySelector('select:nth-of-type(2)')?.value || contactForm.dolor_principal?.value || "No especificado",
+      estado: "Por contactar",
+      score: 0 // Envío estricto de número entero int4 requerido por la base de datos
+    };
 
     // Validación de obligatoriedad en cliente
-    if (!nombre_completo || !correo_electronico || !whatsapp || !empresa_negocio || !presupuesto_estimado || !dolor_principal) {
-      showFeedback('Por favor completa todos los campos del formulario filtro.', 'error');
+    if (!datosParaSupabase.nombre || !datosParaSupabase.correo || !datosParaSupabase.whatsapp) {
+      showFeedback('Por favor completa los campos requeridos (Nombre, Correo y WhatsApp).', 'error');
       return;
     }
-
-    // Estructuración del lead en formato JSON seguro
-    const leadPayload = {
-      id: 'lead-' + Date.now(),
-      nombre_completo,
-      correo_electronico,
-      whatsapp,
-      empresa_negocio,
-      presupuesto_estimado,
-      dolor_principal,
-      estado: 'Por contactar',
-      created_at: new Date().toISOString()
-    };
 
     setLoadingState(true);
 
     try {
-      // Inserción asíncrona hacia la tabla 'leads' de Supabase
+      // 2) Petición de Inserción asíncrona hacia la tabla 'leads' de Supabase
       const endpoint = `${SUPABASE_PROJECT_URL}/rest/v1/leads`;
 
       const response = await fetch(endpoint, {
@@ -71,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
           'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
           'Prefer': 'return=representation'
         },
-        body: JSON.stringify(leadPayload)
+        body: JSON.stringify(datosParaSupabase)
       });
 
       if (!response.ok) {
@@ -84,7 +75,11 @@ document.addEventListener('DOMContentLoaded', () => {
       // Guardar también en almacenamiento local sincronizado para visibilidad inmediata en admin.html
       try {
         const cached = JSON.parse(localStorage.getItem('megatrack_cached_leads') || '[]');
-        cached.unshift(leadPayload);
+        cached.unshift({
+          id: 'lead-' + Date.now(),
+          ...datosParaSupabase,
+          created_at: new Date().toISOString()
+        });
         localStorage.setItem('megatrack_cached_leads', JSON.stringify(cached));
       } catch (e) {
         console.warn('Almacenamiento local no disponible:', e);

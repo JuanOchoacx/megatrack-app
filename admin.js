@@ -317,7 +317,7 @@ function getCombinedLeads() {
   }
   const all = [...cached, ...DEFAULT_DEMO_LEADS];
   const uniqueMap = new Map();
-  all.forEach(item => uniqueMap.set(item.id || item.correo_electronico, item));
+  all.forEach(item => uniqueMap.set(item.id || item.correo || item.correo_electronico, item));
   return Array.from(uniqueMap.values());
 }
 
@@ -340,7 +340,7 @@ function renderLeadsPriorityInbox(leads) {
 
   // 1) Calcular score para cada lead
   const scoredLeads = leads.map(lead => {
-    const scoring = calculateLeadScore(lead.presupuesto_estimado, lead.dolor_principal);
+    const scoring = calculateLeadScore(lead.presupuesto || lead.presupuesto_estimado, lead.dolor_principal);
     return {
       ...lead,
       ...scoring
@@ -375,8 +375,8 @@ function renderLeadsPriorityInbox(leads) {
         </div>
         
         <div class="lead-card-body">
-          <h3 class="lead-name">${escapeHtml(lead.nombre_completo || 'Sin nombre')}</h3>
-          <p class="lead-email">${escapeHtml(lead.correo_electronico || 'Sin correo')}</p>
+          <h3 class="lead-name">${escapeHtml(lead.nombre || lead.nombre_completo || 'Sin nombre')}</h3>
+          <p class="lead-email">${escapeHtml(lead.correo || lead.correo_electronico || 'Sin correo')}</p>
           
           <a href="${waLink}" target="_blank" rel="noopener noreferrer" class="whatsapp-direct-btn">
             💬 Contactar por WhatsApp
@@ -386,11 +386,11 @@ function renderLeadsPriorityInbox(leads) {
           
           <div class="lead-info-row">
             <span class="info-label">Empresa:</span>
-            <span class="info-value text-highlight">${escapeHtml(lead.empresa_negocio || 'Particular')}</span>
+            <span class="info-value text-highlight">${escapeHtml(lead.empresa || lead.empresa_negocio || 'Particular')}</span>
           </div>
           <div class="lead-info-row">
             <span class="info-label">Presupuesto:</span>
-            <span class="info-value">${escapeHtml(lead.presupuesto_estimado || 'No indicado')} <small>(+${lead.scorePresupuesto} pts)</small></span>
+            <span class="info-value">${escapeHtml(lead.presupuesto || lead.presupuesto_estimado || 'No indicado')} <small>(+${lead.scorePresupuesto} pts)</small></span>
           </div>
           <div class="lead-info-row">
             <span class="info-label">Problema Principal del Cliente:</span>
@@ -457,7 +457,7 @@ function attachStatusListeners() {
         try {
           localStorage.setItem('megatrack_cached_leads', JSON.stringify(adminLeads));
         } catch (err) {}
-        updateKpis(adminLeads.map(l => ({ ...l, ...calculateLeadScore(l.presupuesto_estimado, l.dolor_principal) })));
+        updateKpis(adminLeads.map(l => ({ ...l, ...calculateLeadScore(l.presupuesto || l.presupuesto_estimado, l.dolor_principal) })));
       }
 
       // 2) Actualización asíncrona hacia Supabase REST
