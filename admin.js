@@ -185,11 +185,17 @@ function calculateLeadScore(presupuesto, dolor) {
 // ==========================================================
 // 3. Inicialización y Autenticación del Panel
 // ==========================================================
+function cargarLeadsReales() {
+  const panel = document.getElementById('admin-panel');
+  if (panel) panel.style.display = 'block';
+  fetchLeadsFromSupabase();
+}
+window.cargarLeadsReales = cargarLeadsReales;
+
 document.addEventListener('DOMContentLoaded', () => {
-  const authScreen = document.getElementById('admin-auth-screen');
+  const loginOverlay = document.getElementById('login-overlay') || document.getElementById('admin-auth-screen');
   const panelScreen = document.getElementById('admin-panel');
-  const loginForm = document.getElementById('admin-login-form');
-  const passInput = document.getElementById('admin-pass');
+  const passInput = document.querySelector('input[type="password"]');
   const errorMsg = document.getElementById('auth-error');
   const btnLogout = document.getElementById('btn-logout');
   const btnRefresh = document.getElementById('btn-refresh-leads');
@@ -198,23 +204,33 @@ document.addEventListener('DOMContentLoaded', () => {
   const isAuth = sessionStorage.getItem('megatrack_admin_session') === 'true';
 
   if (isAuth) {
-    showDashboard();
-  } else {
-    showAuth();
+    if (loginOverlay) loginOverlay.style.display = 'none';
+    if (panelScreen) panelScreen.style.display = 'block';
+    cargarLeadsReales();
   }
 
-  // Manejador del Login
-  if (loginForm) {
-    loginForm.addEventListener('submit', (e) => {
+  // Validación de contraseña aislada y segura
+  const formularioAdmin = document.getElementById('login-form') || document.getElementById('admin-login-form') || document.querySelector('form');
+  if (formularioAdmin) {
+    formularioAdmin.addEventListener('submit', (e) => {
       e.preventDefault();
-      const enteredPass = (passInput?.value || '').trim();
-
-      if (VALID_PASSWORDS.includes(enteredPass)) {
+      const claveIngresada = (document.querySelector('input[type="password"]')?.value || '').trim();
+      
+      if (claveIngresada === 'megatrack2026') {
         sessionStorage.setItem('megatrack_admin_session', 'true');
         if (errorMsg) errorMsg.style.display = 'none';
-        showDashboard();
+        
+        // Remover pantalla de bloqueo y renderizar la bandeja modular
+        const overlay = document.getElementById('login-overlay') || loginOverlay;
+        if (overlay) overlay.style.display = 'none';
+        if (panelScreen) panelScreen.style.display = 'block';
+        
+        if (typeof cargarLeadsReales === 'function') {
+          cargarLeadsReales();
+        }
       } else {
         if (errorMsg) errorMsg.style.display = 'block';
+        alert('Contraseña incorrecta. Por favor verifique la clave oficial de Megatrack.');
         if (passInput) {
           passInput.value = '';
           passInput.focus();
@@ -227,14 +243,16 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnLogout) {
     btnLogout.addEventListener('click', () => {
       sessionStorage.removeItem('megatrack_admin_session');
-      showAuth();
+      if (loginOverlay) loginOverlay.style.display = 'flex';
+      if (panelScreen) panelScreen.style.display = 'none';
+      if (passInput) passInput.focus();
     });
   }
 
   // Botón Actualizar
   if (btnRefresh) {
     btnRefresh.addEventListener('click', () => {
-      fetchLeadsFromSupabase();
+      cargarLeadsReales();
     });
   }
 
@@ -264,18 +282,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   });
-
-  function showDashboard() {
-    if (authScreen) authScreen.style.display = 'none';
-    if (panelScreen) panelScreen.style.display = 'block';
-    fetchLeadsFromSupabase();
-  }
-
-  function showAuth() {
-    if (authScreen) authScreen.style.display = 'flex';
-    if (panelScreen) panelScreen.style.display = 'none';
-    if (passInput) passInput.focus();
-  }
 });
 
 // ==========================================================
