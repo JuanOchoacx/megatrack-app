@@ -93,6 +93,12 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         e.stopPropagation();
 
+        const checkboxLegal = document.getElementById('acepta-datos-personales');
+        if (checkboxLegal && !checkboxLegal.checked) {
+          alert("Debe aceptar la Política de Privacidad y los Términos de Servicio para poder continuar.");
+          return;
+        }
+
         // Sanitización básica sin alterar la captura actual
         const limpiarXSS = (val) => val ? val.replace(/[/<>`'"&]/g, '').trim() : "";
         

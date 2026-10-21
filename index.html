@@ -458,10 +458,10 @@
           </div>
 
           <!-- Casilla de Verificación Limpia (LOPDP Ecuador) -->
-          <div style="display: flex; align-items: center; gap: 8px; margin-top: 15px; margin-bottom: 15px; width: 100%; text-align: left;">
-            <input type="checkbox" id="acepta-datos-personales" style="cursor: pointer; width: 14px; height: 14px; margin: 0;" required>
-            <label for="acepta-datos-personales" style="font-size: 0.85rem; color: #4B5563; cursor: pointer; user-select: none; margin: 0;">
-              Acepto la <strong style="color: #0A194E;">Política de Privacidad</strong> y los <strong style="color: #0A194E;">Términos de Servicio</strong> para el tratamiento seguro de mis datos.
+          <div style="display: flex; align-items: center; gap: 8px; margin: 20px 0; width: 100%; text-align: left;">
+            <input type="checkbox" id="acepta-datos-personales" style="cursor: pointer; width: 16px; height: 16px; min-width: 16px; min-height: 16px; margin: 0; appearance: checkbox; -webkit-appearance: checkbox;" required>
+            <label for="acepta-datos-personales" style="font-size: 0.85rem; color: #4B5563; cursor: pointer; user-select: none; margin: 0; line-height: 1.2;">
+              Acepto la <strong style="color: #0A194E; font-weight: 600;">Política de Privacidad</strong> y los <strong style="color: #0A194E; font-weight: 600;">Términos de Servicio</strong> para el tratamiento seguro de mis datos.
             </label>
           </div>
 
@@ -582,6 +582,12 @@
         formMonitoreoActivo.addEventListener('submit', async (e) => {
           e.preventDefault();
           e.stopPropagation();
+
+          const checkboxLegal = document.getElementById('acepta-datos-personales');
+          if (checkboxLegal && !checkboxLegal.checked) {
+            alert("Debe aceptar la Política de Privacidad y los Términos de Servicio para poder continuar.");
+            return;
+          }
 
           // Sanitización básica sin alterar la captura actual
           const limpiarXSS = (val) => val ? val.replace(/[/<>`'"&]/g, '').trim() : "";
