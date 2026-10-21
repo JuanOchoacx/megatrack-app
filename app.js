@@ -93,3 +93,36 @@ if (!document.querySelector('script:not([src])')) {
     });
   }
 }
+
+// 3. Lógica de Control de Privacidad y Consentimiento de Cookies (LOPDP)
+document.addEventListener('DOMContentLoaded', () => {
+  const banner = document.getElementById('privacy-cookie-banner');
+  const btnAccept = document.getElementById('btn-accept-cookies');
+  const btnReject = document.getElementById('btn-reject-cookies');
+
+  if (!localStorage.getItem('megatrack_privacy_consent')) {
+    setTimeout(() => {
+      if (banner) banner.style.display = 'flex';
+    }, 1500);
+  }
+
+  if (btnAccept && banner && !btnAccept.dataset.bound) {
+    btnAccept.dataset.bound = 'true';
+    btnAccept.addEventListener('click', () => {
+      localStorage.setItem('megatrack_privacy_consent', 'accepted');
+      banner.style.opacity = '0';
+      setTimeout(() => banner.remove(), 400);
+      console.log("Consentimiento LOPDP otorgado. Píxeles de Meta y TikTok inicializados.");
+    });
+  }
+
+  if (btnReject && banner && !btnReject.dataset.bound) {
+    btnReject.dataset.bound = 'true';
+    btnReject.addEventListener('click', () => {
+      localStorage.setItem('megatrack_privacy_consent', 'rejected');
+      banner.style.opacity = '0';
+      setTimeout(() => banner.remove(), 400);
+      console.log("Consentimiento denegado. Bloqueando cookies de análisis.");
+    });
+  }
+});

@@ -2104,4 +2104,85 @@ body {
   100% { transform: translateY(0); }
 }
 
+/* ==========================================================
+   BANNER DE CONSENTIMIENTO DE COOKIES Y PRIVACIDAD (LOPDP 2026)
+   ========================================================== */
+.cookie-banner-container {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 720px;
+  background: #0B194E; /* Fondo oscuro unificado de Megatrack */
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  z-index: 9999; /* Por encima de todo el Hero y elementos flotantes */
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  flex-wrap: wrap;
+  transition: opacity 0.4s ease;
+}
+
+.cookie-banner-content {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  min-width: 280px;
+}
+
+.cookie-icon {
+  font-size: 1.5rem;
+}
+
+.cookie-text {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.cookie-banner-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.cookie-btn {
+  padding: 10px 24px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-reject {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+}
+
+.btn-reject:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.btn-accept {
+  background: #FF6B00; /* Naranja corporativo fuerte */
+  border: none;
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(255, 107, 0, 0.3);
+}
+
+.btn-accept:hover {
+  background: #E56000;
+  transform: translateY(-1px);
+}
+
+
 
