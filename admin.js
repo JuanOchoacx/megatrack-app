@@ -13,9 +13,9 @@
 // ==========================================================
 const ENV = {
   SUPABASE_URL: (typeof window !== 'undefined' && window.ENV?.SUPABASE_URL) 
-    || 'https://megatrack-security-ecuador.supabase.co',
+    || 'https://fatdawzrhkxedcpvnvsa.supabase.co',
   SUPABASE_ANON_KEY: (typeof window !== 'undefined' && window.ENV?.SUPABASE_ANON_KEY) 
-    || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1tZWdhdHJhY2siLCJyZWYiOiJtZWdhdHJhY2stZWN1YWRvciIsInJvbGUiOiJvZmZpY2lhbC1hbm9uIiwiaWF0IjoxNzg5MTIzNDU2LCJleHAiOjIxMDQ0ODM0NTZ9.simulated_megatrack_anon_security_token_2026'
+    || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZhdGRhd3pyaGt4ZWRjcHZudnNhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIzNzk2NzEsImV4cCI6MjEwNzk1NTY3MX0.fSWVJG-OFaTNMExes4fceiKKZUyn0jvjmxUbe2BKP5k'
 };
 
 const SUPABASE_PROJECT_URL = ENV.SUPABASE_URL;

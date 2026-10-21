@@ -135,6 +135,24 @@
   <!-- Lógica exclusiva del panel de administración -->
   <script src="admin.js"></script>
   
+  <!-- Configuración de Inicialización de Supabase -->
+  <script>
+    const SUPABASE_URL = "https://supabase.co";
+    // Reemplaza la cadena de texto de abajo por la llave real que copiaste en el portapapeles:
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZhdGRhd3pyaGt4ZWRjcHZudnNhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIzNzk2NzEsImV4cCI6MjEwNzk1NTY3MX0.fSWVJG-OFaTNMExes4fceiKKZUyn0jvjmxUbe2BKP5k";
+
+    if (typeof supabase === 'undefined') {
+      var supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    }
+
+    if (!supabase || typeof supabase.from !== 'function') {
+      const realEndpoint = "https://fatdawzrhkxedcpvnvsa.supabase.co";
+      const lib = (window.supabase && window.supabase.createClient) ? window.supabase : supabase;
+      window.supabase = lib.createClient(realEndpoint, SUPABASE_ANON_KEY);
+      var supabase = window.supabase;
+    }
+  </script>
+  
   <!-- Acceso Administrativo Directo -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
