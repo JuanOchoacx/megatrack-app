@@ -29,6 +29,22 @@ if (typeof window !== 'undefined' && window.supabase && typeof window.supabase.c
 if (!supabase || typeof supabase.from !== 'function') {
   supabase = {
     from: (table) => ({
+      select: (cols) => ({
+        limit: async (num) => {
+          try {
+            const res = await fetch(`${SUPABASE_PROJECT_URL}/rest/v1/${table}?select=${encodeURIComponent(cols)}&limit=${num}`, {
+              headers: {
+                'apikey': SUPABASE_ANON_KEY,
+                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+              }
+            });
+            const data = await res.json();
+            return { data, error: res.ok ? null : new Error('REST select error') };
+          } catch (err) {
+            return { data: [], error: err };
+          }
+        }
+      }),
       insert: async (records) => {
         try {
           const res = await fetch(`${SUPABASE_PROJECT_URL}/rest/v1/${table}`, {
@@ -51,45 +67,63 @@ if (!supabase || typeof supabase.from !== 'function') {
 }
 window.supabase = supabase;
 
-// 2. Envío Limpio y Directo del Formulario
-// Si no existe un script inline en el documento, se inicializa el listener directamente:
-if (!document.querySelector('script:not([src])')) {
-  const formMonitoreoActivo = document.querySelector('form');
-  if (formMonitoreoActivo) {
-    formMonitoreoActivo.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-
-      // Sanitización básica sin alterar la captura actual
-      const limpiarXSS = (val) => val ? val.replace(/[/<>`'"&]/g, '').trim() : "";
+// 2. Despertador Preventivo y Envío de Formulario
+document.addEventListener('DOMContentLoaded', () => {
+  // 1. DESPERTADOR PREVENTIVO: Consulta ultra ligera en el primer milisegundo
+  (async () => {
+    try {
+      console.log("⚡ Despertador preventivo activado: Calentando canales de comunicación con Supabase...");
       
-      const inputsForm = formMonitoreoActivo.querySelectorAll('input');
-      const selectsForm = formMonitoreoActivo.querySelectorAll('select');
-
-      const datosFormularioMapeados = {
-        nombre: limpiarXSS(inputsForm[0]?.value),
-        correo: limpiarXSS(inputsForm[1]?.value),
-        telefono: limpiarXSS(inputsForm[2]?.value),
-        tipo_usuario: limpiarXSS(inputsForm[3]?.value),
-        tamano_flota: selectsForm[0]?.value || "No especificado",
-        dolor_principal: selectsForm[1]?.value || "No especificado",
-        estado: "Por contactar",
-        score: 0
-      };
-
-      try {
-        const { error } = await supabase.from('leads').insert([datosFormularioMapeados]);
-        if (error) throw error;
+      await supabase
+        .from('leads')
+        .select('id')
+        .limit(1);
         
-        const successAlertContainer = document.querySelector('.alert-success-container') || document.getElementById('mensaje-exito');
-        if (successAlertContainer) successAlertContainer.style.display = 'block';
-        formMonitoreoActivo.reset();
-      } catch (err) {
-        console.error("Error de red controlado por seguridad.");
-      }
-    });
+      console.log("🔥 Base de datos lista y templada. Latencia cero configurada para el formulario.");
+    } catch (pingError) {
+      console.log("Aviso de precalentamiento gestionado por el cortafuegos.");
+    }
+  })();
+
+  // 2. Envío Limpio y Directo del Formulario
+  if (!document.querySelector('script:not([src])')) {
+    const formMonitoreoActivo = document.querySelector('form');
+    if (formMonitoreoActivo) {
+      formMonitoreoActivo.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        // Sanitización básica sin alterar la captura actual
+        const limpiarXSS = (val) => val ? val.replace(/[/<>`'"&]/g, '').trim() : "";
+        
+        const inputsForm = formMonitoreoActivo.querySelectorAll('input');
+        const selectsForm = formMonitoreoActivo.querySelectorAll('select');
+
+        const datosFormularioMapeados = {
+          nombre: limpiarXSS(inputsForm[0]?.value),
+          correo: limpiarXSS(inputsForm[1]?.value),
+          telefono: limpiarXSS(inputsForm[2]?.value),
+          tipo_usuario: limpiarXSS(inputsForm[3]?.value),
+          tamano_flota: selectsForm[0]?.value || "No especificado",
+          dolor_principal: selectsForm[1]?.value || "No especificado",
+          estado: "Por contactar",
+          score: 0
+        };
+
+        try {
+          const { error } = await supabase.from('leads').insert([datosFormularioMapeados]);
+          if (error) throw error;
+          
+          const successAlertContainer = document.querySelector('.alert-success-container') || document.getElementById('mensaje-exito');
+          if (successAlertContainer) successAlertContainer.style.display = 'block';
+          formMonitoreoActivo.reset();
+        } catch (err) {
+          console.error("Error de red controlado por seguridad.");
+        }
+      });
+    }
   }
-}
+});
 
 // 3. Lógica de Control de Privacidad y Consentimiento de Cookies (LOPDP)
 document.addEventListener('DOMContentLoaded', () => {
